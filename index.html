@@ -25,6 +25,7 @@
   .status { display: inline-block; padding: 1px 6px; border-radius: 4px; font-size: 11px; margin-bottom: 4px; }
   .status.full { background: #fdecea; color: #c0392b; }
   .status.avail { background: #eafaf1; color: #1e8449; }
+  .status.closed { background: #f0f0f0; color: #666; }
 
   .day-cell .line { color: #555; line-height: 1.6; }
 
@@ -95,6 +96,13 @@
         if (!day) {
           cell.className = 'day-cell no-data';
           cell.innerHTML = `<div class="day-num">${d}</div>`;
+        } else if (day.status === '關閉') {
+          cell.className = 'day-cell';
+          cell.innerHTML = `
+            <div class="day-num">${d}</div>
+            <span class="status closed">關閉</span>
+            <div class="line">${day.note ?? '山屋關閉，暫停申請'}</div>
+          `;
         } else {
           const isFull = day.status === '額滿';
           const statusClass = isFull ? 'full' : 'avail';
