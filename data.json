@@ -1,13 +1,235 @@
 {
-  "updated_at": "2026-08-07 10:00",
-  "huts": [
+  "updated_at": "2026-08-07 13:12",
+  "year": 2026,
+  "month": 8,
+  "hut": {
+    "name": "排雲山莊",
+    "mountain": "玉山",
+    "capacity_weekday_bed": 136,
+    "capacity_weekend_bed": 136,
+    "capacity_weekday_tent": 0,
+    "capacity_weekend_tent": 0
+  },
+  "days": [
     {
-      "name": "排雲山莊",
-      "mountain": "玉山",
-      "capacity_weekday": 116,
-      "capacity_weekend": 116,
-      "status": "示範資料",
-      "note": "尚未串接即時查詢，此為排版測試用假資料"
+      "date": "2026-08-12",
+      "status": "餘額",
+      "bed_avail": 8,
+      "tent_avail": 0,
+      "queue": 0,
+      "reviewing": 18,
+      "approved": 110,
+      "total_bed_used": 128,
+      "total_tent_used": 0
+    },
+    {
+      "date": "2026-08-13",
+      "status": "額滿",
+      "bed_avail": 0,
+      "tent_avail": 0,
+      "queue": 8,
+      "reviewing": 19,
+      "approved": 113,
+      "total_bed_used": 136,
+      "total_tent_used": 0
+    },
+    {
+      "date": "2026-08-14",
+      "status": "額滿",
+      "bed_avail": 0,
+      "tent_avail": 0,
+      "queue": 41,
+      "reviewing": 0,
+      "approved": 131,
+      "total_bed_used": 136,
+      "total_tent_used": 0
+    },
+    {
+      "date": "2026-08-15",
+      "status": "額滿",
+      "bed_avail": 0,
+      "tent_avail": 0,
+      "queue": 158,
+      "reviewing": 0,
+      "approved": 136,
+      "total_bed_used": 136,
+      "total_tent_used": 0
+    },
+    {
+      "date": "2026-08-16",
+      "status": "額滿",
+      "bed_avail": 0,
+      "tent_avail": 0,
+      "queue": 39,
+      "reviewing": 22,
+      "approved": 113,
+      "total_bed_used": 136,
+      "total_tent_used": 0
+    },
+    {
+      "date": "2026-08-17",
+      "status": "額滿",
+      "bed_avail": 0,
+      "tent_avail": 0,
+      "queue": 38,
+      "reviewing": 5,
+      "approved": 130,
+      "total_bed_used": 136,
+      "total_tent_used": 0
+    },
+    {
+      "date": "2026-08-18",
+      "status": "額滿",
+      "bed_avail": 0,
+      "tent_avail": 0,
+      "queue": 42,
+      "reviewing": 1,
+      "approved": 129,
+      "total_bed_used": 136,
+      "total_tent_used": 0
+    },
+    {
+      "date": "2026-08-19",
+      "status": "餘額",
+      "bed_avail": 3,
+      "tent_avail": 0,
+      "queue": 11,
+      "reviewing": 7,
+      "approved": 115,
+      "total_bed_used": 133,
+      "total_tent_used": 0
+    },
+    {
+      "date": "2026-08-20",
+      "status": "額滿",
+      "bed_avail": 0,
+      "tent_avail": 0,
+      "queue": 14,
+      "reviewing": 11,
+      "approved": 125,
+      "total_bed_used": 136,
+      "total_tent_used": 0
+    },
+    {
+      "date": "2026-08-21",
+      "status": "餘額",
+      "bed_avail": 1,
+      "tent_avail": 0,
+      "queue": 15,
+      "reviewing": 4,
+      "approved": 116,
+      "total_bed_used": 135,
+      "total_tent_used": 0
+    },
+    {
+      "date": "2026-08-22",
+      "status": "額滿",
+      "bed_avail": 0,
+      "tent_avail": 0,
+      "queue": 276,
+      "reviewing": 0,
+      "approved": 134,
+      "total_bed_used": 136,
+      "total_tent_used": 0
+    },
+    {
+      "date": "2026-08-23",
+      "status": "額滿",
+      "bed_avail": 0,
+      "tent_avail": 0,
+      "queue": 41,
+      "reviewing": 8,
+      "approved": 125,
+      "total_bed_used": 136,
+      "total_tent_used": 0
+    },
+    {
+      "date": "2026-08-24",
+      "status": "額滿",
+      "bed_avail": 0,
+      "tent_avail": 0,
+      "queue": 31,
+      "reviewing": 9,
+      "approved": 121,
+      "total_bed_used": 136,
+      "total_tent_used": 0
+    },
+    {
+      "date": "2026-08-25",
+      "status": "餘額",
+      "bed_avail": 1,
+      "tent_avail": 0,
+      "queue": 0,
+      "reviewing": 7,
+      "approved": 128,
+      "total_bed_used": 135,
+      "total_tent_used": 0
+    },
+    {
+      "date": "2026-08-26",
+      "status": "額滿",
+      "bed_avail": 0,
+      "tent_avail": 0,
+      "queue": 4,
+      "reviewing": 5,
+      "approved": 131,
+      "total_bed_used": 136,
+      "total_tent_used": 0
+    },
+    {
+      "date": "2026-08-27",
+      "status": "餘額",
+      "bed_avail": 1,
+      "tent_avail": 0,
+      "queue": 0,
+      "reviewing": 4,
+      "approved": 131,
+      "total_bed_used": 135,
+      "total_tent_used": 0
+    },
+    {
+      "date": "2026-08-28",
+      "status": "額滿",
+      "bed_avail": 0,
+      "tent_avail": 0,
+      "queue": 0,
+      "reviewing": 13,
+      "approved": 123,
+      "total_bed_used": 136,
+      "total_tent_used": 0
+    },
+    {
+      "date": "2026-08-29",
+      "status": "額滿",
+      "bed_avail": 0,
+      "tent_avail": 0,
+      "queue": 166,
+      "reviewing": 3,
+      "approved": 133,
+      "total_bed_used": 136,
+      "total_tent_used": 0
+    },
+    {
+      "date": "2026-08-30",
+      "status": "額滿",
+      "bed_avail": 0,
+      "tent_avail": 0,
+      "queue": 35,
+      "reviewing": 3,
+      "approved": 129,
+      "total_bed_used": 136,
+      "total_tent_used": 0
+    },
+    {
+      "date": "2026-08-31",
+      "status": "額滿",
+      "bed_avail": 0,
+      "tent_avail": 0,
+      "queue": 16,
+      "reviewing": 27,
+      "approved": 108,
+      "total_bed_used": 136,
+      "total_tent_used": 0
     }
   ]
 }
