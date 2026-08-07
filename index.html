@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>百岳山屋查詢</title>
+<style>
+  body { font-family: -apple-system, "PingFang TC", sans-serif; max-width: 720px; margin: 40px auto; padding: 0 16px; color: #222; }
+  h1 { font-size: 22px; margin-bottom: 4px; }
+  .updated { color: #888; font-size: 13px; margin-bottom: 24px; }
+  table { width: 100%; border-collapse: collapse; }
+  th, td { text-align: left; padding: 10px 8px; border-bottom: 1px solid #eee; font-size: 14px; }
+  th { color: #666; font-weight: 600; }
+  .status { display: inline-block; padding: 2px 8px; border-radius: 4px; background: #f0f0f0; font-size: 12px; }
+  .note { color: #999; font-size: 12px; }
+</style>
+</head>
+<body>
+  <h1>百岳山屋查詢</h1>
+  <div class="updated" id="updated"></div>
+  <table>
+    <thead>
+      <tr><th>山區</th><th>山屋</th><th>平日承載</th><th>假日承載</th><th>狀態</th><th>備註</th></tr>
+    </thead>
+    <tbody id="hut-list"></tbody>
+  </table>
+
+  <script>
+    fetch('data.json')
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById('updated').textContent = '資料更新時間：' + data.updated_at;
+        const tbody = document.getElementById('hut-list');
+        data.huts.forEach(hut => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td>${hut.mountain}</td>
+            <td>${hut.name}</td>
+            <td>${hut.capacity_weekday}</td>
+            <td>${hut.capacity_weekend}</td>
+            <td><span class="status">${hut.status}</span></td>
+            <td class="note">${hut.note}</td>
+          `;
+          tbody.appendChild(tr);
+        });
+      });
+  </script>
+</body>
+</html>
