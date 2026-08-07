@@ -24,6 +24,22 @@ def parse_day_cell(cell):
     m = re.search(r"sdate=(\d{4}-\d{2}-\d{2})", href)
     date = m.group(1) if m else None
 
+    # 山屋因活動/工程等原因整日關閉，該格只會出現「相關訊息」連結，而非額滿/餘額資訊
+    if link.get_attribute("id") == "stopdate":
+        return {
+            "date": date,
+            "status": "關閉",
+            "bed_avail": 0,
+            "tent_avail": 0,
+            "queue": None,
+            "reviewing": None,
+            "approved": None,
+            "total_bed_used": None,
+            "total_tent_used": None,
+            "note": None,
+            "_closure_href": href,
+        }
+
     text = link.inner_text()
 
     status = "額滿" if "額滿" in text else ("餘額" if "餘額" in text else None)
@@ -55,7 +71,20 @@ def parse_day_cell(cell):
         "approved": approved,
         "total_bed_used": total_bed_used,
         "total_tent_used": total_tent_used,
+        "note": None,
     }
+
+
+def fetch_closure_reason(page, href):
+    full_url = "https://hike.taiwan.gov.tw/" + href
+    page.goto(full_url, wait_until="networkidle")
+    text = page.inner_text("body")
+    lines = [l for l in text.split("\n") if l.strip()]
+    for line in lines:
+        cols = line.split("\t")
+        if len(cols) >= 3 and cols[0].strip() != "節點名稱":
+            return cols[2].strip()
+    return None
 
 
 def _grab_int(text, label):
@@ -63,7 +92,7 @@ def _grab_int(text, label):
     return int(m.group(1)) if m else None
 
 
-def scrape_hut(page, hut_value, hut_name):
+def scrape_hut(page, detail_page, hut_value, hut_name):
     page.select_option("#con_rooms", hut_value)
     page.wait_for_timeout(300)
 
@@ -89,6 +118,12 @@ def scrape_hut(page, hut_value, hut_name):
         if d and d["date"]:
             days.append(d)
 
+    # 關閉日的說明在另一個頁面，用獨立分頁抓取，避免打斷主查詢頁面狀態
+    for d in days:
+        href = d.pop("_closure_href", None)
+        if href:
+            d["note"] = fetch_closure_reason(detail_page, href)
+
     return {
         "name": hut_name,
         "mountain": MOUNTAIN,
@@ -105,11 +140,12 @@ def scrape():
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=True)
         page = browser.new_page()
+        detail_page = browser.new_page()
         page.goto(URL, wait_until="networkidle")
         page.wait_for_timeout(500)
 
         for hut in HUTS:
-            result = scrape_hut(page, hut["value"], hut["name"])
+            result = scrape_hut(page, detail_page, hut["value"], hut["name"])
             huts_result.append(result)
 
         browser.close()
