@@ -8,7 +8,11 @@
   body { font-family: -apple-system, "PingFang TC", sans-serif; max-width: 900px; margin: 40px auto; padding: 0 16px; color: #222; }
   h1 { font-size: 22px; margin-bottom: 4px; }
   .sub { color: #666; font-size: 14px; margin-bottom: 4px; }
-  .updated { color: #888; font-size: 13px; margin-bottom: 24px; }
+  .updated { color: #888; font-size: 13px; margin-bottom: 16px; }
+
+  .hut-tabs { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+  .hut-tab { padding: 6px 14px; border-radius: 16px; border: 1px solid #ddd; background: #fff; font-size: 13px; cursor: pointer; color: #333; }
+  .hut-tab.active { background: #222; color: #fff; border-color: #222; }
 
   .calendar { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; }
   .weekday-header { text-align: center; font-size: 13px; font-weight: 600; color: #666; padding-bottom: 6px; }
@@ -33,9 +37,11 @@
 </head>
 <body>
   <h1>百岳山屋查詢</h1>
-  <div class="sub" id="hut-title"></div>
   <div class="updated" id="updated"></div>
 
+  <div class="hut-tabs" id="hut-tabs"></div>
+
+  <div class="sub" id="hut-title"></div>
   <div class="calendar" id="calendar"></div>
 
   <div class="legend">
@@ -44,62 +50,84 @@
 
   <script>
     const weekdayHeaders = ['一', '二', '三', '四', '五', '六', '日'];
+    let currentData = null;
+
+    function renderHut(index) {
+      const hut = currentData.huts[index];
+      const { year, month } = currentData;
+
+      document.querySelectorAll('.hut-tab').forEach((el, i) => {
+        el.classList.toggle('active', i === index);
+      });
+
+      document.getElementById('hut-title').textContent =
+        `${hut.mountain}．${hut.name}（平日床位 ${hut.capacity_weekday_bed}／假日床位 ${hut.capacity_weekend_bed}）`;
+
+      const calendar = document.getElementById('calendar');
+      calendar.innerHTML = '';
+
+      weekdayHeaders.forEach(w => {
+        const h = document.createElement('div');
+        h.className = 'weekday-header';
+        h.textContent = w;
+        calendar.appendChild(h);
+      });
+
+      const dayMap = {};
+      hut.days.forEach(d => { dayMap[d.date] = d; });
+
+      const firstDate = new Date(year, month - 1, 1);
+      const lastDate = new Date(year, month, 0);
+      const lastDay = lastDate.getDate();
+      const firstWeekdayMon0 = (firstDate.getDay() + 6) % 7;
+
+      for (let i = 0; i < firstWeekdayMon0; i++) {
+        const empty = document.createElement('div');
+        empty.className = 'day-cell empty';
+        calendar.appendChild(empty);
+      }
+
+      for (let d = 1; d <= lastDay; d++) {
+        const dateStr = `${year}-${String(month).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+        const day = dayMap[dateStr];
+        const cell = document.createElement('div');
+
+        if (!day) {
+          cell.className = 'day-cell no-data';
+          cell.innerHTML = `<div class="day-num">${d}</div>`;
+        } else {
+          const isFull = day.status === '額滿';
+          const statusClass = isFull ? 'full' : 'avail';
+          const statusText = isFull ? '額滿' : `餘額 ${day.bed_avail}床／${day.tent_avail}帳`;
+          cell.className = 'day-cell';
+          cell.innerHTML = `
+            <div class="day-num">${d}</div>
+            <span class="status ${statusClass}">${statusText}</span>
+            <div class="line">排隊 ${day.queue ?? '—'}</div>
+            <div class="line">審核 ${day.reviewing ?? '—'}</div>
+            <div class="line">入園 ${day.approved ?? '—'}</div>
+          `;
+        }
+        calendar.appendChild(cell);
+      }
+    }
 
     fetch('data.json')
       .then(res => res.json())
       .then(data => {
-        document.getElementById('hut-title').textContent =
-          `${data.hut.mountain}．${data.hut.name}（平日床位 ${data.hut.capacity_weekday_bed}／假日床位 ${data.hut.capacity_weekend_bed}）`;
+        currentData = data;
         document.getElementById('updated').textContent = '資料更新時間：' + data.updated_at;
 
-        const calendar = document.getElementById('calendar');
-
-        weekdayHeaders.forEach(w => {
-          const h = document.createElement('div');
-          h.className = 'weekday-header';
-          h.textContent = w;
-          calendar.appendChild(h);
+        const tabs = document.getElementById('hut-tabs');
+        data.huts.forEach((hut, i) => {
+          const btn = document.createElement('div');
+          btn.className = 'hut-tab';
+          btn.textContent = hut.name;
+          btn.addEventListener('click', () => renderHut(i));
+          tabs.appendChild(btn);
         });
 
-        const dayMap = {};
-        data.days.forEach(d => { dayMap[d.date] = d; });
-
-        const firstDate = new Date(data.year, data.month - 1, 1);
-        const lastDate = new Date(data.year, data.month, 0);
-        const lastDay = lastDate.getDate();
-
-        // getDay(): 0=Sun..6=Sat -> 轉成週一為起點 (0=Mon..6=Sun)
-        const firstWeekdayMon0 = (firstDate.getDay() + 6) % 7;
-
-        for (let i = 0; i < firstWeekdayMon0; i++) {
-          const empty = document.createElement('div');
-          empty.className = 'day-cell empty';
-          calendar.appendChild(empty);
-        }
-
-        for (let d = 1; d <= lastDay; d++) {
-          const dateStr = `${data.year}-${String(data.month).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
-          const day = dayMap[dateStr];
-          const cell = document.createElement('div');
-
-          if (!day) {
-            cell.className = 'day-cell no-data';
-            cell.innerHTML = `<div class="day-num">${d}</div>`;
-          } else {
-            const isFull = day.status === '額滿';
-            const statusClass = isFull ? 'full' : 'avail';
-            const statusText = isFull ? '額滿' : `餘額 ${day.bed_avail}床／${day.tent_avail}帳`;
-            cell.className = 'day-cell';
-            cell.innerHTML = `
-              <div class="day-num">${d}</div>
-              <span class="status ${statusClass}">${statusText}</span>
-              <div class="line">排隊 ${day.queue ?? '—'}</div>
-              <div class="line">審核 ${day.reviewing ?? '—'}</div>
-              <div class="line">入園 ${day.approved ?? '—'}</div>
-            `;
-          }
-          calendar.appendChild(cell);
-        }
+        renderHut(0);
       });
   </script>
 </body>
