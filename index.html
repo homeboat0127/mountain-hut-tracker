@@ -265,5 +265,63 @@
         document.querySelectorAll('.sys-count').forEach(function (el) { el.textContent = '查看完整清單'; });
       });
   </script>
+
+  <script>
+    // 網友回饋表單：送到 Google Apps Script，再由它寫入試算表並每日 20:00 彙整寄信
+    const FEEDBACK_ENDPOINT = 'https://script.google.com/macros/s/AKfycbwfFpDrQMogbs2zZUuDeXU6fpOJMKHW23gyhLF9u6tYeW1XPvYMdvU_lFccEVzxefa2vA/exec';
+
+    (function () {
+      const form = document.getElementById('fb-form');
+      if (!form) return;
+      const btn = document.getElementById('fb-submit');
+      const msg = document.getElementById('fb-msg');
+
+      function show(text, kind) {
+        msg.textContent = text;
+        msg.className = 'fb-msg ' + kind;
+      }
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const message = document.getElementById('fb-message').value.trim();
+        if (message.length < 5) { show('回饋內容太短，請再多描述一些。', 'err'); return; }
+
+        // 簡易防連續送出：同一瀏覽器 60 秒內只能送一次
+        const last = Number(localStorage.getItem('fb_last') || 0);
+        if (Date.now() - last < 60000) { show('剛剛已送出過，請稍候再試。', 'err'); return; }
+
+        btn.disabled = true;
+        btn.textContent = '送出中…';
+
+        fetch(FEEDBACK_ENDPOINT, {
+          method: 'POST',
+          // 用 text/plain 可避開瀏覽器的跨網域預檢，Apps Script 才收得到
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify({
+            type: document.getElementById('fb-type').value,
+            target: document.getElementById('fb-target').value.trim(),
+            message: message,
+            email: document.getElementById('fb-email').value.trim(),
+            website: document.getElementById('fb-website').value,   // 蜜罐
+            page: location.href,
+          }),
+        })
+          .then(function (r) { return r.json(); })
+          .then(function (res) {
+            if (res && res.ok) {
+              localStorage.setItem('fb_last', String(Date.now()));
+              form.reset();
+              show('已收到你的回饋，感謝協助讓網站更準確！', 'ok');
+              if (window.gtag) gtag('event', 'feedback_submit');
+            } else {
+              show((res && res.error) || '送出失敗，請稍後再試。', 'err');
+            }
+          })
+          .catch(function () { show('送出失敗，請檢查網路後再試一次。', 'err'); })
+          .finally(function () { btn.disabled = false; btn.textContent = '送出回饋'; });
+      });
+    })();
+  </script>
 </body>
 </html>
