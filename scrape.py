@@ -522,8 +522,24 @@ def scrape():
 
 if __name__ == "__main__":
     data = scrape()
+    # 完整資料（查詢頁用）
     with open("data.json", "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
+
+    # 輕量摘要（首頁用）。首頁只需要各系統的節點數與更新時間，
+    # 不必為了 4 個數字就載入整份上百 KB 的完整資料。
+    summary = {
+        "updated_at": data["updated_at"],
+        "counts": {
+            "yushan": len(data["huts"]),
+            "snow": len(data["snow_huts"]),
+            "taroko": len(data["taroko_huts"]),
+            "forest": len(data["forest_huts"]),
+        },
+    }
+    summary["counts"]["total"] = sum(summary["counts"].values())
+    with open("summary.json", "w", encoding="utf-8") as f:
+        json.dump(summary, f, ensure_ascii=False, indent=2)
     for hut in data["huts"]:
         print(f"{hut['name']}: 寫入 {len(hut['days'])} 天資料")
     for hut in data["huts_next_month"]["huts"]:

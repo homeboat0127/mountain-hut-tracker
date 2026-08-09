@@ -78,16 +78,27 @@ function doPost(e) {
       return jsonResponse_({ ok: false, error: '回饋內容太短' });
     }
 
-    const sheet = getOrCreateSpreadsheet_().getSheets()[0];
-    sheet.appendRow([
-      new Date(),
-      String(data.type || '未分類').slice(0, 50),
-      String(data.target || '').slice(0, 100),
-      message.slice(0, 3000),
-      String(data.email || '').slice(0, 150),
-      '未處理',
-      String(data.page || '').slice(0, 300),
-    ]);
+    // 多人同時送出時，若不上鎖，兩筆資料可能搶同一列而導致其中一筆遺失。
+    // 這裡最多等 10 秒取得鎖，確保每筆回饋都完整寫入。
+    const lock = LockService.getScriptLock();
+    if (!lock.tryLock(10000)) {
+      return jsonResponse_({ ok: false, error: '系統忙碌中，請稍後再送出一次' });
+    }
+
+    try {
+      const sheet = getOrCreateSpreadsheet_().getSheets()[0];
+      sheet.appendRow([
+        new Date(),
+        String(data.type || '未分類').slice(0, 50),
+        String(data.target || '').slice(0, 100),
+        message.slice(0, 3000),
+        String(data.email || '').slice(0, 150),
+        '未處理',
+        String(data.page || '').slice(0, 300),
+      ]);
+    } finally {
+      lock.releaseLock();
+    }
 
     return jsonResponse_({ ok: true });
   } catch (err) {
@@ -118,11 +129,17 @@ function sendDailyDigest() {
     return;
   }
 
+  // 萬一某天湧入大量回饋，信件全列出去會過長也可能超出執行時間，
+  // 這裡最多列出 50 則，其餘請直接開試算表看。
+  const MAX_IN_MAIL = 50;
+  const shown = fresh.slice(0, MAX_IN_MAIL);
+  const rest = fresh.length - shown.length;
+
   const tz = Session.getScriptTimeZone();
   let html = '<div style="font-family:-apple-system,\'PingFang TC\',sans-serif;color:#223324;">';
   html += '<h2 style="color:#1f5c3b;">台灣百岳資訊站　今日新回饋 ' + fresh.length + ' 則</h2>';
 
-  fresh.forEach(function (r, i) {
+  shown.forEach(function (r, i) {
     const when = Utilities.formatDate(r[0], tz, 'MM/dd HH:mm');
     html += '<div style="border:1px solid #e4e4e4;border-left:4px solid #2f7d52;border-radius:8px;padding:12px 14px;margin-bottom:12px;">';
     html += '<div style="font-size:12px;color:#888;">' + when + '　｜　' + escapeHtml_(r[1]) + '</div>';
@@ -132,6 +149,9 @@ function sendDailyDigest() {
     html += '</div>';
   });
 
+  if (rest > 0) {
+    html += '<p style="font-size:13px;color:#b9770e;">另有 ' + rest + ' 則未列出，請直接開啟試算表查看。</p>';
+  }
   html += '<p style="font-size:12px;color:#888;">完整紀錄：<a href="' + getOrCreateSpreadsheet_().getUrl() + '">開啟試算表</a></p>';
   html += '</div>';
 

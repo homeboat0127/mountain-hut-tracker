@@ -230,95 +230,40 @@
   </div>
 
   <script>
-    // 讀取資料檔，顯示各系統實際收錄的山屋／營地數量與最後更新時間，
-    // 數量直接反映爬蟲抓到的結果，之後新增系統或節點不用手動改首頁數字
-    fetch('data.json')
-      .then(res => res.json())
-      .then(data => {
-        const map = {
-          yushan: data.huts,
-          snow: data.snow_huts,
-          taroko: data.taroko_huts,
-          forest: data.forest_huts,
-        };
-        let total = 0;
-        Object.entries(map).forEach(([key, list]) => {
-          const n = (list || []).length;
-          total += n;
-          const el = document.getElementById('count-' + key);
-          if (el) el.textContent = `${n} 處山屋／營地`;
-        });
-        if (data.updated_at) {
-          document.getElementById('updated').textContent =
-            `資料更新時間：${data.updated_at}　｜　共收錄 ${total} 處山屋・營地`;
-        }
-      })
-      .catch(() => {
-        document.querySelectorAll('.sys-count').forEach(el => { el.textContent = '查看完整清單'; });
+    // 首頁只需要各系統數量與更新時間，因此讀取輕量摘要檔（約 0.1 KB），
+    // 不必為了 4 個數字載入完整資料（約 36 KB 壓縮後 / 1.1 MB 原始）。
+    // 萬一摘要檔還沒產生，會自動回退讀完整資料，不會讓數字開天窗。
+    function applyCounts(counts, updatedAt) {
+      Object.entries(counts).forEach(function ([key, n]) {
+        const el = document.getElementById('count-' + key);
+        if (el) el.textContent = n + ' 處山屋／營地';
       });
-  </script>
-
-  <script>
-    // 網友回饋表單：送到 Google Apps Script，再由它寫入試算表並每日彙整寄信
-    // 尚未接上時（網址還是 PENDING）會提示暫未開放，不會讓使用者白填
-    const FEEDBACK_ENDPOINT = 'PENDING_APPS_SCRIPT_URL';
-
-    (function () {
-      const form = document.getElementById('fb-form');
-      if (!form) return;
-      const btn = document.getElementById('fb-submit');
-      const msg = document.getElementById('fb-msg');
-
-      function show(text, kind) {
-        msg.textContent = text;
-        msg.className = 'fb-msg ' + kind;
+      if (updatedAt) {
+        document.getElementById('updated').textContent =
+          '資料更新時間：' + updatedAt + '　｜　共收錄 ' + (counts.total || 0) + ' 處山屋・營地';
       }
+    }
 
-      form.addEventListener('submit', function (e) {
-        e.preventDefault();
-
-        const message = document.getElementById('fb-message').value.trim();
-        if (message.length < 5) { show('回饋內容太短，請再多描述一些。', 'err'); return; }
-
-        if (FEEDBACK_ENDPOINT.indexOf('PENDING') === 0) {
-          show('回饋功能即將開放，敬請期待。', 'err'); return;
-        }
-
-        // 簡易防連續送出：同一瀏覽器 60 秒內只能送一次
-        const last = Number(localStorage.getItem('fb_last') || 0);
-        if (Date.now() - last < 60000) { show('剛剛已送出過，請稍候再試。', 'err'); return; }
-
-        btn.disabled = true;
-        btn.textContent = '送出中…';
-
-        fetch(FEEDBACK_ENDPOINT, {
-          method: 'POST',
-          // 用 text/plain 可避開瀏覽器的跨網域預檢，Apps Script 才收得到
-          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-          body: JSON.stringify({
-            type: document.getElementById('fb-type').value,
-            target: document.getElementById('fb-target').value.trim(),
-            message: message,
-            email: document.getElementById('fb-email').value.trim(),
-            website: document.getElementById('fb-website').value,   // 蜜罐
-            page: location.href,
-          }),
-        })
+    fetch('summary.json')
+      .then(function (r) { if (!r.ok) throw new Error('no summary'); return r.json(); })
+      .then(function (d) { applyCounts(d.counts, d.updated_at); })
+      .catch(function () {
+        return fetch('data.json')
           .then(function (r) { return r.json(); })
-          .then(function (res) {
-            if (res && res.ok) {
-              localStorage.setItem('fb_last', String(Date.now()));
-              form.reset();
-              show('已收到你的回饋，感謝協助讓網站更準確！', 'ok');
-              if (window.gtag) gtag('event', 'feedback_submit');
-            } else {
-              show((res && res.error) || '送出失敗，請稍後再試。', 'err');
-            }
-          })
-          .catch(function () { show('送出失敗，請檢查網路後再試一次。', 'err'); })
-          .finally(function () { btn.disabled = false; btn.textContent = '送出回饋'; });
+          .then(function (d) {
+            const c = {
+              yushan: (d.huts || []).length,
+              snow: (d.snow_huts || []).length,
+              taroko: (d.taroko_huts || []).length,
+              forest: (d.forest_huts || []).length,
+            };
+            c.total = c.yushan + c.snow + c.taroko + c.forest;
+            applyCounts(c, d.updated_at);
+          });
+      })
+      .catch(function () {
+        document.querySelectorAll('.sys-count').forEach(function (el) { el.textContent = '查看完整清單'; });
       });
-    })();
   </script>
 </body>
 </html>
