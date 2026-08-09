@@ -1,0 +1,41 @@
+name: 更新山屋資料
+
+on:
+  schedule:
+    # UTC 時間，對應台灣時間 07:00 / 11:00 / 15:00 / 19:00
+    - cron: '0 23,3,7,11 * * *'
+  workflow_dispatch:        # 也可以在 GitHub 網頁上手動按按鈕執行
+
+permissions:
+  contents: write
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 安裝 Playwright
+        run: |
+          pip install playwright
+          playwright install --with-deps chromium
+
+      - name: 執行爬蟲
+        run: python scrape.py
+
+      - name: 有變動才提交
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          if [ -n "$(git status --porcelain data.json)" ]; then
+            git add data.json
+            git commit -m "自動更新山屋資料 $(date -u -d '+8 hours' '+%Y-%m-%d %H:%M') (台灣時間)"
+            git push
+          else
+            echo "資料無變動，略過提交"
+          fi
