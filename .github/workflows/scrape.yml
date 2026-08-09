@@ -32,10 +32,22 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          if [ -n "$(git status --porcelain data.json)" ]; then
-            git add data.json
-            git commit -m "自動更新山屋資料 $(date -u -d '+8 hours' '+%Y-%m-%d %H:%M') (台灣時間)"
-            git push
-          else
+          if [ -z "$(git status --porcelain data.json)" ]; then
             echo "資料無變動，略過提交"
+            exit 0
           fi
+          git add data.json
+          git commit -m "自動更新山屋資料 $(TZ=Asia/Taipei date '+%Y-%m-%d %H:%M')"
+          # 爬蟲執行期間若有人推了其他修改，直接推會被拒絕。
+          # 這裡先 rebase 再推，並重試數次，避免整批資料因為時間碰撞而白跑。
+          for i in 1 2 3 4 5; do
+            if git push; then
+              echo "推送成功"
+              exit 0
+            fi
+            echo "推送被拒（第 $i 次），同步遠端後重試…"
+            git pull --rebase --autostash origin main || exit 1
+            sleep 5
+          done
+          echo "重試多次仍失敗"
+          exit 1
