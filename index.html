@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>台灣百岳山屋查詢</title>
+<title>台灣百岳資訊站</title>
+<meta name="description" content="台灣百岳山屋、營地即時訂位狀況查詢，涵蓋玉山、雪霸、太魯閣、林業及自然保育署四大申請系統，含路線難度、行程規劃與一鍵申請入園證。">
 <style>
   body {
     font-family: -apple-system, "PingFang TC", sans-serif; max-width: 900px; margin: 0 auto; padding: 40px 16px; color: #223324;
@@ -11,28 +12,48 @@
   }
 
   /* 頭部橫幅：森林綠漸層，跟山屋查詢頁風格統一 */
-  .hero { background: linear-gradient(135deg, #2f7d52 0%, #1f5c3b 100%); border-radius: 16px; padding: 20px 22px 22px; margin-bottom: 22px; box-shadow: 0 6px 18px rgba(31,92,59,0.2); }
-  .hero h1 { color: #fff; margin: 0 0 6px; }
+  .hero { background: linear-gradient(135deg, #2f7d52 0%, #1f5c3b 100%); border-radius: 16px; padding: 20px 22px 22px; margin-bottom: 26px; box-shadow: 0 6px 18px rgba(31,92,59,0.2); }
+  .hero h1 { color: #fff; margin: 0 0 6px; font-size: 24px; }
   .hero h1::before { content: "⛰️ "; }
-  .hero .sub { color: #d7f0dd; margin-bottom: 0; }
+  .hero .sub { color: #d7f0dd; margin-bottom: 0; font-size: 14px; }
+  .hero .updated { color: #a8d4b8; font-size: 12px; margin-top: 8px; }
 
-  h1 { font-size: 22px; margin-bottom: 4px; }
-  .sub { color: #666; font-size: 14px; margin-bottom: 24px; }
+  /* 區塊標題 */
+  .section { margin-bottom: 34px; }
+  .section-title { font-size: 17px; font-weight: 700; color: #1f5c3b; margin-bottom: 4px; }
+  .section-desc { font-size: 12.5px; color: #7d8a80; margin-bottom: 14px; line-height: 1.7; }
 
-  .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; }
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px; }
+
+  /* 熱門路線卡片 */
   .card {
-    display: block; padding: 18px; border: 1px solid #e4e4e4; border-left: 4px solid var(--accent, #2f7d52); border-radius: 10px;
+    display: block; padding: 16px 18px; border: 1px solid #e4e4e4; border-left: 4px solid var(--accent, #2f7d52); border-radius: 10px;
     text-decoration: none; color: #222; background: #fff; transition: box-shadow .15s, transform .15s, border-color .15s;
   }
   .card:hover { box-shadow: 0 4px 14px rgba(31,92,59,0.14); transform: translateY(-2px); border-color: #9bd0af; }
-  .card .peak-name { font-size: 17px; font-weight: 600; margin-bottom: 6px; }
-  .card .peak-desc { font-size: 13px; color: #777; line-height: 1.6; }
+  .card .peak-name { font-size: 17px; font-weight: 700; margin-bottom: 6px; }
+  .card .peak-desc { font-size: 12.5px; color: #777; line-height: 1.6; }
   .card .peak-tag { display: inline-block; margin-top: 10px; font-size: 11px; color: #1f6b45; background: #e6f3ea; padding: 2px 8px; border-radius: 10px; }
 
-  .footer-note { margin-top: 32px; font-size: 12px; color: #999; }
-  .disclaimer { margin-top: 28px; padding: 14px 16px; background: #fbfaf5; border: 1px solid #e8e6db; border-radius: 8px; font-size: 11.5px; color: #8a8578; line-height: 1.9; }
-  .disclaimer strong { color: #6b6659; }
+  /* 系統分類卡片：整組山屋營地訂位狀況入口 */
+  .sys-card {
+    display: flex; align-items: center; gap: 13px; padding: 16px 18px;
+    border: 1px solid #e4e4e4; border-top: 4px solid var(--accent); border-radius: 12px;
+    text-decoration: none; color: #222; background: #fff; transition: box-shadow .15s, transform .15s, border-color .15s;
+  }
+  .sys-card:hover { box-shadow: 0 4px 14px rgba(31,92,59,0.14); transform: translateY(-2px); }
+  .sys-icon {
+    width: 46px; height: 46px; flex-shrink: 0; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center; font-size: 24px; background: var(--tint);
+  }
+  .sys-body { min-width: 0; }
+  .sys-name { font-size: 15.5px; font-weight: 700; margin-bottom: 3px; }
+  .sys-count { font-size: 12.5px; color: var(--accent); font-weight: 700; }
+  .sys-note { font-size: 11.5px; color: #999; margin-top: 2px; line-height: 1.5; }
 
+  .footer-note { margin-top: 32px; font-size: 12px; color: #999; line-height: 1.8; }
+  .disclaimer { margin-top: 20px; padding: 14px 16px; background: #fbfaf5; border: 1px solid #e8e6db; border-radius: 8px; font-size: 11.5px; color: #8a8578; line-height: 1.9; }
+  .disclaimer strong { color: #6b6659; }
 </style>
   <!-- Google Analytics 4：評估 ID：G-Q1B3W3YWED -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q1B3W3YWED"></script>
@@ -45,44 +66,93 @@
 </head>
 <body>
   <div class="hero">
-    <h1>台灣百岳山屋查詢</h1>
-    <div class="sub">選擇山系，查看該路線山屋目前申請/預約狀況</div>
+    <h1>台灣百岳資訊站</h1>
+    <div class="sub">山屋・營地即時訂位狀況，路線難度與行程規劃一次查詢</div>
+    <div class="updated" id="updated"></div>
   </div>
 
-  <div class="card-grid">
-    <a class="card" href="huts.html?route=yushan" style="--accent:#2f7d52;">
-      <div class="peak-name">玉山</div>
-      <div class="peak-desc">台灣最高峰，經典路線，需申請：排雲山莊</div>
-      <span class="peak-tag">玉山系統</span>
-    </a>
+  <!-- 區塊一：熱門路線（已整理好行程、難度、剖面圖的精選路線） -->
+  <div class="section">
+    <div class="section-title">🥾 熱門路線</div>
+    <div class="section-desc">已整理官方難度分級、每日行程安排、路線剖面圖與一鍵申請，點入即可規劃</div>
+    <div class="card-grid">
+      <a class="card" href="huts.html?route=yushan" style="--accent:#2f7d52;">
+        <div class="peak-name">⛰️ 玉山</div>
+        <div class="peak-desc">台灣最高峰 3952m，經典入門百岳<br>需申請：排雲山莊</div>
+        <span class="peak-tag">難度 3／6．單攻或2天1夜</span>
+      </a>
 
-    <a class="card" href="huts.html?route=jiaming" style="--accent:#9c6b3e;">
-      <div class="peak-name">嘉明湖</div>
-      <div class="peak-desc">全台詢問度數一數二的路線，需申請：向陽山屋、嘉明湖山屋/營地</div>
-      <span class="peak-tag">林業及自然保育署系統</span>
-    </a>
+      <a class="card" href="huts.html?route=jiaming" style="--accent:#3a8fa8;">
+        <div class="peak-name">💧 嘉明湖</div>
+        <div class="peak-desc">天使的眼淚，全台詢問度數一數二<br>需申請：向陽山屋、嘉明湖山屋</div>
+        <span class="peak-tag">難度 3／6．3天2夜</span>
+      </a>
 
-    <a class="card" href="huts.html?route=snow" style="--accent:#3fa565;">
-      <div class="peak-name">雪山</div>
-      <div class="peak-desc">雪山主峰經典路線，需申請：七卡山莊、三六九山莊(現為臨時營地)</div>
-      <span class="peak-tag">雪霸系統</span>
-    </a>
+      <a class="card" href="huts.html?route=snow" style="--accent:#5b9bd5;">
+        <div class="peak-name">❄️ 雪山</div>
+        <div class="peak-desc">台灣第二高峰 3886m，圈谷地形壯闊<br>需申請：七卡山莊、三六九</div>
+        <span class="peak-tag">難度 3～4／6．單攻至3天2夜</span>
+      </a>
 
-    <a class="card" href="huts.html?route=qilai" style="--accent:#b9770e;">
-      <div class="peak-name">奇萊主北</div>
-      <div class="peak-desc">黑色奇萊，難度第5級，需申請：成功山屋、奇萊山屋</div>
-      <span class="peak-tag">太魯閣系統</span>
-    </a>
+      <a class="card" href="huts.html?route=qilai" style="--accent:#6b6b6b;">
+        <div class="peak-name">🌑 奇萊主北</div>
+        <div class="peak-desc">黑色奇萊，斷崖與碎石地形挑戰性高<br>需申請：成功山屋、奇萊山屋</div>
+        <span class="peak-tag">難度 5／6．進階路線</span>
+      </a>
 
-    <a class="card" href="huts.html?route=nanhu" style="--accent:#1f6b45;">
-      <div class="peak-name">南湖大山</div>
-      <div class="peak-desc">中央山脈北段經典路線，需申請：雲稜山屋、審馬陣山屋、南湖山屋</div>
-      <span class="peak-tag">太魯閣系統</span>
-    </a>
+      <a class="card" href="huts.html?route=nanhu" style="--accent:#b9770e;">
+        <div class="peak-name">👑 南湖大山</div>
+        <div class="peak-desc">帝王之山，中央山脈北段代表路線<br>需申請：雲稜、審馬陣、南湖山屋</div>
+        <span class="peak-tag">難度 4／6．5天4夜</span>
+      </a>
+    </div>
   </div>
 
-  <div class="footer-note">
-    目前收錄玉山、嘉明湖／向陽／天池、雪山、太魯閣（奇萊／南湖）共 4 個申請系統。點選山系後可切換查看各山屋逐日申請狀況。
+  <!-- 區塊二：依系統瀏覽全部山屋營地（本站已串接的四大申請系統） -->
+  <div class="section">
+    <div class="section-title">🏠 所有山屋・營地訂位狀況</div>
+    <div class="section-desc">本站已串接全台四大登山申請系統，可直接查看每一間山屋、營地的逐日名額與申請人數</div>
+    <div class="card-grid">
+      <a class="sys-card" href="huts.html?system=yushan" style="--accent:#2f7d52; --tint:#e6f3ea;">
+        <div class="sys-icon">🏔️</div>
+        <div class="sys-body">
+          <div class="sys-name">玉山國家公園</div>
+          <div class="sys-count" id="count-yushan">載入中…</div>
+          <div class="sys-note">排雲山莊、圓峰、觀高、八通關沿線</div>
+        </div>
+      </a>
+
+      <a class="sys-card" href="huts.html?system=snow" style="--accent:#5b9bd5; --tint:#e8f1fa;">
+        <div class="sys-icon">❄️</div>
+        <div class="sys-body">
+          <div class="sys-name">雪霸國家公園</div>
+          <div class="sys-count" id="count-snow">載入中…</div>
+          <div class="sys-note">雪山、大霸、武陵四秀、聖稜線沿線</div>
+        </div>
+      </a>
+
+      <a class="sys-card" href="huts.html?system=taroko" style="--accent:#b9770e; --tint:#f9f0df;">
+        <div class="sys-icon">🏞️</div>
+        <div class="sys-body">
+          <div class="sys-name">太魯閣國家公園</div>
+          <div class="sys-count" id="count-taroko">載入中…</div>
+          <div class="sys-note">奇萊、南湖、屏風山沿線</div>
+        </div>
+      </a>
+
+      <a class="sys-card" href="huts.html?system=forest" style="--accent:#3fa565; --tint:#e9f7ee;">
+        <div class="sys-icon">🌲</div>
+        <div class="sys-body">
+          <div class="sys-name">林業及自然保育署</div>
+          <div class="sys-count" id="count-forest">載入中…</div>
+          <div class="sys-note">嘉明湖、向陽、天池、檜谷</div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <div class="footer-note" id="footer-note">
+    資料每日自動更新 4 次（07:00／11:00／15:00／19:00），來源為臺灣登山申請一站式服務網。
   </div>
 
   <div class="disclaimer">
@@ -92,5 +162,33 @@
     路線里程與難度分級引用自內政部國家公園署各國家公園步道系統分級表。
   </div>
 
+  <script>
+    // 讀取資料檔，顯示各系統實際收錄的山屋／營地數量與最後更新時間，
+    // 數量直接反映爬蟲抓到的結果，之後新增系統或節點不用手動改首頁數字
+    fetch('data.json')
+      .then(res => res.json())
+      .then(data => {
+        const map = {
+          yushan: data.huts,
+          snow: data.snow_huts,
+          taroko: data.taroko_huts,
+          forest: data.forest_huts,
+        };
+        let total = 0;
+        Object.entries(map).forEach(([key, list]) => {
+          const n = (list || []).length;
+          total += n;
+          const el = document.getElementById('count-' + key);
+          if (el) el.textContent = `${n} 處山屋／營地`;
+        });
+        if (data.updated_at) {
+          document.getElementById('updated').textContent =
+            `資料更新時間：${data.updated_at}　｜　共收錄 ${total} 處山屋・營地`;
+        }
+      })
+      .catch(() => {
+        document.querySelectorAll('.sys-count').forEach(el => { el.textContent = '查看完整清單'; });
+      });
+  </script>
 </body>
 </html>
