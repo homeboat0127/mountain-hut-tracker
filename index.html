@@ -3,140 +3,94 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>百岳山屋查詢</title>
+<title>台灣百岳山屋查詢</title>
 <style>
-  body { font-family: -apple-system, "PingFang TC", sans-serif; max-width: 900px; margin: 40px auto; padding: 0 16px; color: #222; }
-  h1 { font-size: 22px; margin-bottom: 4px; }
-  .sub { color: #666; font-size: 14px; margin-bottom: 4px; }
-  .updated { color: #888; font-size: 13px; margin-bottom: 16px; }
-
-  .hut-tabs { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
-  .hut-tab { padding: 6px 14px; border-radius: 16px; border: 1px solid #ddd; background: #fff; font-size: 13px; cursor: pointer; color: #333; }
-  .hut-tab.active { background: #222; color: #fff; border-color: #222; }
-
-  .calendar { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; }
-  .weekday-header { text-align: center; font-size: 13px; font-weight: 600; color: #666; padding-bottom: 6px; }
-
-  .day-cell { border: 1px solid #eee; border-radius: 6px; min-height: 96px; padding: 6px; font-size: 11px; }
-  .day-cell.empty { background: #fafafa; border: none; }
-  .day-cell.no-data { color: #bbb; }
-  .day-num { font-size: 13px; font-weight: 600; margin-bottom: 4px; }
-
-  .status { display: inline-block; padding: 1px 6px; border-radius: 4px; font-size: 11px; margin-bottom: 4px; }
-  .status.full { background: #fdecea; color: #c0392b; }
-  .status.avail { background: #eafaf1; color: #1e8449; }
-  .status.closed { background: #f0f0f0; color: #666; }
-
-  .day-cell .line { color: #555; line-height: 1.6; }
-
-  .legend { margin-top: 24px; font-size: 12px; color: #888; line-height: 1.8; }
-
-  @media (max-width: 640px) {
-    .day-cell { min-height: 76px; font-size: 10px; }
+  body {
+    font-family: -apple-system, "PingFang TC", sans-serif; max-width: 900px; margin: 0 auto; padding: 40px 16px; color: #223324;
+    background: linear-gradient(160deg, #eef7ee 0%, #f8f6ec 45%, #eaf4ec 100%) fixed;
   }
+
+  /* 頭部橫幅：森林綠漸層，跟山屋查詢頁風格統一 */
+  .hero { background: linear-gradient(135deg, #2f7d52 0%, #1f5c3b 100%); border-radius: 16px; padding: 20px 22px 22px; margin-bottom: 22px; box-shadow: 0 6px 18px rgba(31,92,59,0.2); }
+  .hero h1 { color: #fff; margin: 0 0 6px; }
+  .hero h1::before { content: "⛰️ "; }
+  .hero .sub { color: #d7f0dd; margin-bottom: 0; }
+
+  h1 { font-size: 22px; margin-bottom: 4px; }
+  .sub { color: #666; font-size: 14px; margin-bottom: 24px; }
+
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; }
+  .card {
+    display: block; padding: 18px; border: 1px solid #e4e4e4; border-left: 4px solid var(--accent, #2f7d52); border-radius: 10px;
+    text-decoration: none; color: #222; background: #fff; transition: box-shadow .15s, transform .15s, border-color .15s;
+  }
+  .card:hover { box-shadow: 0 4px 14px rgba(31,92,59,0.14); transform: translateY(-2px); border-color: #9bd0af; }
+  .card .peak-name { font-size: 17px; font-weight: 600; margin-bottom: 6px; }
+  .card .peak-desc { font-size: 13px; color: #777; line-height: 1.6; }
+  .card .peak-tag { display: inline-block; margin-top: 10px; font-size: 11px; color: #1f6b45; background: #e6f3ea; padding: 2px 8px; border-radius: 10px; }
+
+  .footer-note { margin-top: 32px; font-size: 12px; color: #999; }
+  .disclaimer { margin-top: 28px; padding: 14px 16px; background: #fbfaf5; border: 1px solid #e8e6db; border-radius: 8px; font-size: 11.5px; color: #8a8578; line-height: 1.9; }
+  .disclaimer strong { color: #6b6659; }
+
 </style>
+  <!-- Google Analytics 4：把 G-XXXXXXXXXX 換成自己的評估 ID 就會開始收集流量 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX');
+  </script>
 </head>
 <body>
-  <h1>百岳山屋查詢</h1>
-  <div class="updated" id="updated"></div>
-
-  <div class="hut-tabs" id="hut-tabs"></div>
-
-  <div class="sub" id="hut-title"></div>
-  <div class="calendar" id="calendar"></div>
-
-  <div class="legend">
-    餘額：剩餘床位或營位名額｜排隊預約：等候抽籤或遞補｜審核中：已核發名額尚未完成手續｜核准入園：已核准，可上網列印入園許可證
+  <div class="hero">
+    <h1>台灣百岳山屋查詢</h1>
+    <div class="sub">選擇山系，查看該路線山屋目前申請/預約狀況</div>
   </div>
 
-  <script>
-    const weekdayHeaders = ['一', '二', '三', '四', '五', '六', '日'];
-    let currentData = null;
+  <div class="card-grid">
+    <a class="card" href="huts.html?route=yushan" style="--accent:#2f7d52;">
+      <div class="peak-name">玉山</div>
+      <div class="peak-desc">台灣最高峰，經典路線，需申請：排雲山莊</div>
+      <span class="peak-tag">玉山系統</span>
+    </a>
 
-    function renderHut(index) {
-      const hut = currentData.huts[index];
-      const { year, month } = currentData;
+    <a class="card" href="huts.html?route=jiaming" style="--accent:#9c6b3e;">
+      <div class="peak-name">嘉明湖</div>
+      <div class="peak-desc">全台詢問度數一數二的路線，需申請：向陽山屋、嘉明湖山屋/營地</div>
+      <span class="peak-tag">林業及自然保育署系統</span>
+    </a>
 
-      document.querySelectorAll('.hut-tab').forEach((el, i) => {
-        el.classList.toggle('active', i === index);
-      });
+    <a class="card" href="huts.html?route=snow" style="--accent:#3fa565;">
+      <div class="peak-name">雪山</div>
+      <div class="peak-desc">雪山主峰經典路線，需申請：七卡山莊、三六九山莊(現為臨時營地)</div>
+      <span class="peak-tag">雪霸系統</span>
+    </a>
 
-      document.getElementById('hut-title').textContent =
-        `${hut.mountain}．${hut.name}（平日床位 ${hut.capacity_weekday_bed}／假日床位 ${hut.capacity_weekend_bed}）`;
+    <a class="card" href="huts.html?route=qilai" style="--accent:#b9770e;">
+      <div class="peak-name">奇萊主北</div>
+      <div class="peak-desc">黑色奇萊，難度第5級，需申請：成功山屋、奇萊山屋</div>
+      <span class="peak-tag">太魯閣系統</span>
+    </a>
 
-      const calendar = document.getElementById('calendar');
-      calendar.innerHTML = '';
+    <a class="card" href="huts.html?route=nanhu" style="--accent:#1f6b45;">
+      <div class="peak-name">南湖大山</div>
+      <div class="peak-desc">中央山脈北段經典路線，需申請：雲稜山屋、審馬陣山屋、南湖山屋</div>
+      <span class="peak-tag">太魯閣系統</span>
+    </a>
+  </div>
 
-      weekdayHeaders.forEach(w => {
-        const h = document.createElement('div');
-        h.className = 'weekday-header';
-        h.textContent = w;
-        calendar.appendChild(h);
-      });
+  <div class="footer-note">
+    目前收錄玉山、嘉明湖／向陽／天池、雪山、太魯閣（奇萊／南湖）共 4 個申請系統。點選山系後可切換查看各山屋逐日申請狀況。
+  </div>
 
-      const dayMap = {};
-      hut.days.forEach(d => { dayMap[d.date] = d; });
+  <div class="disclaimer">
+    <strong>免責聲明</strong>：本站資料由「臺灣登山申請一站式服務網」等政府網站自動擷取整理，非官方網站，亦未經主管機關授權。
+    山屋名額、開放狀態、路線難度等資訊<strong>僅供行前參考</strong>，實際申請結果、承載量與最新公告
+    <strong>一律以各主管機關官方網站為準</strong>。行程規劃與登山安全請自行評估並承擔責任。
+    路線里程與難度分級引用自內政部國家公園署各國家公園步道系統分級表。
+  </div>
 
-      const firstDate = new Date(year, month - 1, 1);
-      const lastDate = new Date(year, month, 0);
-      const lastDay = lastDate.getDate();
-      const firstWeekdayMon0 = (firstDate.getDay() + 6) % 7;
-
-      for (let i = 0; i < firstWeekdayMon0; i++) {
-        const empty = document.createElement('div');
-        empty.className = 'day-cell empty';
-        calendar.appendChild(empty);
-      }
-
-      for (let d = 1; d <= lastDay; d++) {
-        const dateStr = `${year}-${String(month).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
-        const day = dayMap[dateStr];
-        const cell = document.createElement('div');
-
-        if (!day) {
-          cell.className = 'day-cell no-data';
-          cell.innerHTML = `<div class="day-num">${d}</div>`;
-        } else if (day.status === '關閉') {
-          cell.className = 'day-cell';
-          cell.innerHTML = `
-            <div class="day-num">${d}</div>
-            <span class="status closed">關閉</span>
-            <div class="line">${day.note ?? '山屋關閉，暫停申請'}</div>
-          `;
-        } else {
-          const isFull = day.status === '額滿';
-          const statusClass = isFull ? 'full' : 'avail';
-          const statusText = isFull ? '額滿' : `餘額 ${day.bed_avail}床／${day.tent_avail}帳`;
-          cell.className = 'day-cell';
-          cell.innerHTML = `
-            <div class="day-num">${d}</div>
-            <span class="status ${statusClass}">${statusText}</span>
-            <div class="line">排隊 ${day.queue ?? '—'}</div>
-            <div class="line">審核 ${day.reviewing ?? '—'}</div>
-            <div class="line">入園 ${day.approved ?? '—'}</div>
-          `;
-        }
-        calendar.appendChild(cell);
-      }
-    }
-
-    fetch('data.json')
-      .then(res => res.json())
-      .then(data => {
-        currentData = data;
-        document.getElementById('updated').textContent = '資料更新時間：' + data.updated_at;
-
-        const tabs = document.getElementById('hut-tabs');
-        data.huts.forEach((hut, i) => {
-          const btn = document.createElement('div');
-          btn.className = 'hut-tab';
-          btn.textContent = hut.name;
-          btn.addEventListener('click', () => renderHut(i));
-          tabs.appendChild(btn);
-        });
-
-        renderHut(0);
-      });
-  </script>
 </body>
 </html>
