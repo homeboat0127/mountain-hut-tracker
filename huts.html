@@ -53,6 +53,29 @@
   .disclaimer { margin-top: 28px; padding: 14px 16px; background: #fbfaf5; border: 1px solid #e8e6db; border-radius: 8px; font-size: 11.5px; color: #8a8578; line-height: 1.9; }
   .disclaimer strong { color: #6b6659; }
 
+  /* 網友回饋表單 */
+  .fb-box { margin-top: 30px; background: #fff; border: 1px solid #e4e4e4; border-top: 4px solid #2f7d52; border-radius: 12px; padding: 18px 20px; }
+  .fb-title { font-size: 16px; font-weight: 700; color: #1f5c3b; margin-bottom: 4px; }
+  .fb-desc { font-size: 12.5px; color: #7d8a80; line-height: 1.7; margin-bottom: 14px; }
+  .fb-row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 10px; }
+  .fb-field { flex: 1 1 200px; }
+  .fb-label { display: block; font-size: 12px; font-weight: 600; color: #4a5a4e; margin-bottom: 4px; }
+  .fb-box select, .fb-box input[type=text], .fb-box input[type=email], .fb-box textarea {
+    width: 100%; box-sizing: border-box; padding: 9px 11px; border: 1px solid #d8ddd9; border-radius: 8px;
+    font-size: 13.5px; font-family: inherit; color: #223324; background: #fdfefd;
+  }
+  .fb-box textarea { min-height: 96px; resize: vertical; line-height: 1.6; }
+  .fb-box select:focus, .fb-box input:focus, .fb-box textarea:focus { outline: none; border-color: #2f7d52; box-shadow: 0 0 0 3px rgba(47,125,82,0.1); }
+  .fb-hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  .fb-submit { margin-top: 6px; padding: 10px 22px; background: #2f7d52; color: #fff; border: none; border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer; font-family: inherit; }
+  .fb-submit:hover:not(:disabled) { background: #256644; }
+  .fb-submit:disabled { background: #b6ccbd; cursor: not-allowed; }
+  .fb-msg { margin-top: 10px; font-size: 13px; line-height: 1.7; display: none; padding: 10px 12px; border-radius: 8px; }
+  .fb-msg.ok { display: block; background: #eafaf1; color: #1e8449; border: 1px solid #b9e4cb; }
+  .fb-msg.err { display: block; background: #fdecea; color: #c0392b; border: 1px solid #f5c6c0; }
+  .fb-privacy { font-size: 11px; color: #a0a89f; margin-top: 10px; line-height: 1.6; }
+
+
 
   .system-tabs { display: flex; gap: 8px; margin-bottom: 16px; }
   .system-tab { padding: 8px 16px; border-radius: 8px; border: 1px solid #ddd; background: #fff; font-size: 14px; cursor: pointer; color: #333; }
@@ -161,6 +184,50 @@
   <div class="calendar" id="calendar"></div>
 
   <div class="legend" id="legend"></div>
+
+
+  <!-- 網友回饋：送出後寫入 Google 試算表，每天 20:00 彙整寄信通知 -->
+  <div class="fb-box">
+    <div class="fb-title">💬 網友回饋</div>
+    <div class="fb-desc">發現資料有誤、想補充路線資訊，或對網站有任何建議，都歡迎告訴我，會盡快更新。</div>
+
+    <form id="fb-form" autocomplete="off">
+      <div class="fb-row">
+        <div class="fb-field">
+          <label class="fb-label" for="fb-type">回饋類型</label>
+          <select id="fb-type">
+            <option value="資料有誤">資料有誤</option>
+            <option value="功能建議">功能建議</option>
+            <option value="路線資訊補充">路線資訊補充</option>
+            <option value="其他">其他</option>
+          </select>
+        </div>
+        <div class="fb-field">
+          <label class="fb-label" for="fb-target">相關山屋／路線（選填）</label>
+          <input type="text" id="fb-target" placeholder="例如：排雲山莊、嘉明湖" maxlength="100">
+        </div>
+      </div>
+
+      <div style="margin-bottom:10px;">
+        <label class="fb-label" for="fb-message">回饋內容</label>
+        <textarea id="fb-message" placeholder="請描述你發現的問題或建議，越具體越好" maxlength="3000" required></textarea>
+      </div>
+
+      <div style="margin-bottom:6px;">
+        <label class="fb-label" for="fb-email">聯絡 Email（選填，方便回覆你）</label>
+        <input type="email" id="fb-email" placeholder="your@email.com" maxlength="150">
+      </div>
+
+      <!-- 蜜罐欄位：正常使用者看不到，只有機器人會填 -->
+      <div class="fb-hp" aria-hidden="true">
+        <label>Website<input type="text" id="fb-website" tabindex="-1"></label>
+      </div>
+
+      <button type="submit" class="fb-submit" id="fb-submit">送出回饋</button>
+      <div class="fb-msg" id="fb-msg"></div>
+      <div class="fb-privacy">送出的內容僅供網站維護參考，不會公開顯示，也不會用於其他用途。</div>
+    </form>
+  </div>
 
   <div class="disclaimer">
     <strong>免責聲明</strong>：本站資料由「臺灣登山申請一站式服務網」等政府網站自動擷取整理，非官方網站，亦未經主管機關授權。
@@ -1199,6 +1266,69 @@
           switchSystem(validKeys.includes(requested) ? requested : 'yushan');
         }
       });
+  </script>
+
+  <script>
+    // 網友回饋表單：送到 Google Apps Script，再由它寫入試算表並每日彙整寄信
+    // 尚未接上時（網址還是 PENDING）會提示暫未開放，不會讓使用者白填
+    const FEEDBACK_ENDPOINT = 'PENDING_APPS_SCRIPT_URL';
+
+    (function () {
+      const form = document.getElementById('fb-form');
+      if (!form) return;
+      const btn = document.getElementById('fb-submit');
+      const msg = document.getElementById('fb-msg');
+
+      function show(text, kind) {
+        msg.textContent = text;
+        msg.className = 'fb-msg ' + kind;
+      }
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const message = document.getElementById('fb-message').value.trim();
+        if (message.length < 5) { show('回饋內容太短，請再多描述一些。', 'err'); return; }
+
+        if (FEEDBACK_ENDPOINT.indexOf('PENDING') === 0) {
+          show('回饋功能即將開放，敬請期待。', 'err'); return;
+        }
+
+        // 簡易防連續送出：同一瀏覽器 60 秒內只能送一次
+        const last = Number(localStorage.getItem('fb_last') || 0);
+        if (Date.now() - last < 60000) { show('剛剛已送出過，請稍候再試。', 'err'); return; }
+
+        btn.disabled = true;
+        btn.textContent = '送出中…';
+
+        fetch(FEEDBACK_ENDPOINT, {
+          method: 'POST',
+          // 用 text/plain 可避開瀏覽器的跨網域預檢，Apps Script 才收得到
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify({
+            type: document.getElementById('fb-type').value,
+            target: document.getElementById('fb-target').value.trim(),
+            message: message,
+            email: document.getElementById('fb-email').value.trim(),
+            website: document.getElementById('fb-website').value,   // 蜜罐
+            page: location.href,
+          }),
+        })
+          .then(function (r) { return r.json(); })
+          .then(function (res) {
+            if (res && res.ok) {
+              localStorage.setItem('fb_last', String(Date.now()));
+              form.reset();
+              show('已收到你的回饋，感謝協助讓網站更準確！', 'ok');
+              if (window.gtag) gtag('event', 'feedback_submit');
+            } else {
+              show((res && res.error) || '送出失敗，請稍後再試。', 'err');
+            }
+          })
+          .catch(function () { show('送出失敗，請檢查網路後再試一次。', 'err'); })
+          .finally(function () { btn.disabled = false; btn.textContent = '送出回饋'; });
+      });
+    })();
   </script>
 </body>
 </html>
