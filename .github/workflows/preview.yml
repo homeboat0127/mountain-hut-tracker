@@ -56,7 +56,7 @@ jobs:
           # 資料結構有變時，把施工分支的資料檔也放進 preview/，
           # 否則預覽站會用正式站的舊資料，新欄位一律讀不到，看起來像功能壞掉。
           # 沒變的話不複製，兩站共用同一份，避免同一份 1.2 MB 的資料被提交兩次。
-          for f in data.json summary.json search-index.json; do
+          for f in data.json summary.json search-index.json apply-rules.json; do
             if [ -f "work/$f" ] && ! cmp -s "work/$f" "site/$f"; then
               echo "資料有差異，複製 $f 到 preview/"
               cp "work/$f" "site/preview/$f"
