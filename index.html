@@ -323,5 +323,26 @@
       });
     })();
   </script>
+
+  <script>
+    // GA 事件埋點：用委派方式綁在整份文件上，日後新增卡片不必再改埋點程式
+    (function () {
+      function track(name, params) { if (window.gtag) gtag('event', name, params || {}); }
+
+      document.addEventListener('click', function (e) {
+        const routeCard = e.target.closest('.card[href*="route="]');
+        if (routeCard) {
+          const m = routeCard.getAttribute('href').match(/route=([^&]+)/);
+          track('select_route', { route: m ? m[1] : 'unknown' });
+          return;
+        }
+        const sysCard = e.target.closest('.sys-card[href*="system="]');
+        if (sysCard) {
+          const m = sysCard.getAttribute('href').match(/system=([^&]+)/);
+          track('select_system', { system: m ? m[1] : 'unknown' });
+        }
+      });
+    })();
+  </script>
 </body>
 </html>

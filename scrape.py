@@ -1,4 +1,5 @@
 import json
+import os
 import re
 from datetime import datetime, timezone, timedelta
 from playwright.sync_api import sync_playwright
@@ -520,8 +521,66 @@ def scrape():
     }
 
 
+DATA_KEYS = ["huts", "forest_huts", "taroko_huts", "snow_huts"]
+NEXT_KEYS = ["huts_next_month", "forest_huts_next_month",
+             "taroko_huts_next_month", "snow_huts_next_month"]
+
+
+def count_days(data):
+    """統計整份資料實際抓到的『天數總筆數』。
+    只數節點數不夠——政府網站改版時常見的狀況是節點還在、但每個節點的 days 都空了。"""
+    total = 0
+    for k in DATA_KEYS:
+        for hut in data.get(k, []):
+            total += len(hut.get("days", []))
+    for k in NEXT_KEYS:
+        for hut in data.get(k, {}).get("huts", []):
+            total += len(hut.get("days", []))
+    return total
+
+
+def verify_before_write(new_data, previous_path="data.json", min_ratio=0.5):
+    """寫檔前的防呆：抓到空資料或資料量驟降時直接失敗，不覆寫既有檔案。
+
+    會擋下的狀況：
+      1. 完全沒抓到任何天數（政府網站改版、被擋、全面逾時）
+      2. 天數較上次驟降超過 50%（部分系統壞掉但爬蟲仍「成功」結束）
+
+    對使用者而言，錯誤的名額比沒有名額更危險，所以寧可保留舊資料並讓排程失敗，
+    也不要把壞資料蓋上去。
+    """
+    new_days = count_days(new_data)
+    print(f"\n本次抓取天數總筆數：{new_days}")
+
+    if new_days == 0:
+        raise SystemExit("[中止] 本次完全沒抓到任何資料，保留既有 data.json 不覆寫")
+
+    if not os.path.exists(previous_path):
+        print("找不到既有 data.json，視為首次執行，直接寫入")
+        return
+
+    try:
+        with open(previous_path, encoding="utf-8") as f:
+            old_days = count_days(json.load(f))
+    except Exception as e:
+        print(f"[警告] 無法讀取既有 data.json（{type(e).__name__}），略過比對直接寫入")
+        return
+
+    print(f"上次抓取天數總筆數：{old_days}")
+    if old_days > 0 and new_days < old_days * min_ratio:
+        raise SystemExit(
+            f"[中止] 資料量驟降（{old_days} → {new_days}，不足 {int(min_ratio*100)}%），"
+            f"疑似來源網站異常，保留既有 data.json 不覆寫"
+        )
+    print("資料量檢查通過，寫入檔案")
+
+
 if __name__ == "__main__":
     data = scrape()
+
+    # 寫檔前先驗證，避免壞資料覆蓋好資料
+    verify_before_write(data)
+
     # 完整資料（查詢頁用）
     with open("data.json", "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)

@@ -1151,7 +1151,10 @@
           ${renderItinerary(variant.itinerary)}
           ${renderVariantAlerts(variant.alerts)}
         `;
-        card.addEventListener('click', () => selectVariant(route, i, onExitToFullList));
+        card.addEventListener('click', () => {
+          if (window.gtag) gtag('event', 'select_variant', { route: new URLSearchParams(location.search).get('route') || route.label, variant: variant.key || variant.label });
+          selectVariant(route, i, onExitToFullList);
+        });
         container.appendChild(card);
       });
 
@@ -1199,8 +1202,14 @@
       updateMonthNavButtons();
     }
 
-    document.getElementById('month-prev').addEventListener('click', () => changeMonth(0));
-    document.getElementById('month-next').addEventListener('click', () => changeMonth(1));
+    document.getElementById('month-prev').addEventListener('click', () => {
+      if (window.gtag) gtag('event', 'month_change', { direction: 'prev' });
+      changeMonth(0);
+    });
+    document.getElementById('month-next').addEventListener('click', () => {
+      if (window.gtag) gtag('event', 'month_change', { direction: 'next' });
+      changeMonth(1);
+    });
 
     fetch('data.json')
       .then(res => res.json())
@@ -1220,7 +1229,10 @@
           btn.className = 'system-tab';
           btn.dataset.system = s.key;
           btn.textContent = s.label;
-          btn.addEventListener('click', () => switchSystem(s.key));
+          btn.addEventListener('click', () => {
+            if (window.gtag) gtag('event', 'select_system', { system: s.key });
+            switchSystem(s.key);
+          });
           systemTabs.appendChild(btn);
         });
 
@@ -1329,6 +1341,19 @@
           .finally(function () { btn.disabled = false; btn.textContent = '送出回饋'; });
       });
     })();
+  </script>
+
+  <script>
+    // 外連官方申請連結的點擊追蹤。申請按鈕是動態產生的，改用文件層委派才不會漏。
+    document.addEventListener('click', function (e) {
+      const a = e.target.closest('a.apply-cta');
+      if (!a || !window.gtag) return;
+      const title = document.getElementById('hut-title');
+      gtag('event', 'outbound_apply', {
+        hut: (title && title.textContent) ? title.textContent.trim().slice(0, 80) : 'unknown',
+        page_route: new URLSearchParams(location.search).get('route') || 'none',
+      });
+    });
   </script>
 </body>
 </html>
