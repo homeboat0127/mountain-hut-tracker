@@ -9,8 +9,9 @@
   longestDayHours()，用同一份程式碼算出同一組數字，因此不可能不同步。
 
 規則：
-  - 三個欄位固定為「來回里程 ｜ 單程總爬升 ｜ 單日最長步行時數」，五張卡一致，
-    方便橫向比較。
+  - 三個欄位固定為「來回里程 ｜ 來回累積爬升 ｜ 單日最長步行時數」，五張卡一致，
+    方便橫向比較。爬升用累積值（每段正落差相加，且原路往返要把下切段加回來），
+    不是起終點淨差 —— 用淨差會讓奇萊主北這種先下切再上攀的路線看起來比玉山輕鬆。
   - 任何一格算不出來就顯示「—」，不塞別的性質的內容進去充版面。
   - 數字一律取 variants[0]（各路線的主要走法，也就是官方建議天數那一條）。
   - 難度取該路線所有走法的區間（例如雪山 3、3、4 → 「難度 3～4／6」）。
@@ -52,7 +53,7 @@ EXTRACT_JS = """
     out[key] = {
       label: route.label,
       distanceKm: typeof primary.distanceKm === 'number' ? primary.distanceKm : null,
-      ascent: totalAscent(primary.profile),
+      ascent: cumulativeAscent(primary.profile, primary.outAndBack, primary.extraAscent),
       hours: longestDayHours(primary.itinerary),
       diffMin: levels.length ? Math.min(...levels) : null,
       diffMax: levels.length ? Math.max(...levels) : null,
@@ -80,7 +81,7 @@ def collect_stats():
             errors = []
             page.on("pageerror", lambda e: errors.append(str(e)))
             page.goto(f"http://127.0.0.1:{port}/huts.html", wait_until="domcontentloaded")
-            page.wait_for_function("typeof ROUTES !== 'undefined' && typeof totalAscent === 'function'",
+            page.wait_for_function("typeof ROUTES !== 'undefined' && typeof cumulativeAscent === 'function'",
                                    timeout=15000)
             stats = page.evaluate(EXTRACT_JS, CARD_ROUTES)
             browser.close()
@@ -96,7 +97,7 @@ def collect_stats():
 def fmt_stats(s):
     """三格固定順序、固定語意；算不出來就是「—」，不用別的東西補位。"""
     km = f"{s['distanceKm']}km" if s.get("distanceKm") else DASH
-    ascent = f"爬升 {s['ascent']:,}m" if s.get("ascent") else f"爬升 {DASH}"
+    ascent = f"累積爬升 {s['ascent']:,}m" if s.get("ascent") else f"累積爬升 {DASH}"
     hours = f"單日最長 {s['hours']}hr" if s.get("hours") else f"單日最長 {DASH}"
     return f"{km} ｜ {ascent} ｜ {hours}"
 

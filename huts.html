@@ -378,7 +378,7 @@
             difficultyLevel: 3,
             huts: [],
             itinerary: [
-              { day: '當日', route: '塔塔加登山口 → 玉山主峰 → 塔塔加登山口', note: '不申請山屋／營地過夜，當日往返，建議凌晨出發' },
+              { day: '當日', route: '塔塔加登山口 → 玉山主峰 → 塔塔加登山口', note: '不申請山屋／營地過夜，當日往返，約12～14小時，建議凌晨出發' },
             ],
             alerts: [
               '官方規定：上午10時前未抵達排雲山莊者，須一律折返下山',
@@ -478,7 +478,7 @@
             difficultyLevel: 4,
             huts: [],
             itinerary: [
-              { day: '當日', route: '雪山登山口 → 雪山東峰 → 雪山主峰 → 雪山登山口', note: '不申請山屋／營地，當日往返，需凌晨出發' },
+              { day: '當日', route: '雪山登山口 → 雪山東峰 → 雪山主峰 → 雪山登山口', note: '不申請山屋／營地，當日往返，約15～16小時，需凌晨出發' },
             ],
             alerts: [
               '官方將單日往返列為第4級，比多日行程（第3級）更難，體力要求更高',
@@ -503,15 +503,20 @@
             difficultyLevel: 5,
             huts: ['黑水塘山屋', '成功山屋', '成功二號堡', '奇萊山屋'],
             itinerary: [
-              { day: '第1天', route: '松雪樓（滑雪山莊）→ 黑水塘山屋 → 成功山屋', note: '距離約5公里，一路下切再緩上，宿成功山屋' },
-              { day: '第2天', route: '成功山屋 → 稜線叉路口 → 奇萊山屋 → 奇萊北峰', note: '成功山屋後近2公里重裝陡上是全程最硬路段，安置後輕裝登北峰' },
-              { day: '第3天', route: '奇萊山屋 → 奇萊主峰 → 原路下山回松雪樓', note: '摸黑出發登主峰看日出，之後原路長程下撤' },
+              { day: '第1天', route: '松雪樓（滑雪山莊）→ 黑水塘山屋 → 成功山屋', note: '距離約5公里，一路下切再緩上，約2～3小時，宿成功山屋' },
+              { day: '第2天', route: '成功山屋 → 稜線叉路口 → 奇萊山屋 → 奇萊北峰', note: '成功山屋後近2公里重裝陡上是全程最硬路段，安置後輕裝登北峰，約6小時' },
+              { day: '第3天', route: '奇萊山屋 → 奇萊主峰 → 原路下山回松雪樓', note: '摸黑出發登主峰看日出，之後原路長程下撤，約8～9小時' },
             ],
             alerts: [
               '官方難度第5級，是本站目前收錄路線中最難的一條，需要相當經驗與體能',
+              '起點松雪樓先下切約440公尺到黑水塘，回程這440公尺要原路爬回來，體感比單看淨落差重得多',
+              '奇萊北峰為裸露岩壁地形，來回另需約2～3小時、額外約250公尺爬升，未計入上方剖面圖',
               '困難地形：多段爬升度大、碎岩與斷崖地形，隨時注意落石與危崖風險',
               '雪季如遇冰雪岩混合地形，登頂易有滑落危險',
             ],
+            // 奇萊北峰 3,607m 從奇萊山屋（3,350m）岔出去來回，約 +257m，取整 250m。
+            // 這段是行程明列要走的，但剖面圖的單一軸線畫不進去，另外補上。
+            extraAscent: 250,
             profile: QILAI_PROFILE,
             applyUrl: tarokoApplyUrl(665, 15), // 官網分類：奇萊主、北峰線
           },
@@ -523,14 +528,17 @@
             difficultyLevel: 5,
             huts: ['奇萊山屋'],
             itinerary: [
-              { day: '第1天', route: '松雪樓 → 黑水塘山屋 → 成功山屋 → 奇萊山屋', note: '距離約10公里，一天走完官方兩天的路，重裝陡上負擔大' },
-              { day: '第2天', route: '奇萊山屋 → 奇萊北峰 → 奇萊主峰 → 原路下山', note: '摸黑出發，一天內拿下主、北兩峰後長程下撤' },
+              { day: '第1天', route: '松雪樓 → 黑水塘山屋 → 成功山屋 → 奇萊山屋', note: '距離約10公里，一天走完官方兩天的路，重裝陡上負擔大，約5～6小時' },
+              { day: '第2天', route: '奇萊山屋 → 奇萊北峰 → 奇萊主峰 → 原路下山', note: '摸黑出發，一天內拿下主、北兩峰後長程下撤，約11～12小時' },
             ],
             alerts: [
               '官方建議天數為3天，壓縮成2天強度明顯更高，請務必評估自身能力',
+              '起點松雪樓先下切約440公尺到黑水塘，回程這440公尺要原路爬回來，體感比單看淨落差重得多',
+              '奇萊北峰為裸露岩壁地形，來回另需約2～3小時、額外約250公尺爬升，未計入上方剖面圖',
               '官方難度第5級，困難地形：多段爬升度大、碎岩與斷崖地形',
               '雪季如遇冰雪岩混合地形，登頂易有滑落危險',
             ],
+            extraAscent: 250,   // 同上：奇萊北峰側走來回
             profile: QILAI_PROFILE,
             applyUrl: tarokoApplyUrl(665, 15),
           },
@@ -548,11 +556,11 @@
             difficultyLevel: 4,
             huts: ['雲稜山屋', '雲稜營地', '審馬陣山屋', '南湖山屋', '南湖營地'],
             itinerary: [
-              { day: '第1天', route: '思源埡口（勝光登山口）→ 710林道 → 松風嶺 → 多加屯山 → 雲稜山屋', note: '林道路程長，多為緩上，宿雲稜山屋' },
-              { day: '第2天', route: '雲稜山屋 → 審馬陣山屋 → 南湖北山 → 五岩峰 → 南湖山屋', note: '翻越五岩峰陡峭路段，下切南湖圈谷，宿南湖山屋' },
-              { day: '第3天', route: '南湖山屋 → 南湖主峰（可加走東峰）→ 南湖山屋', note: '輕裝攻頂日，行程彈性最大的一天' },
-              { day: '第4天', route: '南湖山屋 → 五岩峰 → 審馬陣山屋 → 雲稜山屋', note: '原路回撤，宿雲稜山屋' },
-              { day: '第5天', route: '雲稜山屋 → 多加屯山 → 710林道 → 思源埡口', note: '長程林道下撤回登山口' },
+              { day: '第1天', route: '思源埡口（勝光登山口）→ 710林道 → 松風嶺 → 多加屯山 → 雲稜山屋', note: '林道路程長，多為緩上，約6小時，宿雲稜山屋' },
+              { day: '第2天', route: '雲稜山屋 → 審馬陣山屋 → 南湖北山 → 五岩峰 → 南湖山屋', note: '翻越五岩峰陡峭路段，下切南湖圈谷，約5～6小時，宿南湖山屋' },
+              { day: '第3天', route: '南湖山屋 → 南湖主峰（可加走東峰）→ 南湖山屋', note: '輕裝攻頂日，主峰來回約3～4小時，加走東峰再多約1.5小時，行程彈性最大' },
+              { day: '第4天', route: '南湖山屋 → 五岩峰 → 審馬陣山屋 → 雲稜山屋', note: '原路回撤，約5～6小時，宿雲稜山屋' },
+              { day: '第5天', route: '雲稜山屋 → 多加屯山 → 710林道 → 思源埡口', note: '長程林道下撤回登山口，約6小時' },
             ],
             alerts: [
               '官方難度第4級，困難地形：黑森林、五岩峰路段陡峭，南湖北山下行圈谷段為碎石坡',
@@ -570,10 +578,10 @@
             difficultyLevel: 4,
             huts: ['雲稜山屋', '雲稜營地', '南湖山屋', '南湖營地'],
             itinerary: [
-              { day: '第1天', route: '思源埡口 → 710林道 → 多加屯山 → 雲稜山屋', note: '同官方行程第1天' },
-              { day: '第2天', route: '雲稜山屋 → 審馬陣山屋 → 南湖北山 → 五岩峰 → 南湖山屋', note: '翻五岩峰下切圈谷，宿南湖山屋' },
-              { day: '第3天', route: '南湖山屋 → 南湖主峰 → 南湖山屋 → 五岩峰 → 雲稜山屋', note: '攻頂後直接回撤到雲稜，是全程最長最累的一天' },
-              { day: '第4天', route: '雲稜山屋 → 多加屯山 → 710林道 → 思源埡口', note: '長程林道下撤回登山口' },
+              { day: '第1天', route: '思源埡口 → 710林道 → 多加屯山 → 雲稜山屋', note: '同官方行程第1天，約6小時' },
+              { day: '第2天', route: '雲稜山屋 → 審馬陣山屋 → 南湖北山 → 五岩峰 → 南湖山屋', note: '翻五岩峰下切圈谷，約5～6小時，宿南湖山屋' },
+              { day: '第3天', route: '南湖山屋 → 南湖主峰 → 南湖山屋 → 五岩峰 → 雲稜山屋', note: '攻頂後直接回撤到雲稜，約8小時，是全程最長最累的一天' },
+              { day: '第4天', route: '雲稜山屋 → 多加屯山 → 710林道 → 思源埡口', note: '長程林道下撤回登山口，約6小時' },
             ],
             alerts: [
               '官方建議天數為5天，壓縮成4天時第3天負擔極重，請務必評估自身能力',
@@ -1125,16 +1133,31 @@
     // 路線選擇卡片（例如玉山的「單攻」／「2天1夜住排雲山莊」），點選後切換所需山屋與難度資訊
     // 圖卡式呈現：圖示＋數據小方塊＋徽章，取代純文字條列，方便一眼比較
 
-    // 由剖面圖的海拔資料累加正落差，算出單程總爬升。
-    // 用程式算而非手填，日後新增或修正路線點位時數字會自動同步。
-    function totalAscent(profile) {
+    // 累積爬升，不是起終點的淨高度差。有兩個會嚴重低估的來源，這裡一起處理：
+    //
+    //   1. 途中的下切要再爬回來：每一段正落差全部相加，不被下降抵銷。
+    //   2. 剖面圖只畫到折返點（單程），但這幾條都是原路往返 ——
+    //      去程下切掉的高度，回程一公尺不少要再爬一次。
+    //
+    // 奇萊主北就是被這兩點坑到的例子：開頭從松雪樓下切 440 公尺到黑水塘，
+    // 只算單程會得到 850 公尺，比玉山的 1,342 公尺還低，但它是難度 5 級的路線。
+    // 新手看到的訊號會變成「奇萊比玉山輕鬆」，跟事實完全相反。
+    //
+    // outAndBack: false 用於縱走路線（例如聖稜線 A 進 B 出），回程不走原路，
+    // 剖面圖本身已涵蓋全程，就不能再把下降量加回去。
+    // extraAscent: 行程有走、但剖面圖主軸畫不出來的側走支線爬升（公尺）。
+    //   剖面圖是「距離對海拔」的單一軸線，岔出去再走回來的支線沒有辦法畫進去，
+    //   但那段路使用者真的要爬。奇萊主北的北峰就是這種：從奇萊山屋岔出去，
+    //   不補進來的話，一條難度 5 級的路線爬升會顯示得比玉山還低。
+    function cumulativeAscent(profile, outAndBack, extraAscent) {
       if (!profile || !profile.points || profile.points.length < 2) return null;
-      let gain = 0;
+      let up = 0, down = 0;
       for (let i = 1; i < profile.points.length; i++) {
         const d = profile.points[i].elevation - profile.points[i - 1].elevation;
-        if (d > 0) gain += d;
+        if (d > 0) up += d; else down -= d;
       }
-      return gain;
+      const base = outAndBack === false ? up : up + down;
+      return base + (extraAscent || 0);
     }
 
     // 從每日行程的說明文字裡抓出時數（例如「約6～8小時」「約9～10小時」），
@@ -1172,10 +1195,10 @@
         const icon = needsHuts ? '🏠' : '☀️';
 
         // 客觀數字：只陳述量級，不下「適合／不適合新手」的斷語
-        const ascent = totalAscent(variant.profile);
+        const ascent = cumulativeAscent(variant.profile, variant.outAndBack, variant.extraAscent);
         const hours = longestDayHours(variant.itinerary);
         const scaleBits = [];
-        if (ascent) scaleBits.push(`總爬升約等於連續爬 ${ascentInFloors(ascent)} 層樓`);
+        if (ascent) scaleBits.push(`累積爬升約等於連續爬 ${ascentInFloors(ascent)} 層樓`);
         if (hours) scaleBits.push(`單日最長步行約 ${hours} 小時`);
         const scaleNote = scaleBits.length
           ? `<div class="variant-scale">${scaleBits.join('　｜　')}</div>` : '';
@@ -1197,7 +1220,7 @@
               <div class="variant-stat-value">${variant.distanceKm} km</div>
             </div>
             <div class="variant-stat">
-              <div class="variant-stat-label">單程總爬升</div>
+              <div class="variant-stat-label">來回累積爬升</div>
               <div class="variant-stat-value">${ascent ? ascent + ' m' : '—'}</div>
             </div>
             <div class="variant-stat">
@@ -1221,7 +1244,8 @@
 
       const note = document.createElement('div');
       note.className = 'route-variants-note';
-      note.textContent = `${DIFFICULTY_SCALE_NOTE}｜資料來源：內政部國家公園署玉山國家公園步道系統分級表`;
+      note.textContent = `${DIFFICULTY_SCALE_NOTE}｜難度與里程來源：內政部國家公園署步道系統分級表；` +
+        `步行時數依各步道官方路程時間表分段加總，實際依個人腳程與天候而異`;
       container.appendChild(note);
     }
 
