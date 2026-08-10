@@ -102,6 +102,18 @@
   .apply-steps .step-detail { font-size: 12px; color: #6c7a70; line-height: 1.75; margin-top: 2px; }
   .apply-steps .step-src { font-size: 11px; color: #a0a89f; margin-top: 3px; }
   .apply-steps .step-src a { color: #6f9c82; }
+  .ics-row { margin-top: 12px; padding-top: 12px; border-top: 1px solid #eef2ef; }
+  .ics-btn { padding: 9px 18px; background: #2f7d52; color: #fff; border: none; border-radius: 8px;
+    font-size: 14px; font-weight: 700; font-family: inherit; cursor: pointer; }
+  .ics-btn:hover { background: #256644; }
+  .ics-note { margin-top: 7px; font-size: 11.5px; color: #8a5f16; line-height: 1.75;
+    background: #fff8ec; border: 1px solid #f3d9a4; border-radius: 8px; padding: 8px 11px; }
+  .ics-note .ics-alarm-note { color: #97a09a; }
+  @media (max-width: 640px) {
+    .ics-btn { width: 100%; }
+    .ics-note { font-size: 11px; }
+  }
+
   .apply-note { font-size: 11.5px; color: #97a09a; line-height: 1.8; margin-top: 12px; padding-top: 10px; border-top: 1px solid #eef2ef; }
 
   /* 所需證件：收合狀態也看得到，因為「要辦哪幾張證」是申請前的第一個問題 */
@@ -610,6 +622,9 @@ font-family:-apple-system,'PingFang TC',sans-serif;">
         variants: [
           {
             key: 'baiyun',
+            // 對應 apply-rules.json 的站點，事件組由該站點的 apply_type 決定，
+            // 不把判斷寫死在畫面邏輯裡
+            applySite: '排雲山莊',
             // 難度 3 依「玉山國家公園步道系統分級表」第11項：
             //   玉山主峰、西峰線　塔塔加登山口→排雲山莊→玉山主、西峰→塔塔加登山口
             //   26.2 公里／2 天／難度 3／困難地形「無」
@@ -642,6 +657,7 @@ font-family:-apple-system,'PingFang TC',sans-serif;">
             // 對應 bed_7.aspx 的單日往返路線名稱。有這個欄位就顯示逐日名額日曆，
             // 沒有的（例如雪山單攻，雪霸系統無此資料源）維持文字說明。
             quotaRoute: '玉山線單日往返',
+            applySite: '玉山線單日往返',
             label: '單攻．當日不過夜',
             days: '單日來回',
             distanceKm: 21.8,
@@ -1249,6 +1265,217 @@ font-family:-apple-system,'PingFang TC',sans-serif;">
              `出發前請自行向管理處確認是否因天災封園。</div>`;
     }
 
+    // ---------------- 行事曆匯出（.ics） ----------------
+    //
+    // 目的：把申請流程的關鍵日期交給使用者自己的行事曆負責提醒。
+    // 純前端產生，不存任何資料、不做帳號、不做推播 —— 網站零維護成本。
+    // 每筆事件都帶回站連結，提醒跳出時使用者能回來查最新名額與封園狀態。
+    //
+    // 紅線：抽籤日期一律用 bed_8.aspx 的公告值，查無資料就不產生該筆，不推算。
+    // 行事曆事件錯一天比網頁顯示錯更嚴重 —— 使用者會信任行事曆而不再回站確認。
+    const SITE_ORIGIN = location.origin + location.pathname.replace(/[^/]*$/, '');
+    const ICS_DOMAIN = 'mountain-hut-tracker';
+    const CWA_URL = 'https://www.cwa.gov.tw/V8/C/';
+
+    let applyRules = null;
+    fetch('apply-rules.json')
+      .then(r => r.ok ? r.json() : null)
+      .then(d => { applyRules = d; })
+      .catch(() => { applyRules = null; });
+
+    function ymd(d) {
+      return `${d.getFullYear()}${String(d.getMonth() + 1).padStart(2, '0')}${String(d.getDate()).padStart(2, '0')}`;
+    }
+    function parseYmd(str) {
+      const [y, m, d] = str.split('-').map(Number);
+      return new Date(y, m - 1, d);
+    }
+    function addDays(d, n) {
+      const x = new Date(d.getTime());
+      x.setDate(x.getDate() + n);
+      return x;
+    }
+    // 官方寫的是「前2個月」，不是「前60天」。用月份運算而非天數，
+    // 才不會把語意換算掉（紅線：規則文字不得改寫語意）。
+    function addMonths(d, n) {
+      const x = new Date(d.getTime());
+      const day = x.getDate();
+      x.setMonth(x.getMonth() + n);
+      if (x.getDate() !== day) x.setDate(0);   // 例如 3/31 往前推到 2 月
+      return x;
+    }
+
+    function icsEscape(t) {
+      // 注意 '\;' 在 JS 裡等於 ';'（\; 不是合法跳脫），要寫成 '\;' 才是反斜線加分號。
+      // 順序也重要：反斜線必須先跳脫，否則會把後面補上的反斜線再跳脫一次。
+      return String(t == null ? '' : t)
+        .replace(/\\/g, '\\\\')
+        .replace(/;/g, '\;')
+        .replace(/,/g, '\\,')
+        .replace(/\r?\n/g, '\\n');
+    }
+
+    // RFC 5545 規定單行上限 75 octets。中文是 3 bytes，
+    // 直接按字元數折會把字切成兩半變成亂碼，因此要按 UTF-8 位元組長度計算，
+    // 且只在字元邊界折行。
+    function icsFold(line) {
+      const enc = new TextEncoder();
+      let out = '', cur = '', bytes = 0;
+      for (const ch of line) {
+        const n = enc.encode(ch).length;
+        if (bytes + n > 74) {           // 續行前面要加一個空白，預留 1 byte
+          out += cur + '\r\n ';
+          cur = ''; bytes = 1;
+        }
+        cur += ch; bytes += n;
+      }
+      return out + cur;
+    }
+
+    function icsDateTimeTW(dateStr, hhmm) {
+      // 轉成 UTC 加 Z，避免匯入端沒有 VTIMEZONE 定義而解讀錯誤
+      const [y, m, d] = dateStr.split('-').map(Number);
+      const [hh, mm] = hhmm.split(':').map(Number);
+      const utc = Date.UTC(y, m - 1, d, hh - 8, mm, 0);
+      const t = new Date(utc);
+      const p = n => String(n).padStart(2, '0');
+      return `${t.getUTCFullYear()}${p(t.getUTCMonth() + 1)}${p(t.getUTCDate())}T`
+           + `${p(t.getUTCHours())}${p(t.getUTCMinutes())}00Z`;
+    }
+
+    function buildIcs(events, routeKey) {
+      // DTSTAMP 必須是真正的 UTC。原本用本地時間再補 Z，等於把台北時間
+      // 宣告成 UTC，差 8 小時。
+      const now = new Date();
+      const p2 = n => String(n).padStart(2, '0');
+      const stamp = `${now.getUTCFullYear()}${p2(now.getUTCMonth() + 1)}${p2(now.getUTCDate())}`
+                  + `T${p2(now.getUTCHours())}${p2(now.getUTCMinutes())}${p2(now.getUTCSeconds())}`;
+      const lines = [
+        'BEGIN:VCALENDAR', 'VERSION:2.0',
+        'PRODID:-//taiwan-baiyue//apply-timeline//ZH-TW',
+        'CALSCALE:GREGORIAN', 'METHOD:PUBLISH',
+      ];
+      events.forEach(ev => {
+        lines.push('BEGIN:VEVENT');
+        // UID 穩定：同一條路線、同一個日期、同一種事件永遠是同一個 UID，
+        // 重複匯入不會變成兩筆
+        lines.push(`UID:${routeKey}-${ev.date}-${ev.kind}@${ICS_DOMAIN}`);
+        lines.push(`DTSTAMP:${stamp}Z`);
+        if (ev.time) {
+          lines.push(`DTSTART:${icsDateTimeTW(ev.date, ev.time[0])}`);
+          lines.push(`DTEND:${icsDateTimeTW(ev.date, ev.time[1])}`);
+        } else {
+          lines.push(`DTSTART;VALUE=DATE:${ev.date.replace(/-/g, '')}`);
+          lines.push(`DTEND;VALUE=DATE:${ymd(addDays(parseYmd(ev.date), 1))}`);
+        }
+        lines.push(icsFold(`SUMMARY:${icsEscape(ev.title)}`));
+        lines.push(icsFold(`DESCRIPTION:${icsEscape(ev.desc)}`));
+        if (ev.url) lines.push(icsFold(`URL:${ev.url}`));
+        lines.push('BEGIN:VALARM');
+        lines.push(`TRIGGER:${ev.alarm || '-P1D'}`);
+        lines.push('ACTION:DISPLAY');
+        lines.push(icsFold(`DESCRIPTION:${icsEscape(ev.title)}`));
+        lines.push('END:VALARM');
+        lines.push('END:VEVENT');
+      });
+      lines.push('END:VCALENDAR');
+      return lines.join('\r\n') + '\r\n';
+    }
+
+    // 依 apply_type 決定事件組，不把判斷寫死在畫面邏輯裡
+    function buildApplyEvents(routeKey, siteKey, targetDate) {
+      const rules = applyRules && applyRules.yushan;
+      if (!rules) return [];
+      const site = rules.sites[siteKey];
+      if (!site) return [];
+
+      const D = parseYmd(targetDate);
+      const back = SITE_ORIGIN + `huts.html?route=${routeKey}`;
+      const link = `\n\n查最新名額與封園狀態：${back}`;
+      const ev = [];
+      const iso = d => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+
+      // 申請開放：官方為「預定入園日前2個月」
+      const openDate = addMonths(D, -2);
+      let openDesc = `${rules.common.apply_window.text}。\n${rules.common.system_hours.text}。`
+        + `\n\n入山證：${rules.common.mountain_permit.text}。`
+        + `\n行前講習：${rules.common.briefing.text}。`;
+      if (site.experience) openDesc += `\n\n${site.experience.text}。`;
+      if (site.capacity) openDesc += `\n${site.capacity.text}。`;
+      ev.push({ date: iso(openDate), kind: 'apply-open', alarm: '-P1D',
+        title: `可開始申請｜${siteKey}`, desc: openDesc + link, url: back });
+
+      if (site.apply_type === 'lottery') {
+        // 抽籤日：只用官方公告值。查無資料就整筆不產生。
+        const draw = (currentData && currentData.lottery || []).find(x => x.stay_date === targetDate);
+        if (draw) {
+          ev.push({ date: draw.draw_date, kind: 'lottery', time: [draw.draw_start, draw.draw_end],
+            alarm: '-PT1H',
+            title: `抽籤｜${siteKey}`,
+            desc: `官方公開抽籤時間（公告值）。\n${rules.lottery.draw_time.text}。`
+                  + `\n\n中籤與否會以電子郵件及簡訊通知。` + link, url: back });
+
+          // 繳費期限：只有需要住宿費的站點才有。單日往返不過夜，無此事件。
+          if (site.fee) {
+            const pay = addDays(parseYmd(draw.draw_date), rules.lottery.payment.days_after_draw);
+            ev.push({ date: iso(pay), kind: 'payment', alarm: '-P1D',
+              title: `繳費期限｜${site.fee.amount} 元／人・宿`,
+              desc: `${rules.lottery.payment.text}。\n${rules.lottery.payment.example}。`
+                    + `\n\n${site.fee.text}。`
+                    + `\n\n沒在期限內繳費，抽中的資格會被系統退掉。` + link, url: back });
+          }
+        }
+        const wl = addDays(D, -rules.lottery.waitlist_deadline.days_before);
+        ev.push({ date: iso(wl), kind: 'waitlist', alarm: '-P1D',
+          title: `遞補申請截止｜${siteKey}`,
+          desc: `${rules.lottery.waitlist_deadline.text}。\n${rules.lottery.after_draw.text}。` + link, url: back });
+      } else {
+        const close = addDays(D, -rules.common.apply_window.close_days_before);
+        ev.push({ date: iso(close), kind: 'apply-close', alarm: '-P1D',
+          title: `申請截止｜${siteKey}`,
+          desc: `${rules.common.apply_window.text}。\n不受理5日以內之申請。` + link, url: back });
+      }
+
+      const dl = addDays(D, -rules.common.permit_download.days_before);
+      ev.push({ date: iso(dl), kind: 'permit', alarm: '-P1D',
+        title: '入園許可證可開始下載',
+        desc: `${rules.common.permit_download.text}。\n${rules.common.permit_download.url}` + link, url: back });
+
+      ev.push({ date: iso(addDays(D, -7)), kind: 'weather', alarm: '-P1D',
+        title: '查天氣｜出發前一週',
+        desc: `確認山區天氣與颱風動向。\n中央氣象署：${CWA_URL}` + link, url: back });
+
+      ev.push({ date: iso(addDays(D, -3)), kind: 'closure', alarm: '-P1D',
+        title: '確認封園狀態｜出發前三天',
+        desc: `天災可能導致全面禁止入園。出發前再確認一次封園公告與名額。` + link, url: back });
+
+      ev.push({ date: iso(D), kind: 'depart', alarm: '-P1D',
+        title: `出發｜${siteKey}`,
+        desc: `${rules.common.checkin.text}。` + link, url: back });
+
+      ev.push({ date: iso(addDays(D, 1)), kind: 'exit-report', alarm: '-P1D',
+        title: '出園回報',
+        desc: `${rules.common.exit_report.text}。` + link, url: back });
+
+      return ev;
+    }
+
+    function downloadIcs(routeKey, siteKey, targetDate) {
+      const events = buildApplyEvents(routeKey, siteKey, targetDate);
+      if (events.length === 0) return 0;
+      const blob = new Blob([buildIcs(events, routeKey)], { type: 'text/calendar;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      const slug = siteKey === '排雲山莊' ? 'paiyun' : (siteKey === '玉山線單日往返' ? 'yushan-day' : 'route');
+      a.href = url;
+      a.download = `${routeKey}-${slug}-${targetDate}.ics`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+      return events.length;
+    }
+
     function renderApplyTimeline(routeKey, route) {
       const box = document.getElementById('apply-timeline');
       if (!box) return;
@@ -1263,10 +1490,17 @@ font-family:-apple-system,'PingFang TC',sans-serif;">
                   aria-expanded="false" aria-controls="apply-detail">完整申請流程 <span class="chev">▾</span></button>
         </div>
         <div class="apply-date-row">
-          <label for="apply-date">預計住宿日／單日往返日</label>
+          <label for="apply-date" id="apply-date-label">預計住宿日／單日往返日</label>
           <input type="date" id="apply-date">
         </div>
-        <div class="apply-result" id="apply-result">選擇日期後，顯示該日的官方公告抽籤時間。</div>` : `
+        <div class="apply-result" id="apply-result">選擇日期後，顯示該日的官方公告抽籤時間。</div>
+        <div class="ics-row" id="ics-row" style="display:none;">
+          <button type="button" class="ics-btn" id="ics-btn">📅 加入行事曆</button>
+          <div class="ics-note">
+            匯入的是目前的公告時間，官方日後若變更，行事曆不會自動更新。<br>
+            <span class="ics-alarm-note">提醒時間請自行在行事曆調整（部分行事曆會忽略匯入的提醒設定）。</span>
+          </div>
+        </div>` : `
         <div class="apply-summary" id="apply-summary">
           <div class="apply-summary-text">🎫 申請前先確認所需證件</div>
           <button type="button" class="apply-toggle" id="apply-toggle"
@@ -1315,6 +1549,43 @@ font-family:-apple-system,'PingFang TC',sans-serif;">
       const input = document.getElementById('apply-date');
       if (!input) return;
       const result = document.getElementById('apply-result');
+      const icsRow = document.getElementById('ics-row');
+      const icsBtn = document.getElementById('ics-btn');
+      const dateLabel = document.getElementById('apply-date-label');
+
+      // 目前選中的走法決定用哪一組事件。抽籤制與非抽籤制的輸入框標籤也不同。
+      function currentSite() {
+        const v = route && route.variants && route.variants[currentVariantIndex];
+        return (v && v.applySite) || null;
+      }
+      function syncApplyUi() {
+        const site = currentSite();
+        const rules = applyRules && applyRules.yushan && applyRules.yushan.sites[site];
+        if (dateLabel) {
+          dateLabel.textContent = (rules && rules.apply_type === 'lottery')
+            ? '預計住宿日／單日往返日' : '預計出發日';
+        }
+        // 沒填日期就不顯示按鈕
+        if (icsRow) icsRow.style.display = (input.value && site && rules) ? 'block' : 'none';
+      }
+      window.__syncApplyUi = syncApplyUi;
+
+      if (icsBtn) {
+        icsBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const site = currentSite();
+          if (!site || !input.value) return;
+          const n = downloadIcs(routeKey, site, input.value);
+          const rules = applyRules && applyRules.yushan && applyRules.yushan.sites[site];
+          if (window.gtag) {
+            gtag('event', 'add_to_calendar', {
+              route: routeKey,
+              apply_type: (rules && rules.apply_type) || 'unknown',
+              event_count: n,
+            });
+          }
+        });
+      }
       input.addEventListener('click', e => e.stopPropagation());
       input.addEventListener('change', () => {
         const v = input.value;
@@ -1333,7 +1604,9 @@ font-family:-apple-system,'PingFang TC',sans-serif;">
             `<br><span style="font-size:12px;color:#6c7a70;">官方公告值，出處：玉山抽籤日期（bed_8）</span>`;
         }
         if (window.gtag) gtag('event', 'apply_date_lookup', { route: routeKey, has_result: hits.length > 0 });
+        syncApplyUi();
       });
+      syncApplyUi();
     }
 
     // 手機上格子只有約 42px 寬，「餘額 床位19人／營位0人」這種字串每個字都要換行，
@@ -2327,6 +2600,8 @@ font-family:-apple-system,'PingFang TC',sans-serif;">
       // 證件需求依走法而異（例如單日往返與多日行程是不同的官方登錄路線），
       // 只更新這一小塊，不重建整個申請流程區塊，避免展開狀態與已填日期被重置
       renderPermits(variant.officialRoute);
+      // 走法決定 apply_type，輸入框標籤與匯出按鈕要跟著更新
+      if (window.__syncApplyUi) window.__syncApplyUi();
 
       if (variant.profile) {
         renderElevationProfile(`${route.label}．${variant.label}`, variant.profile);
