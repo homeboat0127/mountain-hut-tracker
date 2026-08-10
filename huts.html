@@ -49,6 +49,46 @@
      撐到 84px，整個月曆撐破手機螢幕造成整頁橫向捲動。密集格線因此還原成預設斷行。 */
   .calendar, .weekday-header, .day-cell, .day-cell * { word-break: normal; overflow-wrap: anywhere; }
 
+  /* 封園警示。分兩級，理由見 scrape.py 的 scrape_closures()：
+     confirmed（明確禁止入園且未公告恢復）才灰化名額；其餘只顯示原文提示。 */
+  .closure-box { border-radius: 10px; padding: 12px 16px; margin-bottom: 14px; font-size: 13px; line-height: 1.75; }
+  .closure-box.confirmed { background: #fdecea; border: 1px solid #f5c6c0; color: #a5342a; }
+  .closure-box.notice { background: #fff8ec; border: 1px solid #f3d9a4; color: #8a5f16; }
+  .closure-box .closure-head { font-weight: 700; margin-bottom: 4px; }
+  .closure-box .closure-period { font-weight: 700; }
+  .closure-box .closure-msg { font-size: 12px; opacity: .92; margin-top: 2px; }
+  .closure-box .closure-src { font-size: 11px; opacity: .75; margin-top: 6px; }
+  .closure-box a { color: inherit; }
+  /* 封園期間的名額數字：灰化加刪除線，沿用過期資料的視覺語言 ——
+     兩者要傳達的是同一件事「這個數字現在不可信」。 */
+  .day-cell.park-closed { background: #fbf3f2; border-color: #f0d3cf; }
+  .day-cell.park-closed .status,
+  .day-cell.park-closed .line { opacity: .4; text-decoration: line-through; }
+  .day-cell .closed-flag { display: inline-block; font-size: 10px; padding: 1px 5px; border-radius: 4px;
+    background: #c0392b; color: #fff; margin-bottom: 3px; }
+
+  /* 申請時間軸 */
+  .apply-box { background: #fff; border: 1px solid #e4e4e4; border-top: 4px solid #2f7d52; border-radius: 12px; padding: 16px 18px; margin-bottom: 16px; }
+  .apply-box h3 { font-size: 15px; color: #1f5c3b; margin: 0 0 3px; }
+  .apply-box .apply-sub { font-size: 12px; color: #7d8a80; line-height: 1.7; margin-bottom: 12px; }
+  .apply-date-row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-bottom: 12px; }
+  .apply-date-row label { font-size: 12.5px; font-weight: 600; color: #4a5a4e; }
+  .apply-date-row input { padding: 8px 10px; border: 1px solid #d8ddd9; border-radius: 8px; font-size: 13.5px; font-family: inherit; color: #223324; }
+  .apply-date-row input:focus { outline: none; border-color: #2f7d52; box-shadow: 0 0 0 3px rgba(47,125,82,0.1); }
+  .apply-result { font-size: 13px; line-height: 1.8; padding: 11px 13px; border-radius: 8px; background: #f3f9f5; border: 1px solid #d9ecdf; }
+  .apply-result.unknown { background: #fff8ec; border-color: #f3d9a4; color: #8a5f16; }
+  .apply-result strong { color: #1f5c3b; }
+  .apply-result.unknown strong { color: #8a5f16; }
+  .apply-steps { list-style: none; padding: 0; margin: 12px 0 0; }
+  .apply-steps li { position: relative; padding: 0 0 12px 22px; border-left: 2px solid #d9ecdf; margin-left: 5px; }
+  .apply-steps li:last-child { border-left-color: transparent; padding-bottom: 0; }
+  .apply-steps li::before { content: ''; position: absolute; left: -6px; top: 3px; width: 10px; height: 10px; border-radius: 50%; background: #2f7d52; }
+  .apply-steps .step-label { font-size: 13.5px; font-weight: 700; color: #223324; }
+  .apply-steps .step-detail { font-size: 12px; color: #6c7a70; line-height: 1.75; margin-top: 2px; }
+  .apply-steps .step-src { font-size: 11px; color: #a0a89f; margin-top: 3px; }
+  .apply-steps .step-src a { color: #6f9c82; }
+  .apply-note { font-size: 11.5px; color: #97a09a; line-height: 1.8; margin-top: 12px; padding-top: 10px; border-top: 1px solid #eef2ef; }
+
   .day-cell { border: 1px solid #eee; border-radius: 6px; min-height: 96px; padding: 6px; font-size: 11px; background: #fff; }
   .day-cell.empty { background: #f7f7f4; border: none; }
   .day-cell.no-data { color: #bbb; }
@@ -207,6 +247,7 @@
   <div class="stale-banner" id="stale-banner"></div>
   <div class="profile-box" id="profile-box" style="display:none;"></div>
   <div class="route-variants" id="route-variants" style="display:none;"></div>
+  <div class="apply-box" id="apply-timeline" style="display:none;"></div>
   <div class="route-banner" id="route-banner" style="display:none;"></div>
   <div class="no-calendar-note" id="no-calendar-note" style="display:none;"></div>
 
@@ -220,6 +261,7 @@
     <span class="month-label" id="month-label"></span>
     <button class="month-nav" id="month-next" disabled title="目前僅提供當月資料">下個月 →</button>
   </div>
+  <div id="closure-notice"></div>
   <div class="calendar" id="calendar"></div>
 
   <div class="legend" id="legend"></div>
@@ -762,8 +804,200 @@
       `;
     }
 
+    // -----------------------------------------------------------------
+    // 封園警示
+    //
+    // 資料來源是「玉山可申請退費日期查詢」，欄位是可退費期間、不是封園期間，
+    // 兩者不相等（詳見 scrape.py 的 scrape_closures 註解）。爬蟲已把判定做完，
+    // 前端只負責照 confirmed 旗標呈現：
+    //   confirmed  → 紅色警示 ＋ 灰化該期間名額
+    //   非 confirmed → 黃色提示，原文照登，不動名額數字
+    // 只涵蓋玉山系統，其他系統沒有對應的公告資料源。
+    // -----------------------------------------------------------------
+    const CLOSURE_SOURCE_URL = 'https://hike.taiwan.gov.tw/bed_9.aspx';
+
+    function closuresForHut(hutName) {
+      const list = (currentData && currentData.closures) || [];
+      const today = todayStr();
+      return list.filter(c =>
+        (c.sites || []).some(sname => sname === hutName) &&
+        c.end >= today            // 已結束的封園沒有參考價值，只留還在期間內或未來的
+      );
+    }
+
+    function todayStr() {
+      const d = new Date();
+      return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+    }
+
+    // 這一天是否落在「確認封園」的期間內。只有 confirmed 的才算，
+    // 有公告恢復日的期間不灰化 —— 把開放日標成封園，使用者可能因此放棄行程。
+    function isParkClosed(hutName, dateStr) {
+      return closuresForHut(hutName).some(c =>
+        c.confirmed && dateStr >= c.start && dateStr <= c.end);
+    }
+
+    function renderClosureNotice(hutName) {
+      const box = document.getElementById('closure-notice');
+      if (!box) return;
+      box.innerHTML = '';
+      closuresForHut(hutName).forEach(c => {
+        const confirmed = !!c.confirmed;
+        const el = document.createElement('div');
+        el.className = 'closure-box ' + (confirmed ? 'confirmed' : 'notice');
+        const head = confirmed
+          ? `⚠ ${c.reason}：本期間全面禁止入園`
+          : `${c.reason}：本期間屬可退費期間`;
+        const tail = confirmed
+          ? '下方該期間的名額數字已標示為失效，請勿據以規劃行程。'
+          : (c.recovery_date
+              ? `官方已公告 ${c.recovery_date} 起恢復入園，實際開放狀態請以官方公告為準。`
+              : '本站未將此期間標示為封園，實際開放狀態請以官方公告為準。');
+        el.innerHTML =
+          `<div class="closure-head">${escapeHtml(head)}</div>` +
+          `<div><span class="closure-period">${c.start} ~ ${c.end}</span>　${escapeHtml(c.reason_type || '')}</div>` +
+          (c.message ? `<div class="closure-msg">${escapeHtml(c.message)}</div>` : '') +
+          `<div class="closure-msg">${escapeHtml(tail)}</div>` +
+          `<div class="closure-src">資料來源：內政部國家公園署 臺灣登山申請一站式服務網　` +
+          `<a href="${CLOSURE_SOURCE_URL}" target="_blank" rel="noopener">玉山可申請退費日期查詢</a></div>`;
+        box.appendChild(el);
+      });
+    }
+
+    function escapeHtml(t) {
+      return String(t == null ? '' : t).replace(/[&<>"]/g, c =>
+        ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
+    }
+
+    // -----------------------------------------------------------------
+    // 申請時間軸
+    //
+    // 紅線：抽籤日期一律用 bed_8.aspx 的公告值，不得用「住宿日前 31 天」之類的
+    // 規律推算。實測住宿日與抽籤日的間隔是 28～31 天不等（遇假日順延），
+    // 同一天還有 09:00／12:00／15:00 多個時段，光靠日期規律推不出時段。
+    // 推算錯一天，使用者就錯過整個抽籤週期，因此查無資料一律顯示「尚未公告」。
+    //
+    // 紅線：規則類事實不得由程式或印象生成，每筆都要帶 source 與 verifiedAt。
+    // 查證不足的項目寧可明白寫「尚未查證」，也不要填一個看起來合理的答案。
+    // -----------------------------------------------------------------
+    const APPLY_VERIFIED_AT = '2026-08-10';
+    const APPLY_SOURCES = {
+      lottery: 'https://hike.taiwan.gov.tw/bed_8.aspx',
+      result: 'https://hike.taiwan.gov.tw/bed_3.aspx',
+      refund: 'https://hike.taiwan.gov.tw/bed_9.aspx',
+      apply: 'https://hike.taiwan.gov.tw/apply_1.aspx',
+    };
+
+    // 目前只有玉山系統查證完成。其他系統沒有對應的公告資料源，
+    // 不假裝有 —— 空白會被讀成「沒有規則」，比誠實說「尚未查證」更糟。
+    const APPLY_RULES = {
+      yushan: {
+        systemName: '玉山國家公園',
+        applyType: '抽籤制',
+        appliesTo: '排雲山莊、圓峰山屋/營地、瓦拉米山屋/營地、庫哈諾辛山屋/營地、玉山線單日往返',
+        steps: [
+          {
+            label: '線上提出入園申請',
+            detail: '透過「臺灣登山申請一站式服務網」單一入口提出，再由各機關個別審核。入園證與入山證主管機關不同，但申請入口已整合。',
+            source: APPLY_SOURCES.apply, sourceName: '登山線上申請',
+          },
+          {
+            label: '等待抽籤',
+            detail: '抽籤時間依「住宿日或單日往返日」逐日公告，同一天可能有多個時段。實際日期時段見下方查詢結果。',
+            source: APPLY_SOURCES.lottery, sourceName: '玉山抽籤日期',
+          },
+          {
+            label: '查詢抽籤結果',
+            detail: '抽籤順序隊伍名單由玉管處發布，可依日期與宿營地點查詢。',
+            source: APPLY_SOURCES.result, sourceName: '玉山抽籤結果查詢',
+          },
+          {
+            label: '無法成行時先取消，再申請退費',
+            detail: '隊伍或隊員因故無法成行，須自行線上取消入園或以入園信箱告知；欲申請退費者，須先取消入園後再提出。排雲山莊供餐及睡袋租賃的退費另洽委外公司。',
+            source: APPLY_SOURCES.refund, sourceName: '玉山可申請退費日期查詢',
+          },
+        ],
+        // 明列查證缺口，不留白。使用者看到「尚未查證」會去看官方，
+        // 看到空白則會以為沒這回事。
+        unverified: ['繳費期限與逾期後果', '候補與釋出名額規則', '入園證與入山證的適用差異', '隊伍人數與資格限制'],
+      },
+    };
+
+    function lotteryForStayDate(dateStr) {
+      const list = (currentData && currentData.lottery) || [];
+      return list.filter(x => x.stay_date === dateStr);
+    }
+
+    function renderApplyTimeline(routeKey, route) {
+      const box = document.getElementById('apply-timeline');
+      if (!box) return;
+      const rules = APPLY_RULES[routeKey];
+
+      if (!rules) {
+        // 沒查證過的系統：說明現況並導向官方，不猜規則
+        box.style.display = 'block';
+        box.innerHTML =
+          `<h3>申請流程說明</h3>` +
+          `<div class="apply-sub">${escapeHtml(route ? route.label : '本路線')}的申請規則尚未完成查證，` +
+          `本站不提供未經查證的流程說明，以免誤導。請直接查閱官方申請頁面。</div>` +
+          `<div class="apply-result unknown">目前僅玉山國家公園系統的申請流程已查證完成。</div>` +
+          `<div class="apply-note">資料來源：內政部國家公園署 臺灣登山申請一站式服務網　` +
+          `<a href="${APPLY_SOURCES.apply}" target="_blank" rel="noopener">登山線上申請</a></div>`;
+        return;
+      }
+
+      box.style.display = 'block';
+      const stepsHtml = rules.steps.map(st => `
+        <li>
+          <div class="step-label">${escapeHtml(st.label)}</div>
+          <div class="step-detail">${escapeHtml(st.detail)}</div>
+          <div class="step-src">出處：<a href="${st.source}" target="_blank" rel="noopener">${escapeHtml(st.sourceName)}</a>　最後查證 ${APPLY_VERIFIED_AT}</div>
+        </li>`).join('');
+
+      box.innerHTML = `
+        <h3>申請流程與抽籤時間</h3>
+        <div class="apply-sub">${escapeHtml(rules.systemName)}．${escapeHtml(rules.applyType)}　｜　適用：${escapeHtml(rules.appliesTo)}</div>
+        <div class="apply-date-row">
+          <label for="apply-date">預計住宿日／單日往返日</label>
+          <input type="date" id="apply-date">
+        </div>
+        <div class="apply-result" id="apply-result">選擇日期後，顯示該日的官方公告抽籤時間。</div>
+        <ol class="apply-steps">${stepsHtml}</ol>
+        <div class="apply-note">
+          <strong>尚未查證，本站不提供</strong>：${rules.unverified.map(escapeHtml).join('、')}。
+          這些項目請以官方公告為準。<br>
+          抽籤時間一律採官方公告值，本站不以日期規律推算 —— 實際間隔為 28～31 天不等，推算會出錯。<br>
+          資料來源：內政部國家公園署 臺灣登山申請一站式服務網。所有規則以官方最新公告為準。
+        </div>`;
+
+      const input = document.getElementById('apply-date');
+      const result = document.getElementById('apply-result');
+      input.addEventListener('change', () => {
+        const v = input.value;
+        if (!v) return;
+        const hits = lotteryForStayDate(v);
+        if (hits.length === 0) {
+          result.className = 'apply-result unknown';
+          result.innerHTML = `<strong>尚未公告</strong>　${escapeHtml(v)} 的抽籤時間官方尚未公布。` +
+            `目前已公告的範圍請見<a href="${APPLY_SOURCES.lottery}" target="_blank" rel="noopener">玉山抽籤日期</a>。` +
+            `本站不推算日期，以免與實際公告不符。`;
+        } else {
+          result.className = 'apply-result';
+          const lines = hits.map(h =>
+            `<strong>${h.draw_date}　${h.draw_start}～${h.draw_end}</strong>`).join('<br>');
+          result.innerHTML = `住宿日 <strong>${escapeHtml(v)}</strong> 的抽籤時間：<br>${lines}` +
+            `<br><span style="font-size:12px;color:#6c7a70;">官方公告值，出處：玉山抽籤日期（bed_8）</span>`;
+        }
+        if (window.gtag) gtag('event', 'apply_date_lookup', { route: 'yushan', has_result: hits.length > 0 });
+      });
+    }
+
     function buildCalendarShell(year, month) {
       document.getElementById('month-label').textContent = `${year}年${month}月`;
+      // 封園警示只有玉山系統有資料。切到其他系統時要清掉，
+      // 否則會留著上一個山屋的警示，變成張冠李戴的錯誤資訊。
+      const cn = document.getElementById('closure-notice');
+      if (cn) cn.innerHTML = '';
 
       const calendar = document.getElementById('calendar');
       calendar.innerHTML = '';
@@ -805,6 +1039,7 @@
         `${hut.mountain}．${hut.name}（${capParts.join('｜')}）`;
 
       const calendar = buildCalendarShell(year, month);
+      renderClosureNotice(hut.name);
       const dayMap = {};
       hut.days.forEach(d => { dayMap[d.date] = d; });
       const { lastDay, firstWeekdayMon0 } = monthGrid(year, month);
@@ -819,6 +1054,7 @@
         const dateStr = `${year}-${String(month).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
         const day = dayMap[dateStr];
         const cell = document.createElement('div');
+        const parkClosed = isParkClosed(hut.name, dateStr);
 
         if (!day) {
           cell.className = 'day-cell no-data';
@@ -834,9 +1070,10 @@
           const isFull = day.status === '額滿';
           const statusClass = isFull ? 'full' : 'avail';
           const statusText = isFull ? '額滿' : `餘額 床位${day.bed_avail}人／營位${day.tent_avail}人`;
-          cell.className = 'day-cell';
+          cell.className = 'day-cell' + (parkClosed ? ' park-closed' : '');
           cell.innerHTML = `
             <div class="day-num">${d}</div>
+            ${parkClosed ? '<div><span class="closed-flag">封園</span></div>' : ''}
             <span class="status ${statusClass}">${statusText}</span>
             <div class="line">排隊 ${day.queue ?? '—'}</div>
             <div class="line">審核 ${day.reviewing ?? '—'}</div>
@@ -1363,12 +1600,15 @@
           document.getElementById('page-title').textContent = route.label;
           document.title = `${route.label}｜百岳山屋查詢`;
 
+          renderApplyTimeline(routeKey, route);
+
           const exitToFullList = () => {
             routeFilter = null;
             document.getElementById('route-variants').style.display = 'none';
             document.getElementById('route-banner').style.display = 'none';
             document.getElementById('no-calendar-note').style.display = 'none';
             document.getElementById('profile-box').style.display = 'none';
+            document.getElementById('apply-timeline').style.display = 'none';
             document.getElementById('system-tabs').style.display = 'flex';
             setCalendarAreaVisible(true);
             // 切到「完整山屋列表」後不再是單一路線視角，頁首與路線剖面圖要跟著收掉

@@ -397,6 +397,138 @@ def safe_scrape(label, fn, fallback):
         return fallback
 
 
+# ---------------------------------------------------------------------------
+# 公告類資料：封園（可退費期間）與抽籤時間
+#
+# 兩個來源都只涵蓋玉山國家公園系統，雪霸／太魯閣／林業保育署沒有對應的期間型
+# 公告頁面。前端必須把這個範圍限制講明白，否則使用者會把「沒有警示」誤讀成
+# 「已確認安全」。
+# ---------------------------------------------------------------------------
+
+CLOSURE_URL = "https://hike.taiwan.gov.tw/bed_9.aspx"   # 玉山可申請退費日期查詢
+LOTTERY_URL = "https://hike.taiwan.gov.tw/bed_8.aspx"   # 玉山抽籤日期
+
+# 民國年日期，例如「115年7月14日」「115-7-14」
+ROC_DATE = r'(\d{2,3})\s*[-年]\s*(\d{1,2})\s*[-月]\s*(\d{1,2})'
+
+
+def _roc_to_iso(m):
+    return f"{int(m.group(1)) + 1911:04d}-{int(m.group(2)):02d}-{int(m.group(3)):02d}"
+
+
+def _grid_rows(page, table_id="con_gvData", max_pages=12):
+    """讀完 ASP.NET GridView 的所有分頁。
+
+    先把頁碼全部讀出來再逐一點過去，不靠「下一頁」推進 —— 用下一頁判斷終點時，
+    只要頁面結構稍有不同就會判斷不出終點而無限空轉（開發時實際踩到）。
+    """
+    nums = page.eval_on_selector_all(
+        f"#{table_id} a", "els => els.map(a => a.innerText.trim()).filter(t => /^\\d+$/.test(t))")
+    pages = sorted({int(n) for n in nums} | {1})[:max_pages]
+    rows, seen = [], set()
+
+    def collect():
+        for r in page.eval_on_selector_all(
+                f"#{table_id} tr",
+                "els => els.map(tr => Array.from(tr.cells).map(td => td.innerText.trim()))"):
+            if len(r) < 2 or not r[0]:
+                continue
+            key = "|".join(r)
+            if key not in seen:
+                seen.add(key)
+                rows.append(r)
+
+    collect()
+    for n in pages:
+        if n == 1:
+            continue
+        link = page.query_selector(f"#{table_id} a:text-is('{n}')")
+        if link:
+            link.click()
+            page.wait_for_timeout(1000)
+            collect()
+    return rows
+
+
+def scrape_closures(page):
+    """爬「玉山可申請退費日期查詢」，判定哪些期間屬於真正的封園。
+
+    這裡最容易出錯的一點：這張表的欄位是「未入園可退費期間」，不是封園期間。
+    兩者不相等，實測 17 筆裡只有 1 筆是全期間禁止入園：
+
+      - 6 成以上是豪雨特報造成的可退費期間，內文根本沒有「禁止入園」字樣
+      - 有幾筆雖然禁止入園，但內文另外公告了恢復日，且恢復日早於期間結束日
+        （例如排雲山莊 7/07~7/19，公告 7/14 起恢復，7/14~7/19 其實是開放的）
+
+    若把可退費期間直接當封園期間，會把開放日標成封園，使用者可能因此放棄一趟
+    本來可以成行的行程 —— 這同時違反資料授權「不得展示與原資料不符之資訊」。
+
+    因此只有「明確禁止入園」且「沒有公告恢復日」才標記為 confirmed，
+    由前端灰化該期間名額；其餘一律只顯示原文提示，不動名額數字。
+    """
+    page.goto(CLOSURE_URL, wait_until="networkidle", timeout=60000)
+    page.wait_for_timeout(1200)
+
+    closures = []
+    for r in _grid_rows(page):
+        if len(r) < 5 or "退費期間" in r[0]:
+            continue
+        dates = re.findall(r'\d{4}-\d{2}-\d{2}', r[0].replace("\n", ""))
+        if len(dates) < 2:
+            continue
+        message = " ".join(r[4].split())
+        prohibits = bool(re.search(r'禁止.{0,8}入園', message))
+        rec = re.search(r'自\s*' + ROC_DATE + r'\s*日?\s*起.{0,6}恢復', message)
+        recovery = _roc_to_iso(rec) if rec else None
+        closures.append({
+            "start": dates[0],
+            "end": dates[1],
+            "sites": [s.strip() for s in re.split(r'[、,]', r[1]) if s.strip()],
+            "reason_type": r[2],
+            "reason": r[3],
+            "message": message,
+            "prohibits_entry": prohibits,
+            "recovery_date": recovery,
+            # confirmed=True 才會讓前端灰化名額。寧可少灰化，不要灰化錯。
+            "confirmed": bool(prohibits and not recovery),
+        })
+    closures.sort(key=lambda c: c["start"], reverse=True)
+    print(f"  封園公告：{len(closures)} 筆，其中確認全期間禁止入園 "
+          f"{sum(1 for c in closures if c['confirmed'])} 筆")
+    return closures
+
+
+def scrape_lottery(page):
+    """爬「玉山抽籤日期」的住宿日↔抽籤時間對照表。
+
+    一律用公告值，不得用「住宿日前 31 天」之類的規律推算 ——
+    實測住宿日與抽籤日的間隔是 28～31 天不等（遇假日順延），而且同一天有
+    09:00／12:00／15:00 多個時段，光靠日期規律也推不出時段。
+    推算錯一天，使用者就錯過整個抽籤週期。查無資料時前端顯示「尚未公告」。
+    """
+    page.goto(LOTTERY_URL, wait_until="networkidle", timeout=60000)
+    page.wait_for_timeout(1200)
+
+    lottery = []
+    for r in _grid_rows(page):
+        if len(r) < 2 or "住宿日" in r[0]:
+            continue
+        d = re.match(r'(\d{4})/(\d{2})/(\d{2})', r[0].strip())
+        t = re.search(r'(\d{4})/(\d{2})/(\d{2})\s+(\d{2}:\d{2})[~～](\d{2}:\d{2})', r[1])
+        if not (d and t):
+            continue
+        lottery.append({
+            "stay_date": f"{d.group(1)}-{d.group(2)}-{d.group(3)}",
+            "draw_date": f"{t.group(1)}-{t.group(2)}-{t.group(3)}",
+            "draw_start": t.group(4),
+            "draw_end": t.group(5),
+        })
+    lottery.sort(key=lambda x: x["stay_date"])
+    print(f"  抽籤日期：{len(lottery)} 筆"
+          + (f"，涵蓋住宿日 {lottery[0]['stay_date']} ~ {lottery[-1]['stay_date']}" if lottery else ""))
+    return lottery
+
+
 def scrape():
     huts_result = []
     huts_next_result = []
@@ -490,10 +622,17 @@ def scrape():
                                  {"name": hut["name"], "days": []})
             snow_next_result.append(result)
 
+        # 公告類資料：封園與抽籤時間。包在 safe_scrape 裡，
+        # 這兩項失敗不該讓整批名額資料白跑 —— 名額是主資料，公告是加值。
+        closures = safe_scrape("封園公告", lambda: scrape_closures(page), [])
+        lottery = safe_scrape("抽籤日期", lambda: scrape_lottery(page), [])
+
         browser.close()
 
     return {
         "updated_at": now.strftime("%Y-%m-%d %H:%M"),
+        "closures": closures,
+        "lottery": lottery,
         "year": now.year,
         "month": now.month,
         "huts": huts_result,
@@ -836,6 +975,25 @@ def assert_timestamps_match():
 if __name__ == "__main__":
     # --derive：不重新爬，只用現有的 data.json 重建 summary.json 與 search-index.json。
     # 用在衍生檔漏更新、需要補齊的時候，不必等下一次排程或重跑 20 分鐘的爬蟲。
+    # --notices：只爬封園與抽籤兩張公告表，合併進現有的 data.json。
+    # 公告的變動頻率與名額不同（颱風是突發的），而且只要幾秒鐘，
+    # 不必為了更新一則封園公告重跑 20 分鐘的完整爬蟲。
+    if "--notices" in sys.argv:
+        with open("data.json", encoding="utf-8") as f:
+            data = json.load(f)
+        with sync_playwright() as p:
+            browser = p.chromium.launch()
+            page = browser.new_page()
+            data["closures"] = safe_scrape("封園公告", lambda: scrape_closures(page), [])
+            data["lottery"] = safe_scrape("抽籤日期", lambda: scrape_lottery(page), [])
+            browser.close()
+        with open("data.json", "w", encoding="utf-8") as f:
+            json.dump(data, f, ensure_ascii=False, indent=2)
+        write_derived(data)
+        assert_timestamps_match()
+        print("已更新 data.json 的封園與抽籤公告")
+        raise SystemExit(0)
+
     if "--derive" in sys.argv:
         with open("data.json", encoding="utf-8") as f:
             data = json.load(f)
