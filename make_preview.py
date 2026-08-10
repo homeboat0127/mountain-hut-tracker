@@ -33,7 +33,13 @@ PAGES = ["index.html", "huts.html"]
 # 才能跟正式站看同一份資料，不必複製一份 1.2 MB 的 data.json
 DATA_FILES = ["data.json", "summary.json", "search-index.json", "apply-rules.json"]
 
-BANNER = """<div style="position:sticky;top:0;z-index:999;background:#8a5f16;color:#fff;
+# 這條橫幅原本用 position: sticky。
+# sticky 在手機上縮放時是有名的破圖來源 —— 視覺視窗與版面視窗不一致時，
+# sticky 元素會被拉伸、錯位或蓋住其他內容，看起來像整個版面壞掉。
+# 正式站沒有任何 sticky/fixed 元素，所以那是預覽站獨有的問題，
+# 等於預覽站自己製造了一個正式站不存在的 bug —— 預覽就失去意義了。
+# 改成一般靜態橫幅，只在頁面最上方出現一次。
+BANNER = """<div style="background:#8a5f16;color:#fff;
 padding:7px 12px;font-size:12.5px;line-height:1.6;text-align:center;
 font-family:-apple-system,'PingFang TC',sans-serif;">
 🔧 預覽版 — 這是測試中的版面，不是正式網站。

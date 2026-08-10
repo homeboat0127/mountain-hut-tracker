@@ -19,7 +19,6 @@
        改成隨頁面捲動，視覺差異極小，但不會再有縮放時的破圖。 */
     background: linear-gradient(160deg, #eef7ee 0%, #f8f6ec 45%, #eaf4ec 100%);
     background-attachment: scroll;
-    min-height: 100vh;
 
     /* 中文斷行：瀏覽器預設可以在任兩個漢字之間換行，於是「嘉明湖」會被拆成
        「嘉明」＋「湖」，山名、山屋名被切斷後很難讀。
@@ -28,7 +27,13 @@
        overflow-wrap 是保險：萬一某個詞長到單獨一行都塞不下，仍允許拆開，
        避免文字溢出容器造成整頁橫向捲動。 */
     word-break: keep-all;
-    overflow-wrap: break-word;
+    /* 用 anywhere 而非 break-word。兩者都是「塞不下才拆」，但只有 anywhere
+       會同時縮小元素的最小內容寬度(min-content)。
+       這很重要：keep-all 在 iOS Safari 對中文的處理與 Chromium 不同
+       —— 它原本是為有空格的韓文設計的，對沒有空格的中文可能把整句視為
+       不可拆，於是長句子撐出一條超長的行，把整頁撐寬，縮放時看起來像版面壞掉。
+       break-word 不影響 min-content，擋不住這種撐寬；anywhere 可以。 */
+    overflow-wrap: anywhere;
   }
 
   /* 頭部橫幅：森林綠漸層，跟山屋查詢頁風格統一 */
@@ -162,7 +167,7 @@
   </script>
 </head>
 <body>
-<div style="position:sticky;top:0;z-index:999;background:#8a5f16;color:#fff;
+<div style="background:#8a5f16;color:#fff;
 padding:7px 12px;font-size:12.5px;line-height:1.6;text-align:center;
 font-family:-apple-system,'PingFang TC',sans-serif;">
 🔧 預覽版 — 這是測試中的版面，不是正式網站。
