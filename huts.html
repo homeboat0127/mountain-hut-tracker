@@ -175,6 +175,8 @@
   .system-tab.active { background: #2f7d52; color: #fff; border-color: #2f7d52; }
 
   .route-banner { background: #e6f3ea; border-radius: 8px; padding: 14px 16px; margin-bottom: 16px; }
+  /* 只剩導覽連結時不需要色塊 */
+  .route-banner.slim { background: none; padding: 0 2px; margin-bottom: 12px; }
   .route-banner .route-title { font-size: 16px; font-weight: 600; color: #1f6b45; margin-bottom: 4px; }
   .route-banner .route-desc { font-size: 17px; font-weight: 700; color: #333; margin-bottom: 6px; }
   .route-banner a { font-size: 12px; color: #2f7d52; }
@@ -1404,7 +1406,12 @@
     }
 
     // 「所需申請山屋」提示卡，若該走法不需過夜（例如單攻）則不顯示日曆，改顯示說明文字
-    function renderRouteBanner(route, huts, onExitToFullList, applyUrl) {
+    // hideHutList：走法卡片上的「🏔 需申請：…」徽章已經列出同一份山屋清單，
+    // 且該徽章不受收合影響、恆常可見，所以這裡不再重複列一次。
+    // 但橫幅另外兩樣東西沒有重複，必須保留：
+    //   1. 長期停止申請（整修中）的警告 —— 走法卡片沒有這個資訊
+    //   2. 「查看完整山屋列表」的導覽出口
+    function renderRouteBanner(route, huts, onExitToFullList, applyUrl, hideHutList) {
       const banner = document.getElementById('route-banner');
       const noCalendarNote = document.getElementById('no-calendar-note');
 
@@ -1416,6 +1423,9 @@
           <div>此走法當日來回，不需申請山屋或營地過夜，僅需事先申請${parkName}國家公園入園許可證。</div>
           ${renderApplyCta(applyUrl)}
         `;
+        // 這條路徑的申請按鈕就放在說明文字底下（語意上緊接著「僅需申請入園證」），
+        // 因此要清掉頁尾那顆，否則切換走法後會留著上一個走法的按鈕，同頁出現兩顆。
+        setBottomCta(null);
         setCalendarAreaVisible(false);
         return;
       }
@@ -1431,8 +1441,14 @@
       const warningHtml = closedNames.length > 0
         ? `<div class="route-desc" style="color:#c0392b;">⚠ ${closedNames.join('、')} 目前長期停止申請（例如整修中），請改申請清單中其他山屋</div>`
         : '';
+      const hutListHtml = hideHutList
+        ? ''
+        : `<div class="route-desc">所需申請山屋：${huts.join('、')}</div>`;
+      // 清單與警告都沒有時，橫幅只剩一行導覽連結，改用低調樣式，
+      // 不要留一個空的綠色色塊在版面上。
+      banner.className = 'route-banner' + (hutListHtml || warningHtml ? '' : ' slim');
       banner.innerHTML = `
-        <div class="route-desc">所需申請山屋：${huts.join('、')}</div>
+        ${hutListHtml}
         ${warningHtml}
         <div><a href="#" id="show-all-link">查看該系統完整山屋列表 →</a></div>
       `;
@@ -1627,7 +1643,7 @@
       });
 
       routeFilter = variant.huts.length ? variant.huts : [];
-      renderRouteBanner(route, variant.huts, onExitToFullList, variant.applyUrl);
+      renderRouteBanner(route, variant.huts, onExitToFullList, variant.applyUrl, true);
 
       if (variant.profile) {
         renderElevationProfile(`${route.label}．${variant.label}`, variant.profile);
