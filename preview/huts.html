@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>百岳山屋查詢</title>
+<title>[預覽] 百岳山屋查詢</title>
 <style>
   body {
     font-family: -apple-system, "PingFang TC", sans-serif; max-width: 900px; margin: 0 auto; padding: 40px 16px; color: #223324;
@@ -313,6 +313,12 @@
   </script>
 </head>
 <body>
+<div style="position:sticky;top:0;z-index:999;background:#8a5f16;color:#fff;
+padding:7px 12px;font-size:12.5px;line-height:1.6;text-align:center;
+font-family:-apple-system,'PingFang TC',sans-serif;">
+🔧 預覽版 — 這是測試中的版面，不是正式網站。
+<a href="../index.html" style="color:#ffe9bf;">前往正式站 →</a></div>
+
   <div class="hero">
     <a class="back-link" href="index.html">← 回首頁</a>
     <h1 id="page-title">百岳山屋查詢</h1>
@@ -1939,7 +1945,7 @@
       changeMonth(1);
     });
 
-    fetch('data.json')
+    fetch('../data.json')
       .then(res => res.json())
       .then(data => {
         currentData = data;

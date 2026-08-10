@@ -178,6 +178,11 @@ def check_difficulty(variants):
     if not permits:
         return
 
+    # 已查證屬「申請分類 vs 路線分級」差異、不是錯誤的組合，不再重複提醒。
+    # 玉山：分級表第11項「玉山主峰、西峰線」為難度3；一站式服務網的
+    # 「2~5天(塔塔加-玉山線-塔塔加)」是涵蓋多種行程的申請分類，標第4級。
+    KNOWN_OK = {("yushan", "2~5天(塔塔加 - 玉山線 - 塔塔加)")}
+
     gaps = []
     for v in variants:
         oc = v.get("officialRoute")
@@ -188,7 +193,7 @@ def check_difficulty(variants):
         if not m:
             continue
         official = int(m.group(1))
-        if v.get("difficulty") != official:
+        if v.get("difficulty") != official and (v["route"], oc) not in KNOWN_OK:
             gaps.append((v["route"], v["label"], v["difficulty"], official, oc))
 
     if gaps:

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>台灣百岳資訊站</title>
+<title>[預覽] 台灣百岳資訊站</title>
 <meta name="description" content="台灣百岳山屋、營地即時訂位狀況查詢，涵蓋玉山、雪霸、太魯閣、林業及自然保育署四大申請系統，含路線難度、行程規劃與一鍵申請入園證。">
 <style>
   body {
@@ -139,6 +139,12 @@
   </script>
 </head>
 <body>
+<div style="position:sticky;top:0;z-index:999;background:#8a5f16;color:#fff;
+padding:7px 12px;font-size:12.5px;line-height:1.6;text-align:center;
+font-family:-apple-system,'PingFang TC',sans-serif;">
+🔧 預覽版 — 這是測試中的版面，不是正式網站。
+<a href="../index.html" style="color:#ffe9bf;">前往正式站 →</a></div>
+
   <div class="hero">
     <h1>台灣百岳資訊站</h1>
     <div class="sub">山屋・營地即時訂位狀況，路線難度與行程規劃一次查詢</div>
@@ -309,11 +315,11 @@
       }
     }
 
-    fetch('summary.json')
+    fetch('../summary.json')
       .then(function (r) { if (!r.ok) throw new Error('no summary'); return r.json(); })
       .then(function (d) { applyCounts(d.counts, d.updated_at); })
       .catch(function () {
-        return fetch('data.json')
+        return fetch('../data.json')
           .then(function (r) { return r.json(); })
           .then(function (d) {
             const c = {
@@ -422,7 +428,7 @@
       let items = [];
       let cursor = -1;
 
-      fetch('search-index.json')
+      fetch('../search-index.json')
         .then(function (r) { return r.json(); })
         .then(function (d) { index = d; })
         .catch(function () { input.placeholder = '搜尋暫時無法使用'; input.disabled = true; });
