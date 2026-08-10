@@ -6,9 +6,20 @@
 <title>[預覽] 台灣百岳資訊站</title>
 <meta name="description" content="玉山、雪霸、太魯閣、林業及自然保育署四大登山申請系統的山屋與營地名額，整合在同一頁查詢。逐日空床數與申請人數每天自動更新四次，不必分別登入四個政府網站。">
 <style>
+  /* 手機瀏覽器（Android Chrome、iOS Safari）會對部分區塊自動放大字級，
+     縮放頁面時特別明顯：有些字被放大、有些沒有，版面就歪掉。
+     鎖定為 100% 讓字級只由 CSS 決定。 */
+  html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+
   body {
     font-family: -apple-system, "PingFang TC", sans-serif; max-width: 900px; margin: 0 auto; padding: 40px 16px; color: #223324;
-    background: linear-gradient(160deg, #eef7ee 0%, #f8f6ec 45%, #eaf4ec 100%) fixed;
+    /* 這裡原本用 background-attachment: fixed。
+       它在 iOS Safari 與 Android Chrome 上是有名的問題來源：
+       捲動或縮放時漸層會跳動、拉伸、重繪錯位，看起來像整個版面歪掉。
+       改成隨頁面捲動，視覺差異極小，但不會再有縮放時的破圖。 */
+    background: linear-gradient(160deg, #eef7ee 0%, #f8f6ec 45%, #eaf4ec 100%);
+    background-attachment: scroll;
+    min-height: 100vh;
 
     /* 中文斷行：瀏覽器預設可以在任兩個漢字之間換行，於是「嘉明湖」會被拆成
        「嘉明」＋「湖」，山名、山屋名被切斷後很難讀。
