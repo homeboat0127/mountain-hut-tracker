@@ -541,6 +541,157 @@ def count_days(data):
     return total
 
 
+# ---------------------------------------------------------------------------
+# 逐系統健檢
+#
+# 既有的 verify_before_write 只看「全站天數總量」，擋得住整批壞掉，擋不住這幾種
+# 悄悄壞掉的狀況：
+#   - safe_scrape 吞掉個別山屋的失敗，27 間少 3 間，總量仍遠高於門檻
+#   - 政府網站改欄位名稱，天數與筆數都沒變，但每一格的內容都解析成空的
+#   - 單一系統整個掛掉，但其他三個系統把總量撐住
+# 因此改成逐系統統計，並把「解析出實際內容的比例」當成主要訊號。
+#
+# 四個系統的資料結構彼此不同，判斷「這一天有沒有真的解析到東西」的方式也不同：
+#   玉山       day["status"] 有值
+#   林業保育署  day["items"] 有元素
+#   太魯閣／雪霸 day["fields"] 有鍵值
+# ---------------------------------------------------------------------------
+
+SYSTEM_KEYS = {
+    "玉山": ("huts", "huts_next_month"),
+    "林業保育署": ("forest_huts", "forest_huts_next_month"),
+    "太魯閣": ("taroko_huts", "taroko_huts_next_month"),
+    "雪霸": ("snow_huts", "snow_huts_next_month"),
+}
+
+
+def _day_has_content(day):
+    """這一天是否真的解析到內容。空的不等於壞掉（可能真的沒開放），但整個系統
+    全空就幾乎一定是解析壞了。"""
+    if day.get("status") is not None:
+        return True
+    if day.get("items"):
+        return True
+    if day.get("fields"):
+        return True
+    return False
+
+
+def _vocabulary(days):
+    """收集這個系統實際出現過的欄位名稱／狀態字串。
+
+    政府網站改用字（例如「餘額」改成別的詞）時，天數與筆數都不會變，只有這份
+    字彙會變。先把它記錄下來，累積幾天的實際波動後才有依據設白名單。
+    """
+    vocab = set()
+    for day in days:
+        if day.get("status") is not None:
+            vocab.add(str(day["status"]))
+        for item in day.get("items") or []:
+            if item.get("label"):
+                vocab.add(str(item["label"]))
+        for key in (day.get("fields") or {}):
+            vocab.add(str(key))
+    return sorted(vocab)
+
+
+def health_report(data):
+    """產生逐系統健檢報表。只描述現況，不做判斷。
+
+    本月與次月分開統計：兩者由不同的爬取流程取得，會各自壞掉。
+    若合併計算，單月整個消失時比例仍有五成，剛好躲過所有門檻。
+    """
+    report = {"updated_at": data.get("updated_at"), "systems": {}}
+    for label, (cur_key, next_key) in SYSTEM_KEYS.items():
+        cur_huts = list(data.get(cur_key, []))
+        next_huts = list(data.get(next_key, {}).get("huts", []))
+        cur_days = [d for h in cur_huts for d in h.get("days", [])]
+        next_days = [d for h in next_huts for d in h.get("days", [])]
+        all_days = cur_days + next_days
+        with_content = sum(1 for d in all_days if _day_has_content(d))
+        report["systems"][label] = {
+            "山屋數": len(cur_huts),
+            "本月天數": len(cur_days),
+            "次月天數": len(next_days),
+            "天數": len(all_days),
+            "有內容天數": with_content,
+            "有內容比例": round(with_content / len(all_days), 3) if all_days else 0.0,
+            "字彙": _vocabulary(all_days),
+        }
+    return report
+
+
+def check_health(report, previous_path="health.json"):
+    """比對上一次的健檢報表，明確壞掉就讓排程失敗。
+
+    刻意只擋「幾乎不可能是正常波動」的狀況。山屋會季節性關閉、名額會歸零、
+    颱風會封園，門檻設太緊會天天誤報，然後就會開始無視告警 —— 那比沒有告警更糟。
+    容忍區間要等累積幾天的實際資料後再收緊，現階段先讓報表進版控累積觀察。
+    """
+    print("\n===== 逐系統健檢 =====")
+    for label, s in report["systems"].items():
+        print(f"  {label:<6} 山屋 {s['山屋數']:>3} 間｜本月 {s['本月天數']:>5} 天"
+              f"／次月 {s['次月天數']:>5} 天｜有內容 {s['有內容天數']:>5}"
+              f"（{s['有內容比例']:.0%}）｜字彙 {len(s['字彙'])} 種")
+
+    previous = None
+    if os.path.exists(previous_path):
+        try:
+            with open(previous_path, encoding="utf-8") as f:
+                previous = json.load(f)
+        except (json.JSONDecodeError, OSError):
+            print("  （讀不到上次的健檢報表，本次只輸出現況）")
+
+    problems = []
+    for label, s in report["systems"].items():
+        prev = (previous or {}).get("systems", {}).get(label)
+
+        # 這個系統整個消失
+        if s["山屋數"] == 0 and (prev is None or prev.get("山屋數", 0) > 0):
+            problems.append(f"{label}：山屋數歸零")
+            continue
+
+        # 節點還在但一天都沒抓到。本月與次月分開判斷，避免其中一邊
+        # 整個消失時被另一邊的數量掩蓋過去。
+        for span in ("本月天數", "次月天數"):
+            if s[span] == 0 and (prev or {}).get(span, 0) > 0:
+                problems.append(
+                    f"{label}：{span}歸零（上次 {prev[span]} 天，節點還在但沒有日期資料）")
+        if s["天數"] == 0 and (prev is None or prev.get("天數", 0) > 0):
+            problems.append(f"{label}：天數歸零（節點還在，但完全沒有日期資料）")
+            continue
+
+        # 節點與天數都在，但每一天都解析成空的 —— 典型的欄位改名
+        if s["天數"] > 0 and s["有內容天數"] == 0:
+            problems.append(f"{label}：{s['天數']} 天全部解析為空，欄位結構可能已變更")
+            continue
+
+        if not prev:
+            continue
+
+        # 山屋數腰斬。設 40% 是因為單一山屋維修下架屬正常，一次少掉四成不是
+        if prev.get("山屋數", 0) > 0 and s["山屋數"] < prev["山屋數"] * 0.6:
+            problems.append(f"{label}：山屋數 {prev['山屋數']} → {s['山屋數']}，減少逾四成")
+
+        # 原本解析得出內容，現在幾乎全空
+        if prev.get("有內容比例", 0) >= 0.5 and s["有內容比例"] < 0.1:
+            problems.append(
+                f"{label}：有內容比例 {prev['有內容比例']:.0%} → {s['有內容比例']:.0%}")
+
+        # 字彙變化只提醒、不擋。這是 B 層白名單的觀察素材，現在還沒有基準可以判斷
+        gone = set(prev.get("字彙", [])) - set(s["字彙"])
+        added = set(s["字彙"]) - set(prev.get("字彙", []))
+        if gone or added:
+            print(f"  [注意] {label} 字彙有變動"
+                  + (f"　消失：{'、'.join(sorted(gone))}" if gone else "")
+                  + (f"　新增：{'、'.join(sorted(added))}" if added else ""))
+
+    if problems:
+        raise SystemExit("[中止] 健檢未過：\n  - " + "\n  - ".join(problems))
+
+    print("  健檢通過")
+
+
 def verify_before_write(new_data, previous_path="data.json", min_ratio=0.5):
     """寫檔前的防呆：抓到空資料或資料量驟降時直接失敗，不覆寫既有檔案。
 
@@ -654,6 +805,17 @@ def write_derived(data):
     write_search_index(data)
 
 
+def write_health(report, path="health.json"):
+    """把健檢報表寫進版控。
+
+    這份檔案不供網站使用，目的是讓每次執行的統計進到 git 歷史，
+    之後用 `git log -p health.json` 就能直接看出各系統的實際波動範圍，
+    不必去翻 Actions 的執行紀錄。收緊告警門檻時需要的正是這份時間序列。
+    """
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(report, f, ensure_ascii=False, indent=2)
+
+
 def assert_timestamps_match():
     """確認三個檔案的 updated_at 一致，不一致就讓排程失敗而不是默默上線。
 
@@ -679,10 +841,18 @@ if __name__ == "__main__":
             data = json.load(f)
         write_derived(data)
         assert_timestamps_match()
-        print("已由現有 data.json 重建 summary.json 與 search-index.json")
+        report = health_report(data)
+        write_health(report)
+        check_health(report)
+        print("已由現有 data.json 重建 summary.json、search-index.json 與 health.json")
         raise SystemExit(0)
 
     data = scrape()
+
+    # 逐系統健檢：先跟上一次的報表比對，明確壞掉就中止，不覆寫既有資料。
+    # 順序很重要 —— 要在寫檔之前跑，否則壞資料已經蓋上去了才發現沒有意義。
+    report = health_report(data)
+    check_health(report)
 
     # 寫檔前先驗證，避免壞資料覆蓋好資料
     verify_before_write(data)
@@ -692,6 +862,7 @@ if __name__ == "__main__":
         json.dump(data, f, ensure_ascii=False, indent=2)
 
     write_derived(data)
+    write_health(report)
     assert_timestamps_match()
     for hut in data["huts"]:
         print(f"{hut['name']}: 寫入 {len(hut['days'])} 天資料")
