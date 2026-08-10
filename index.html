@@ -33,6 +33,7 @@
   .card:hover { box-shadow: 0 4px 14px rgba(31,92,59,0.14); transform: translateY(-2px); border-color: #9bd0af; }
   .card .peak-name { font-size: 17px; font-weight: 700; margin-bottom: 6px; }
   .card .peak-desc { font-size: 12.5px; color: #777; line-height: 1.6; }
+  .card .peak-stats { font-size: 11.5px; color: #8d968f; margin-top: 7px; line-height: 1.6; }
   .card .peak-tag { display: inline-block; margin-top: 10px; font-size: 11px; color: #1f6b45; background: #e6f3ea; padding: 2px 8px; border-radius: 10px; }
 
   /* 系統分類卡片：整組山屋營地訂位狀況入口 */
@@ -84,6 +85,16 @@
   .sr-sub { font-size: 11.5px; color: #97a09a; margin-top: 1px; }
   .sr-empty { padding: 16px 14px; font-size: 13px; color: #8d968f; line-height: 1.8; }
 
+
+  /* 資料過期警示：錯誤的名額比沒有名額更危險，超時要讓使用者一眼看到 */
+  .stale-banner { display: none; border-radius: 10px; padding: 12px 16px; margin-bottom: 16px; font-size: 13.5px; line-height: 1.7; }
+  .stale-banner.warn { display: block; background: #fff8ec; border: 1px solid #f3d9a4; color: #8a5f16; }
+  .stale-banner.danger { display: block; background: #fdecea; border: 1px solid #f5c6c0; color: #a5342a; }
+  .stale-banner strong { font-weight: 700; }
+  /* 超過 48 小時：讓名額數字明顯不可信，避免被當成即時資料 */
+  body.data-stale-danger .day-cell .status,
+  body.data-stale-danger .day-cell .line { opacity: .45; text-decoration: line-through; }
+
   .footer-note { margin-top: 32px; font-size: 12px; color: #999; line-height: 1.8; }
   .disclaimer { margin-top: 20px; padding: 14px 16px; background: #fbfaf5; border: 1px solid #e8e6db; border-radius: 8px; font-size: 11.5px; color: #8a8578; line-height: 1.9; }
   .disclaimer strong { color: #6b6659; }
@@ -128,6 +139,8 @@
   </div>
 
 
+  <div class="stale-banner" id="stale-banner"></div>
+
   <div class="search-box">
     <input type="text" class="search-input" id="site-search" autocomplete="off"
            placeholder="搜尋山名或山屋，例如：玉山、嘉明湖、大霸尖山" aria-label="搜尋山名或山屋">
@@ -143,31 +156,31 @@
       <a class="card" href="huts.html?route=yushan" style="--accent:#2f7d52;">
         <div class="peak-name">⛰️ 玉山</div>
         <div class="peak-desc">台灣最高峰 3952m，經典入門百岳<br>需申請：排雲山莊</div>
-        <span class="peak-tag">難度 3／6．單攻或2天1夜</span>
+        <span class="peak-tag">難度 3／6</span><div class="peak-stats">21.8km ｜ 爬升 1,342m ｜ 單日最長 8hr</div>
       </a>
 
       <a class="card" href="huts.html?route=jiaming" style="--accent:#3a8fa8;">
         <div class="peak-name">💧 嘉明湖</div>
         <div class="peak-desc">天使的眼淚，全台詢問度數一數二<br>需申請：向陽山屋、嘉明湖山屋</div>
-        <span class="peak-tag">難度 3／6．3天2夜</span>
+        <span class="peak-tag">難度 3／6</span><div class="peak-stats">28.4km ｜ 爬升 1,053m ｜ 單日最長 10hr</div>
       </a>
 
       <a class="card" href="huts.html?route=snow" style="--accent:#5b9bd5;">
         <div class="peak-name">❄️ 雪山</div>
         <div class="peak-desc">台灣第二高峰 3886m，圈谷地形壯闊<br>需申請：七卡山莊、三六九</div>
-        <span class="peak-tag">難度 3～4／6．單攻至3天2夜</span>
+        <span class="peak-tag">難度 3～4／6</span><div class="peak-stats">21.8km ｜ 爬升 1,797m ｜ 單日最長 7hr</div>
       </a>
 
       <a class="card" href="huts.html?route=qilai" style="--accent:#6b6b6b;">
         <div class="peak-name">🌑 奇萊主北</div>
         <div class="peak-desc">黑色奇萊，斷崖與碎石地形挑戰性高<br>需申請：成功山屋、奇萊山屋</div>
-        <span class="peak-tag">難度 5／6．進階路線</span>
+        <span class="peak-tag">難度 5／6</span><div class="peak-stats">23.9km ｜ 爬升 850m ｜ 斷崖碎石地形</div>
       </a>
 
       <a class="card" href="huts.html?route=nanhu" style="--accent:#b9770e;">
         <div class="peak-name">👑 南湖大山</div>
         <div class="peak-desc">帝王之山，中央山脈北段代表路線<br>需申請：雲稜、審馬陣、南湖山屋</div>
-        <span class="peak-tag">難度 4／6．5天4夜</span>
+        <span class="peak-tag">難度 4／6</span><div class="peak-stats">45.9km ｜ 爬升 2,173m ｜ 5天4夜</div>
       </a>
     </div>
   </div>
@@ -279,6 +292,7 @@
         const el = document.getElementById('count-' + key);
         if (el) el.textContent = n + ' 處山屋／營地';
       });
+      if (window.checkDataFreshness) window.checkDataFreshness(updatedAt);
       if (updatedAt) {
         document.getElementById('updated').textContent =
           '資料更新時間：' + updatedAt + '　｜　共收錄 ' + (counts.total || 0) + ' 處山屋・營地';
@@ -488,6 +502,36 @@
         if (!e.target.closest('.search-box')) box.classList.remove('open');
       });
     })();
+  </script>
+
+  <script>
+    // 資料過期防呆：比對 updated_at 與現在時間。
+    // 12 小時 → 黃色提醒；48 小時 → 紅色並讓名額數字灰化加刪除線，避免被誤讀為即時資料。
+    window.checkDataFreshness = function (updatedAt) {
+      const el = document.getElementById('stale-banner');
+      if (!el || !updatedAt) return;
+
+      // updated_at 格式為「YYYY-MM-DD HH:MM」（台灣時間）
+      const t = Date.parse(String(updatedAt).replace(' ', 'T') + '+08:00');
+      if (isNaN(t)) return;
+
+      const hours = (Date.now() - t) / 36e5;
+      if (hours < 12) return;
+
+      const day = Math.floor(hours / 24);
+      const ago = day >= 1 ? day + ' 天' : Math.floor(hours) + ' 小時';
+
+      if (hours >= 48) {
+        el.className = 'stale-banner danger';
+        el.innerHTML = '<strong>⚠ 資料已超過 ' + ago + ' 未更新</strong>　名額數字可能已失效，' +
+          '請務必以<a href="https://hike.taiwan.gov.tw/" target="_blank" rel="noopener">臺灣登山申請一站式服務網</a>為準。';
+        document.body.classList.add('data-stale-danger');
+      } else {
+        el.className = 'stale-banner warn';
+        el.innerHTML = '<strong>資料已 ' + ago + ' 未更新</strong>　可能未反映最新名額，建議與' +
+          '<a href="https://hike.taiwan.gov.tw/" target="_blank" rel="noopener">官方網站</a>再次確認。';
+      }
+    };
   </script>
 </body>
 </html>

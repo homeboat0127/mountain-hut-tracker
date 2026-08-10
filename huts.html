@@ -49,6 +49,16 @@
   .day-cell .line { color: #555; line-height: 1.6; }
   .day-cell .line.zero { color: #c0392b; }
 
+
+  /* 資料過期警示：錯誤的名額比沒有名額更危險，超時要讓使用者一眼看到 */
+  .stale-banner { display: none; border-radius: 10px; padding: 12px 16px; margin-bottom: 16px; font-size: 13.5px; line-height: 1.7; }
+  .stale-banner.warn { display: block; background: #fff8ec; border: 1px solid #f3d9a4; color: #8a5f16; }
+  .stale-banner.danger { display: block; background: #fdecea; border: 1px solid #f5c6c0; color: #a5342a; }
+  .stale-banner strong { font-weight: 700; }
+  /* 超過 48 小時：讓名額數字明顯不可信，避免被當成即時資料 */
+  body.data-stale-danger .day-cell .status,
+  body.data-stale-danger .day-cell .line { opacity: .45; text-decoration: line-through; }
+
   .legend { margin-top: 24px; font-size: 12px; color: #888; line-height: 1.8; }
   .disclaimer { margin-top: 28px; padding: 14px 16px; background: #fbfaf5; border: 1px solid #e8e6db; border-radius: 8px; font-size: 11.5px; color: #8a8578; line-height: 1.9; }
   .disclaimer strong { color: #6b6659; }
@@ -109,6 +119,7 @@
   .difficulty-dots .dot { width: 6px; height: 6px; border-radius: 50%; background: #e8e8e8; }
   .difficulty-dots .dot.filled { background: #e08a2e; }
 
+  .variant-scale { padding: 8px 16px 0; font-size: 11.5px; color: #7d8a80; line-height: 1.6; }
   .variant-huts-row { padding: 10px 16px 0; }
   .variant-huts-badge { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 11.5px; font-weight: 600; }
   .variant-huts-badge.needs { background: #f7ecd9; color: #8a5a22; }
@@ -166,6 +177,7 @@
     <div class="updated" id="updated"></div>
   </div>
 
+  <div class="stale-banner" id="stale-banner"></div>
   <div class="profile-box" id="profile-box" style="display:none;"></div>
   <div class="route-variants" id="route-variants" style="display:none;"></div>
   <div class="route-banner" id="route-banner" style="display:none;"></div>
@@ -1112,6 +1124,41 @@
 
     // 路線選擇卡片（例如玉山的「單攻」／「2天1夜住排雲山莊」），點選後切換所需山屋與難度資訊
     // 圖卡式呈現：圖示＋數據小方塊＋徽章，取代純文字條列，方便一眼比較
+
+    // 由剖面圖的海拔資料累加正落差，算出單程總爬升。
+    // 用程式算而非手填，日後新增或修正路線點位時數字會自動同步。
+    function totalAscent(profile) {
+      if (!profile || !profile.points || profile.points.length < 2) return null;
+      let gain = 0;
+      for (let i = 1; i < profile.points.length; i++) {
+        const d = profile.points[i].elevation - profile.points[i - 1].elevation;
+        if (d > 0) gain += d;
+      }
+      return gain;
+    }
+
+    // 從每日行程的說明文字裡抓出時數（例如「約6～8小時」「約9～10小時」），
+    // 取各天的最大值當作「單日最長行走時數」
+    function longestDayHours(itinerary) {
+      if (!itinerary) return null;
+      let max = 0;
+      itinerary.forEach(function (d) {
+        const text = (d.note || '') + (d.route || '');
+        const m = text.match(/約?\s*(\d+)\s*[～~-]\s*(\d+)\s*小時/) || text.match(/約?\s*(\d+)\s*小時/);
+        if (m) {
+          const hi = Number(m[2] || m[1]);
+          if (hi > max) max = hi;
+        }
+      });
+      return max || null;
+    }
+
+    // 把爬升換算成「連續爬幾層樓」，給沒有概念的人一個量級參照。
+    // 一層樓以 3 公尺計；只描述量級，不評斷難易或適不適合。
+    function ascentInFloors(meters) {
+      return Math.round(meters / 3 / 10) * 10;
+    }
+
     function renderRouteVariants(route, onExitToFullList) {
       const container = document.getElementById('route-variants');
       container.style.display = 'flex';
@@ -1123,6 +1170,15 @@
         card.dataset.index = i;
         const needsHuts = variant.huts.length > 0;
         const icon = needsHuts ? '🏠' : '☀️';
+
+        // 客觀數字：只陳述量級，不下「適合／不適合新手」的斷語
+        const ascent = totalAscent(variant.profile);
+        const hours = longestDayHours(variant.itinerary);
+        const scaleBits = [];
+        if (ascent) scaleBits.push(`總爬升約等於連續爬 ${ascentInFloors(ascent)} 層樓`);
+        if (hours) scaleBits.push(`單日最長步行約 ${hours} 小時`);
+        const scaleNote = scaleBits.length
+          ? `<div class="variant-scale">${scaleBits.join('　｜　')}</div>` : '';
         const hutsBadge = needsHuts
           ? `🏔 需申請：${variant.huts.join('、')}`
           : '✅ 免申請山屋／營地';
@@ -1137,14 +1193,19 @@
               <div class="variant-stat-value">${variant.days}</div>
             </div>
             <div class="variant-stat">
-              <div class="variant-stat-label">里程</div>
+              <div class="variant-stat-label">來回里程</div>
               <div class="variant-stat-value">${variant.distanceKm} km</div>
+            </div>
+            <div class="variant-stat">
+              <div class="variant-stat-label">單程總爬升</div>
+              <div class="variant-stat-value">${ascent ? ascent + ' m' : '—'}</div>
             </div>
             <div class="variant-stat">
               <div class="variant-stat-label">難度 ${variant.difficultyLevel}／6</div>
               <div class="variant-stat-value">${difficultyDots(variant.difficultyLevel)}</div>
             </div>
           </div>
+          ${scaleNote}
           <div class="variant-huts-row">
             <span class="variant-huts-badge ${needsHuts ? 'needs' : 'free'}">${hutsBadge}</span>
           </div>
@@ -1216,6 +1277,7 @@
       .then(data => {
         currentData = data;
         document.getElementById('updated').textContent = '資料更新時間：' + data.updated_at;
+        if (window.checkDataFreshness) window.checkDataFreshness(data.updated_at);
 
         const systemTabs = document.getElementById('system-tabs');
         const systems = [
@@ -1379,6 +1441,36 @@
         page_route: new URLSearchParams(location.search).get('route') || 'none',
       });
     });
+  </script>
+
+  <script>
+    // 資料過期防呆：比對 updated_at 與現在時間。
+    // 12 小時 → 黃色提醒；48 小時 → 紅色並讓名額數字灰化加刪除線，避免被誤讀為即時資料。
+    window.checkDataFreshness = function (updatedAt) {
+      const el = document.getElementById('stale-banner');
+      if (!el || !updatedAt) return;
+
+      // updated_at 格式為「YYYY-MM-DD HH:MM」（台灣時間）
+      const t = Date.parse(String(updatedAt).replace(' ', 'T') + '+08:00');
+      if (isNaN(t)) return;
+
+      const hours = (Date.now() - t) / 36e5;
+      if (hours < 12) return;
+
+      const day = Math.floor(hours / 24);
+      const ago = day >= 1 ? day + ' 天' : Math.floor(hours) + ' 小時';
+
+      if (hours >= 48) {
+        el.className = 'stale-banner danger';
+        el.innerHTML = '<strong>⚠ 資料已超過 ' + ago + ' 未更新</strong>　名額數字可能已失效，' +
+          '請務必以<a href="https://hike.taiwan.gov.tw/" target="_blank" rel="noopener">臺灣登山申請一站式服務網</a>為準。';
+        document.body.classList.add('data-stale-danger');
+      } else {
+        el.className = 'stale-banner warn';
+        el.innerHTML = '<strong>資料已 ' + ago + ' 未更新</strong>　可能未反映最新名額，建議與' +
+          '<a href="https://hike.taiwan.gov.tw/" target="_blank" rel="noopener">官方網站</a>再次確認。';
+      }
+    };
   </script>
 </body>
 </html>
