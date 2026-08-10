@@ -1278,7 +1278,7 @@ font-family:-apple-system,'PingFang TC',sans-serif;">
     const CWA_URL = 'https://www.cwa.gov.tw/V8/C/';
 
     let applyRules = null;
-    fetch('apply-rules.json')
+    fetch('apply-rules.json').then(function(r){return r.ok?r:fetch('../apply-rules.json');})
       .then(r => r.ok ? r.json() : null)
       .then(d => { applyRules = d; })
       .catch(() => { applyRules = null; });
