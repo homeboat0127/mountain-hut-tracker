@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>[預覽] 台灣百岳資訊站</title>
-<meta name="description" content="台灣百岳山屋、營地即時訂位狀況查詢，涵蓋玉山、雪霸、太魯閣、林業及自然保育署四大申請系統，含路線難度、行程規劃與一鍵申請入園證。">
+<meta name="description" content="玉山、雪霸、太魯閣、林業及自然保育署四大登山申請系統的山屋與營地名額，整合在同一頁查詢。逐日空床數與申請人數每天自動更新四次，不必分別登入四個政府網站。">
 <style>
   body {
     font-family: -apple-system, "PingFang TC", sans-serif; max-width: 900px; margin: 0 auto; padding: 40px 16px; color: #223324;
@@ -103,6 +103,14 @@
   /* 註：首頁沒有名額格子，「超過 48 小時把數字劃掉」那組規則寫在 huts.html。 */
 
   .footer-note { margin-top: 32px; font-size: 12px; color: #999; line-height: 1.8; }
+
+  /* 維護者資訊：站是一個人做的，講清楚是誰、為什麼做，
+     比匿名的工具更容易讓人願意回報錯誤 —— 回饋表單就接在下面。 */
+  .maintainer { margin-top: 26px; padding: 14px 16px; background: #fff; border: 1px solid #e4e4e4;
+    border-left: 3px solid #2f7d52; border-radius: 8px; font-size: 13px; color: #5a6a5e; line-height: 1.85; }
+  .maintainer p { margin: 0; }
+  .maintainer a { color: #2f7d52; font-weight: 700; text-decoration: none; border-bottom: 1px solid #9bd0af; }
+  .maintainer a:hover { background: #eef7f1; }
   .disclaimer { margin-top: 20px; padding: 14px 16px; background: #fbfaf5; border: 1px solid #e8e6db; border-radius: 8px; font-size: 11.5px; color: #8a8578; line-height: 1.9; }
   .disclaimer strong { color: #6b6659; }
 
@@ -147,7 +155,7 @@ font-family:-apple-system,'PingFang TC',sans-serif;">
 
   <div class="hero">
     <h1>台灣百岳資訊站</h1>
-    <div class="sub">山屋・營地即時訂位狀況，路線難度與行程規劃一次查詢</div>
+    <div class="sub">玉山・雪霸・太魯閣・林業署　四大申請系統的山屋名額，一頁查完</div>
     <div class="updated" id="updated"></div>
   </div>
 
@@ -245,6 +253,12 @@ font-family:-apple-system,'PingFang TC',sans-serif;">
     資料每日自動更新 4 次（07:00／11:00／15:00／19:00），來源為臺灣登山申請一站式服務網。
   </div>
 
+
+  <div class="maintainer">
+    <p>這個站由 <a href="https://www.instagram.com/hb__log__/" target="_blank" rel="noopener">hb.log</a> 維護。</p>
+    <p>自己爬山時被四個政府系統的申請流程搞得很煩，所以整理了這個。</p>
+    <p>發現資料有誤請用下方表單告訴我，會盡快更新。</p>
+  </div>
 
   <!-- 網友回饋：送出後寫入 Google 試算表，每天 20:00 彙整寄信通知 -->
   <div class="fb-box">
