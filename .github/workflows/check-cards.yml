@@ -1,0 +1,36 @@
+name: 檢查首頁卡片數字是否同步
+
+# 首頁的里程／爬升／時數是從 huts.html 的路線資料算出來的。
+# 只要有人改了 huts.html 的路線點位或每日行程卻忘了同步首頁，這裡就會擋下來，
+# 避免首頁又出現和內頁對不起來的數字。
+on:
+  push:
+    paths:
+      - 'huts.html'
+      - 'index.html'
+      - 'sync_cards.py'
+  pull_request:
+    paths:
+      - 'huts.html'
+      - 'index.html'
+      - 'sync_cards.py'
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 安裝 Playwright
+        run: |
+          pip install playwright
+          playwright install --with-deps chromium
+
+      - name: 比對首頁卡片與路線資料
+        run: python sync_cards.py --check
