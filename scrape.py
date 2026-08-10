@@ -575,6 +575,139 @@ def scrape_permits(page):
     return permits
 
 
+# 單日往返路線的逐日名額。
+#
+# 為什麼要抓：站上原本寫「單攻僅需申請入園證」，是錯的 ——
+# 單日往返一樣有每日承載量上限（玉山線每日 60 人且列入抽籤，前峰 100 人不抽籤），
+# 寫成「僅需申請」會讓使用者以為隨到隨辦。
+#
+# 逐日資料的結構與玉山山屋月曆相同（餘額／排隊預約／審核中／核准入園），
+# 差別在名額是單一數字而非「床位,營位」兩個數字。
+ROUTE_QUOTA_URL = "https://hike.taiwan.gov.tw/bed_7.aspx"
+
+
+def _parse_quota_cell(text, year, month):
+    """解析單日往返月曆的一格。格式範例：
+         15
+         餘額 1
+         排隊預約 17
+         審核中 0
+         核准入園 97
+    只有日期沒有其他內容的格子（已過去的日期）回傳 None。
+    """
+    lines = [l.strip() for l in text.split("\n") if l.strip()]
+    if not lines:
+        return None
+    m = re.match(r"^(\d{1,2})$", lines[0])
+    if not m:
+        return None
+    day = int(m.group(1))
+    rest = " ".join(lines[1:])
+    if not rest:
+        return None    # 過去的日期只有數字，沒有名額資料
+
+    status = "額滿" if "額滿" in rest else ("餘額" if "餘額" in rest else None)
+    if status is None:
+        return None
+
+    def grab(label):
+        mm = re.search(label + r"\s*(\d+)", rest)
+        return int(mm.group(1)) if mm else None
+
+    avail = grab("餘額") if status == "餘額" else 0
+    return {
+        "date": f"{year:04d}-{month:02d}-{day:02d}",
+        "status": status,
+        "avail": avail if avail is not None else 0,
+        "queue": grab("排隊預約"),
+        "reviewing": grab("審核中"),
+        "approved": grab("核准入園"),
+    }
+
+
+def _read_quota_calendar(page, year, month):
+    cells = page.evaluate("""() => {
+        const t = document.querySelector('table');
+        if (!t) return [];
+        const out = [];
+        Array.from(t.rows).slice(1).forEach(r =>
+          Array.from(r.cells).forEach(c => { const x = c.innerText.trim(); if (x) out.push(x); }));
+        return out;
+    }""")
+    days = []
+    for text in cells:
+        d = _parse_quota_cell(text, year, month)
+        if d:
+            days.append(d)
+    return days
+
+
+def scrape_route_quota(page, year, month, next_year, next_month):
+    """抓五條單日往返路線的承載量與逐日名額（本月與次月）。"""
+    page.goto(ROUTE_QUOTA_URL, wait_until="networkidle", timeout=60000)
+    page.wait_for_timeout(1200)
+
+    # 承載量表：路線 / 平日 / 假日 / 備註
+    table = page.evaluate("""() => {
+        const t = document.querySelector('table');
+        if (!t) return [];
+        return Array.from(t.rows).slice(1)
+          .map(r => Array.from(r.cells).map(c => c.innerText.trim().replace(/\\s+/g, ' ')))
+          .filter(r => r.length >= 3);
+    }""")
+    caps = {}
+    for r in table:
+        name = r[0]
+        try:
+            caps[name] = {
+                "capacity_weekday": int(re.sub(r"\D", "", r[1]) or 0),
+                "capacity_weekend": int(re.sub(r"\D", "", r[2]) or 0),
+                "note": (r[3] if len(r) > 3 else "").replace("...more", "").strip() or None,
+            }
+        except ValueError:
+            continue
+
+    options = page.evaluate("""() => Array.from(document.getElementById('con_rooms').options)
+        .filter(o => o.value).map(o => ({name: o.text.trim(), value: o.value}))""")
+
+    cur, nxt = [], []
+    for opt in options:
+        name, value = opt["name"], opt["value"]
+        page.evaluate("""(v) => {
+            const s = document.getElementById('con_rooms');
+            s.value = v; s.dispatchEvent(new Event('change', { bubbles: true }));
+        }""", value)
+        page.wait_for_timeout(250)
+        page.evaluate("""() => {
+            const a = Array.from(document.querySelectorAll('a,input[type=button],input[type=submit]'))
+              .find(e => (e.innerText || e.value || '').trim() === '查詢' && e.id !== 'btngoogle');
+            if (a) a.click();
+        }""")
+        page.wait_for_timeout(2200)
+
+        base = dict(caps.get(name, {}), name=name, value=value, type="route_quota")
+        cur.append(dict(base, days=_read_quota_calendar(page, year, month)))
+
+        # 次月：改 con_ddlMonth 會自動 postback
+        page.evaluate("""(mm) => {
+            const m = document.getElementById('con_ddlMonth');
+            if (m) { m.value = String(mm); m.dispatchEvent(new Event('change', { bubbles: true })); }
+        }""", next_month)
+        page.wait_for_timeout(2200)
+        nxt.append(dict(base, days=_read_quota_calendar(page, next_year, next_month)))
+
+        # 切回本月，避免影響下一條路線
+        page.evaluate("""(mm) => {
+            const m = document.getElementById('con_ddlMonth');
+            if (m) { m.value = String(mm); m.dispatchEvent(new Event('change', { bubbles: true })); }
+        }""", month)
+        page.wait_for_timeout(1600)
+
+    total = sum(len(r["days"]) for r in cur) + sum(len(r["days"]) for r in nxt)
+    print(f"  單日往返路線：{len(cur)} 條，共 {total} 天")
+    return cur, nxt
+
+
 def scrape_lottery(page):
     """爬「玉山抽籤日期」的住宿日↔抽籤時間對照表。
 
@@ -600,10 +733,25 @@ def scrape_lottery(page):
             "draw_start": t.group(4),
             "draw_end": t.group(5),
         })
+    # 抽籤適用範圍：直接從頁面敘述解析「…」內的項目，不寫死在程式裡。
+    # 前端用它判斷某條單日往返路線要不要顯示抽籤時間 ——
+    # 官方若新增或移除適用對象，這裡會跟著變。
+    # 只取「…抽籤日期查詢」這句敘述裡的項目。用前 400 字會把頁尾的
+    # 「臺灣登山申請一站式服務網」也撈進來，那不是抽籤對象。
+    scope = page.evaluate("""() => {
+        const t = document.body.innerText.replace(/\\s+/g, ' ');
+        const i = t.indexOf('抽籤日期查詢');
+        if (i < 0) return [];
+        const seg = t.slice(Math.max(0, i - 200), i);
+        return (seg.match(/「([^」]+)」/g) || []).map(x => x.replace(/[「」]/g, ''));
+    }""")
+    if scope:
+        print(f"  抽籤適用範圍：{'、'.join(scope)}")
+
     lottery.sort(key=lambda x: x["stay_date"])
     print(f"  抽籤日期：{len(lottery)} 筆"
           + (f"，涵蓋住宿日 {lottery[0]['stay_date']} ~ {lottery[-1]['stay_date']}" if lottery else ""))
-    return lottery
+    return {"draws": lottery, "scope": scope}
 
 
 def scrape():
@@ -702,16 +850,23 @@ def scrape():
         # 公告類資料：封園與抽籤時間。包在 safe_scrape 裡，
         # 這兩項失敗不該讓整批名額資料白跑 —— 名額是主資料，公告是加值。
         closures = safe_scrape("封園公告", lambda: scrape_closures(page), [])
-        lottery = safe_scrape("抽籤日期", lambda: scrape_lottery(page), [])
+        lot = safe_scrape("抽籤日期", lambda: scrape_lottery(page), {"draws": [], "scope": []})
         permits = safe_scrape("路線證件", lambda: scrape_permits(page), {})
+        route_cur, route_next = safe_scrape(
+            "單日往返路線",
+            lambda: scrape_route_quota(page, now.year, now.month, next_year, next_month),
+            ([], []))
 
         browser.close()
 
     return {
         "updated_at": now.strftime("%Y-%m-%d %H:%M"),
         "closures": closures,
-        "lottery": lottery,
+        "lottery": lot.get("draws", []),
+        "lottery_scope": lot.get("scope", []),
         "permits": permits,
+        "route_quota": {"year": now.year, "month": now.month, "routes": route_cur},
+        "route_quota_next_month": {"year": next_year, "month": next_month, "routes": route_next},
         "year": now.year,
         "month": now.month,
         "huts": huts_result,
@@ -975,6 +1130,32 @@ def write_search_index(data, path="search-index.json"):
                 "url": f"huts.html?system={sys_key}&hut={quote(name)}",
             })
 
+    # 單日往返路線：搜「玉山前峰」要能連到實際名額，而不是只回一行說明。
+    # 這幾條有官方逐日名額，價值等同山屋，因此收進索引並指向名額頁。
+    QUOTA_ALIASES = {
+        "玉山前峰單日往返": ["玉山前峰", "前峰", "玉山前峰單攻"],
+        "玉山線單日往返": ["玉山單攻", "玉山主峰單攻", "玉山線單攻", "玉山當日往返"],
+        "庫哈諾辛山/關山單日往返": ["庫哈諾辛山", "關山", "庫哈諾辛"],
+        "乙女瀑布單日往返": ["乙女瀑布", "乙女"],
+        "瓦拉米單日往返": ["瓦拉米", "瓦拉米步道"],
+    }
+    scope = data.get("lottery_scope") or []
+    for r in (data.get("route_quota") or {}).get("routes", []):
+        name = r["name"]
+        cap = r.get("capacity_weekday")
+        note = f"每日 {cap} 人" if cap else "單日往返路線"
+        if name in scope:
+            note += "・抽籤制"
+        index.append({
+            "name": name,
+            "alias": QUOTA_ALIASES.get(name, []),
+            "system": "yushan",
+            "systemLabel": "玉山國家公園",
+            "type": "單日往返",
+            "note": note,
+            "url": f"huts.html?system=quota&hut={quote(name)}",
+        })
+
     for r in NO_HUT_ROUTES:
         index.append({
             "name": r["name"],
@@ -1064,8 +1245,16 @@ if __name__ == "__main__":
             browser = p.chromium.launch()
             page = browser.new_page()
             data["closures"] = safe_scrape("封園公告", lambda: scrape_closures(page), [])
-            data["lottery"] = safe_scrape("抽籤日期", lambda: scrape_lottery(page), [])
+            lot = safe_scrape("抽籤日期", lambda: scrape_lottery(page), {"draws": [], "scope": []})
+            data["lottery"] = lot.get("draws", [])
+            data["lottery_scope"] = lot.get("scope", [])
             data["permits"] = safe_scrape("路線證件", lambda: scrape_permits(page), {})
+            y, mo = data.get("year"), data.get("month")
+            ny, nm = (y + 1, 1) if mo == 12 else (y, mo + 1)
+            rc, rn = safe_scrape("單日往返路線",
+                                 lambda: scrape_route_quota(page, y, mo, ny, nm), ([], []))
+            data["route_quota"] = {"year": y, "month": mo, "routes": rc}
+            data["route_quota_next_month"] = {"year": ny, "month": nm, "routes": rn}
             browser.close()
         with open("data.json", "w", encoding="utf-8") as f:
             json.dump(data, f, ensure_ascii=False, indent=2)

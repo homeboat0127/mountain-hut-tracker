@@ -281,6 +281,21 @@
   .variant-alerts li { font-size: 12px; color: #7a5410; line-height: 1.7; }
 
   .no-calendar-note { background: #fff; border: 1px solid #e8e8e0; border-radius: 8px; padding: 14px 16px; font-size: 13px; color: #555; line-height: 1.7; margin-bottom: 16px; }
+  .no-calendar-note .ncn-sub { margin-top: 6px; font-size: 12.5px; color: #7d8a80; line-height: 1.75; }
+  .no-calendar-note .ncn-sub strong { color: #a5342a; }
+
+  /* 單日往返路線的名額說明：抽籤與否直接影響什麼時候要動作，放在日曆正上方 */
+  .quota-box { background: #eef7f1; border: 1px solid #d9ecdf; border-radius: 10px;
+    padding: 11px 14px; margin-bottom: 14px; font-size: 13px; line-height: 1.75; color: #1f5c3b; }
+  .quota-box .quota-line { margin-bottom: 3px; }
+  .quota-box .quota-line strong { color: #a5342a; }
+  .quota-box .quota-src { font-size: 10.5px; color: #6f9c82; margin-top: 7px;
+    padding-top: 6px; border-top: 1px solid #d9ecdf; line-height: 1.6; }
+  .quota-box a { color: #2f7d52; }
+  @media (max-width: 640px) {
+    .quota-box { font-size: 12px; padding: 10px 12px; }
+    .quota-box .quota-src { font-size: 10px; }
+  }
 
   .month-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
   .month-header .month-label { font-size: 18px; font-weight: 700; }
@@ -617,6 +632,9 @@
           {
             key: 'day',
             officialRoute: '玉山線單日往返',
+            // 對應 bed_7.aspx 的單日往返路線名稱。有這個欄位就顯示逐日名額日曆，
+            // 沒有的（例如雪山單攻，雪霸系統無此資料源）維持文字說明。
+            quotaRoute: '玉山線單日往返',
             label: '單攻．當日不過夜',
             days: '單日來回',
             distanceKm: 21.8,
@@ -865,6 +883,7 @@
       if (currentSystem === 'forest') return !!currentData?.forest_huts_next_month;
       if (currentSystem === 'taroko') return !!currentData?.taroko_huts_next_month;
       if (currentSystem === 'snow') return !!currentData?.snow_huts_next_month;
+      if (currentSystem === 'quota') return !!currentData?.route_quota_next_month;
       return false;
     }
 
@@ -1571,6 +1590,132 @@
       return html;
     }
 
+    // ---------------- 單日往返路線名額 ----------------
+    // 單攻不是「不用申請」，而是另一套有每日承載量的申請制度。
+    // 資料源 bed_7.aspx 只涵蓋玉山國家公園的五條單日往返路線，
+    // 其他系統（例如雪山單攻）沒有對應資料，維持文字說明。
+    const QUOTA_LEGEND = [
+      ['每日承載量', '該路線每天可核准的人數上限'],
+      ['餘額', '當日剩餘名額'],
+      ['排隊預約', '無餘額時等候空位釋出的人數'],
+      ['審核中', '已核發名額尚未完成手續'],
+      ['核准入園', '已核准，可上網列印入園許可證'],
+    ];
+    const QUOTA_SOURCE_URL = 'https://hike.taiwan.gov.tw/bed_7.aspx';
+
+    function quotaSource(offset) {
+      const key = offset === 1 ? 'route_quota_next_month' : 'route_quota';
+      return (currentData && currentData[key]) || null;
+    }
+
+    function quotaRoutes(offset) {
+      const src = quotaSource(offset);
+      return (src && src.routes) || [];
+    }
+
+    // 是否採抽籤制：比對官方 bed_8 頁面敘述解析出來的適用範圍，不寫死。
+    function isLotteryRoute(name) {
+      const scope = (currentData && currentData.lottery_scope) || [];
+      return scope.includes(name);
+    }
+
+    function renderQuotaTabs() {
+      const container = document.getElementById('hut-tabs');
+      container.innerHTML = '';
+      const routes = quotaRoutes(monthOffset);
+      const list = routes
+        .map((r, i) => ({ r, i }))
+        .filter(({ r }) => !routeFilter || routeFilter.includes(r.name));
+      if (list.length === 0) return;
+
+      const tabs = document.createElement('div');
+      tabs.className = 'hut-tabs';
+      list.forEach(({ r, i }) => {
+        const btn = document.createElement('div');
+        btn.className = 'hut-tab';
+        btn.dataset.index = i;
+        btn.innerHTML = `<span>${escapeHtml(r.name)}</span>`;
+        btn.addEventListener('click', () => renderQuotaRoute(i));
+        tabs.appendChild(btn);
+      });
+      container.appendChild(tabs);
+      renderLegend(QUOTA_LEGEND);
+      renderQuotaRoute(list[0].i);
+    }
+
+    function renderQuotaRoute(index) {
+      currentHutIndex = index;
+      const src = quotaSource(monthOffset);
+      const routes = quotaRoutes(monthOffset);
+      const route = routes[index];
+      if (!route || !src) return;
+
+      document.querySelectorAll('.hut-tab').forEach(el => {
+        el.classList.toggle('active', Number(el.dataset.index) === index);
+      });
+
+      const capBits = [];
+      if (route.capacity_weekday) capBits.push(`平日每日 ${route.capacity_weekday} 人`);
+      if (route.capacity_weekend && route.capacity_weekend !== route.capacity_weekday) {
+        capBits.push(`假日每日 ${route.capacity_weekend} 人`);
+      }
+      document.getElementById('hut-title').textContent =
+        `${route.name}（${capBits.join('｜') || '承載量未提供'}）`;
+
+      // 必須在 buildCalendarShell 之後 —— 它會清空 #closure-notice，
+      // 先寫會被清掉（封園警示踩過同一個坑）。
+      const calendar = buildCalendarShell(src.year, src.month);
+      renderQuotaNotice(route);
+      const dayMap = {};
+      (route.days || []).forEach(d => { dayMap[d.date] = d; });
+      const { lastDay, firstWeekdayMon0 } = monthGrid(src.year, src.month);
+
+      for (let i = 0; i < firstWeekdayMon0; i++) {
+        const empty = document.createElement('div');
+        empty.className = 'day-cell empty';
+        calendar.appendChild(empty);
+      }
+      for (let d = 1; d <= lastDay; d++) {
+        const dateStr = `${src.year}-${String(src.month).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+        const day = dayMap[dateStr];
+        const cell = document.createElement('div');
+        if (!day) {
+          cell.className = 'day-cell no-data';
+          cell.innerHTML = `<div class="day-num">${d}</div>`;
+        } else {
+          const isFull = day.status === '額滿';
+          cell.className = 'day-cell';
+          cell.innerHTML = `
+            <div class="day-num">${d}</div>
+            <span class="status ${isFull ? 'full' : 'avail'}">${
+              isFull ? statusSpans('額滿', '滿') : statusSpans(`餘額 ${day.avail}`, String(day.avail))}</span>
+            <div class="line">排隊 ${day.queue ?? '—'}</div>
+            <div class="line">審核 ${day.reviewing ?? '—'}</div>
+            <div class="line">入園 ${day.approved ?? '—'}</div>
+          `;
+        }
+        calendar.appendChild(cell);
+      }
+    }
+
+    // 抽籤與否直接影響「什麼時候要動作」，因此放在日曆正上方而非埋在說明裡。
+    function renderQuotaNotice(route) {
+      const box = document.getElementById('closure-notice');
+      if (!box) return;
+      const lottery = isLotteryRoute(route.name);
+      const extra = lottery
+        ? `<div class="quota-line">本路線<strong>採抽籤制</strong>，非先到先得。${nextDrawSummary()}</div>`
+        : `<div class="quota-line">本路線<strong>未列入</strong>玉山抽籤日期公告範圍，仍受每日承載量限制。</div>`;
+      box.innerHTML =
+        `<div class="quota-box">` +
+        `<div class="quota-line">單日往返仍需申請入園，且有<strong>每日承載量上限</strong>，不是隨到隨辦。</div>` +
+        extra +
+        `<div class="quota-src">出處：內政部國家公園署 臺灣登山申請一站式服務網 · ` +
+        `<a href="${QUOTA_SOURCE_URL}" target="_blank" rel="noopener">玉山單日往返路線查詢</a>` +
+        (lottery ? ` · <a href="${APPLY_SOURCES.lottery}" target="_blank" rel="noopener">玉山抽籤日期</a>` : '') +
+        `</div></div>`;
+    }
+
     function renderYushanTabs() {
       const container = document.getElementById('hut-tabs');
       container.innerHTML = '';
@@ -1739,20 +1884,44 @@
     // 但橫幅另外兩樣東西沒有重複，必須保留：
     //   1. 長期停止申請（整修中）的警告 —— 走法卡片沒有這個資訊
     //   2. 「查看完整山屋列表」的導覽出口
-    function renderRouteBanner(route, huts, onExitToFullList, applyUrl, hideHutList) {
+    function renderRouteBanner(route, huts, onExitToFullList, applyUrl, hideHutList, variant) {
       const banner = document.getElementById('route-banner');
       const noCalendarNote = document.getElementById('no-calendar-note');
 
       if (huts.length === 0) {
         banner.style.display = 'none';
+
+        // 單日往返若有官方逐日名額資料，直接顯示日曆 ——
+        // 這才是「這天還有沒有位」的答案，比一段文字說明有用得多。
+        const qName = variant && variant.quotaRoute;
+        const qIndex = qName ? quotaRoutes(monthOffset).findIndex(r => r.name === qName) : -1;
+        if (qIndex >= 0) {
+          noCalendarNote.style.display = 'none';
+          setCalendarAreaVisible(true);
+          routeFilter = [qName];
+          currentSystem = 'quota';
+          renderQuotaTabs();
+          setBottomCta(applyUrl);
+          updateMonthNavButtons();
+          return;
+        }
+
         noCalendarNote.style.display = 'block';
         const parkName = { yushan: '玉山', snow: '雪霸', taroko: '太魯閣' }[route.system] || '';
+        // 先前這裡寫「僅需事先申請入園許可證」是錯的 ——
+        // 單日往返一樣有每日承載量上限（例如玉山線單日往返每日 60 人，
+        // 且列入抽籤），寫成「僅需申請」會讓人以為沒有名額限制、隨到隨辦。
+        // 在逐日名額資料接上之前，先用中性敘述說明有上限。
         noCalendarNote.innerHTML = `
-          <div>此走法當日來回，不需申請山屋或營地過夜，僅需事先申請${parkName}國家公園入園許可證。</div>
+          <div><strong>此走法當日來回，不需申請山屋或營地過夜，但仍需申請入園。</strong></div>
+          <div class="ncn-sub">單日往返路線同樣有<strong>每日承載量上限</strong>，並非隨到隨辦；
+          部分路線採抽籤制。本站目前只取得玉山國家公園的單日往返逐日名額，
+          ${parkName}的名額與申請方式請以
+          <a href="${APPLY_SOURCES.apply}" target="_blank" rel="noopener">官方登山線上申請</a>為準。</div>
           ${renderApplyCta(applyUrl)}
         `;
-        // 這條路徑的申請按鈕就放在說明文字底下（語意上緊接著「僅需申請入園證」），
-        // 因此要清掉頁尾那顆，否則切換走法後會留著上一個走法的按鈕，同頁出現兩顆。
+        // 這條路徑的申請按鈕就放在說明文字底下，因此要清掉頁尾那顆，
+        // 否則切換走法後會留著上一個走法的按鈕，同頁出現兩顆。
         setBottomCta(null);
         setCalendarAreaVisible(false);
         return;
@@ -2001,7 +2170,7 @@
       });
 
       routeFilter = variant.huts.length ? variant.huts : [];
-      renderRouteBanner(route, variant.huts, onExitToFullList, variant.applyUrl, true);
+      renderRouteBanner(route, variant.huts, onExitToFullList, variant.applyUrl, true, variant);
       // 證件需求依走法而異（例如單日往返與多日行程是不同的官方登錄路線），
       // 只更新這一小塊，不重建整個申請流程區塊，避免展開狀態與已填日期被重置
       renderPermits(variant.officialRoute);
@@ -2029,6 +2198,8 @@
         renderProgressTabs('taroko_huts', '太魯閣', TAROKO_LEGEND);
       } else if (system === 'snow') {
         renderProgressTabs('snow_huts', '雪霸', SNOW_LEGEND);
+      } else if (system === 'quota') {
+        renderQuotaTabs();
       }
       updateMonthNavButtons();
     }
@@ -2055,6 +2226,7 @@
           { key: 'forest', label: `林業及自然保育署系統（${data.forest_huts.length}）` },
           { key: 'taroko', label: `太魯閣系統（${data.taroko_huts.length}）` },
           { key: 'snow', label: `雪霸系統（${data.snow_huts.length}）` },
+          { key: 'quota', label: `單日往返路線（${((data.route_quota || {}).routes || []).length}）` },
         ];
         systems.forEach(s => {
           const btn = document.createElement('div');

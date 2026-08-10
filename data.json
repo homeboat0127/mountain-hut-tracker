@@ -46959,5 +46959,1988 @@
       "can_apply": null,
       "status": null
     }
+  },
+  "lottery_scope": [
+    "排雲山莊",
+    "圓峰山屋/營地",
+    "瓦拉米山屋/營地",
+    "庫哈諾辛山屋/營地",
+    "玉山線單日往返"
+  ],
+  "route_quota": {
+    "year": 2026,
+    "month": 8,
+    "routes": [
+      {
+        "capacity_weekday": 100,
+        "capacity_weekend": 100,
+        "note": "玉山前峰登山口距前峰雖僅0.8",
+        "name": "玉山前峰單日往返",
+        "value": "3",
+        "type": "route_quota",
+        "days": [
+          {
+            "date": "2026-08-15",
+            "status": "餘額",
+            "avail": 1,
+            "queue": 17,
+            "reviewing": 0,
+            "approved": 97
+          },
+          {
+            "date": "2026-08-16",
+            "status": "餘額",
+            "avail": 5,
+            "queue": 7,
+            "reviewing": 0,
+            "approved": 92
+          },
+          {
+            "date": "2026-08-17",
+            "status": "餘額",
+            "avail": 98,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 2
+          },
+          {
+            "date": "2026-08-18",
+            "status": "餘額",
+            "avail": 97,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 3
+          },
+          {
+            "date": "2026-08-19",
+            "status": "餘額",
+            "avail": 95,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 5
+          },
+          {
+            "date": "2026-08-20",
+            "status": "餘額",
+            "avail": 97,
+            "queue": 3,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-08-21",
+            "status": "餘額",
+            "avail": 85,
+            "queue": 2,
+            "reviewing": 0,
+            "approved": 13
+          },
+          {
+            "date": "2026-08-22",
+            "status": "餘額",
+            "avail": 46,
+            "queue": 3,
+            "reviewing": 0,
+            "approved": 51
+          },
+          {
+            "date": "2026-08-23",
+            "status": "餘額",
+            "avail": 12,
+            "queue": 6,
+            "reviewing": 2,
+            "approved": 80
+          },
+          {
+            "date": "2026-08-24",
+            "status": "餘額",
+            "avail": 95,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 5
+          },
+          {
+            "date": "2026-08-25",
+            "status": "餘額",
+            "avail": 97,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 3
+          },
+          {
+            "date": "2026-08-26",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-08-27",
+            "status": "餘額",
+            "avail": 95,
+            "queue": 5,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-08-28",
+            "status": "餘額",
+            "avail": 97,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 3
+          },
+          {
+            "date": "2026-08-29",
+            "status": "餘額",
+            "avail": 27,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 73
+          },
+          {
+            "date": "2026-08-30",
+            "status": "餘額",
+            "avail": 50,
+            "queue": 3,
+            "reviewing": 0,
+            "approved": 47
+          },
+          {
+            "date": "2026-08-31",
+            "status": "餘額",
+            "avail": 99,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 1
+          }
+        ]
+      },
+      {
+        "capacity_weekday": 60,
+        "capacity_weekend": 60,
+        "note": "一、單日往返入園時間原則為上午",
+        "name": "玉山線單日往返",
+        "value": "4",
+        "type": "route_quota",
+        "days": [
+          {
+            "date": "2026-08-15",
+            "status": "餘額",
+            "avail": 6,
+            "queue": 65,
+            "reviewing": 0,
+            "approved": 54
+          },
+          {
+            "date": "2026-08-16",
+            "status": "額滿",
+            "avail": 0,
+            "queue": 59,
+            "reviewing": 0,
+            "approved": 55
+          },
+          {
+            "date": "2026-08-17",
+            "status": "額滿",
+            "avail": 0,
+            "queue": 4,
+            "reviewing": 0,
+            "approved": 60
+          },
+          {
+            "date": "2026-08-18",
+            "status": "餘額",
+            "avail": 19,
+            "queue": 2,
+            "reviewing": 0,
+            "approved": 39
+          },
+          {
+            "date": "2026-08-19",
+            "status": "餘額",
+            "avail": 31,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 29
+          },
+          {
+            "date": "2026-08-20",
+            "status": "餘額",
+            "avail": 30,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 30
+          },
+          {
+            "date": "2026-08-21",
+            "status": "餘額",
+            "avail": 28,
+            "queue": 0,
+            "reviewing": 2,
+            "approved": 30
+          },
+          {
+            "date": "2026-08-22",
+            "status": "餘額",
+            "avail": 2,
+            "queue": 65,
+            "reviewing": 2,
+            "approved": 56
+          },
+          {
+            "date": "2026-08-23",
+            "status": "額滿",
+            "avail": 0,
+            "queue": 39,
+            "reviewing": 0,
+            "approved": 60
+          },
+          {
+            "date": "2026-08-24",
+            "status": "餘額",
+            "avail": 3,
+            "queue": 12,
+            "reviewing": 3,
+            "approved": 54
+          },
+          {
+            "date": "2026-08-25",
+            "status": "餘額",
+            "avail": 46,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 14
+          },
+          {
+            "date": "2026-08-26",
+            "status": "餘額",
+            "avail": 42,
+            "queue": 2,
+            "reviewing": 0,
+            "approved": 16
+          },
+          {
+            "date": "2026-08-27",
+            "status": "餘額",
+            "avail": 42,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 18
+          },
+          {
+            "date": "2026-08-28",
+            "status": "餘額",
+            "avail": 30,
+            "queue": 3,
+            "reviewing": 0,
+            "approved": 27
+          },
+          {
+            "date": "2026-08-29",
+            "status": "餘額",
+            "avail": 2,
+            "queue": 23,
+            "reviewing": 0,
+            "approved": 58
+          },
+          {
+            "date": "2026-08-30",
+            "status": "額滿",
+            "avail": 0,
+            "queue": 30,
+            "reviewing": 0,
+            "approved": 60
+          },
+          {
+            "date": "2026-08-31",
+            "status": "餘額",
+            "avail": 36,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 24
+          }
+        ]
+      },
+      {
+        "capacity_weekday": 100,
+        "capacity_weekend": 100,
+        "note": "[登山路線路況]",
+        "name": "庫哈諾辛山/關山單日往返",
+        "value": "81",
+        "type": "route_quota",
+        "days": [
+          {
+            "date": "2026-08-15",
+            "status": "餘額",
+            "avail": 1,
+            "queue": 22,
+            "reviewing": 0,
+            "approved": 99
+          },
+          {
+            "date": "2026-08-16",
+            "status": "餘額",
+            "avail": 38,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 62
+          },
+          {
+            "date": "2026-08-17",
+            "status": "餘額",
+            "avail": 81,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 19
+          },
+          {
+            "date": "2026-08-18",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-08-19",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-08-20",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-08-21",
+            "status": "餘額",
+            "avail": 80,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 20
+          },
+          {
+            "date": "2026-08-22",
+            "status": "餘額",
+            "avail": 1,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 99
+          },
+          {
+            "date": "2026-08-23",
+            "status": "餘額",
+            "avail": 36,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 64
+          },
+          {
+            "date": "2026-08-24",
+            "status": "餘額",
+            "avail": 93,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 7
+          },
+          {
+            "date": "2026-08-25",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-08-26",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-08-27",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-08-28",
+            "status": "餘額",
+            "avail": 97,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 3
+          },
+          {
+            "date": "2026-08-29",
+            "status": "餘額",
+            "avail": 34,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 66
+          },
+          {
+            "date": "2026-08-30",
+            "status": "額滿",
+            "avail": 0,
+            "queue": 9,
+            "reviewing": 0,
+            "approved": 93
+          },
+          {
+            "date": "2026-08-31",
+            "status": "餘額",
+            "avail": 98,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 2
+          }
+        ]
+      },
+      {
+        "capacity_weekday": 100,
+        "capacity_weekend": 100,
+        "note": "一、行經東埔至八通關步道2.2",
+        "name": "乙女瀑布單日往返",
+        "value": "1",
+        "type": "route_quota",
+        "days": [
+          {
+            "date": "2026-08-15",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-08-16",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-08-17",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-08-18",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-08-19",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-08-20",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-08-21",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-08-22",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-08-23",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-08-24",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-08-25",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-08-26",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-08-27",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-08-28",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-08-29",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-08-30",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-08-31",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          }
+        ]
+      },
+      {
+        "capacity_weekday": 100,
+        "capacity_weekend": 100,
+        "note": "一、山風登山口至東段步道7K里",
+        "name": "瓦拉米單日往返",
+        "value": "7",
+        "type": "route_quota",
+        "days": [
+          {
+            "date": "2026-08-15",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-08-16",
+            "status": "餘額",
+            "avail": 83,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 17
+          },
+          {
+            "date": "2026-08-17",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-08-18",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-08-19",
+            "status": "餘額",
+            "avail": 99,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 1
+          },
+          {
+            "date": "2026-08-20",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-08-21",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-08-22",
+            "status": "餘額",
+            "avail": 75,
+            "queue": 11,
+            "reviewing": 0,
+            "approved": 14
+          },
+          {
+            "date": "2026-08-23",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-08-24",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-08-25",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-08-26",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-08-27",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-08-28",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-08-29",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-08-30",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-08-31",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          }
+        ]
+      }
+    ]
+  },
+  "route_quota_next_month": {
+    "year": 2026,
+    "month": 9,
+    "routes": [
+      {
+        "capacity_weekday": 100,
+        "capacity_weekend": 100,
+        "note": "玉山前峰登山口距前峰雖僅0.8",
+        "name": "玉山前峰單日往返",
+        "value": "3",
+        "type": "route_quota",
+        "days": [
+          {
+            "date": "2026-09-01",
+            "status": "餘額",
+            "avail": 97,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 3
+          },
+          {
+            "date": "2026-09-02",
+            "status": "餘額",
+            "avail": 98,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 2
+          },
+          {
+            "date": "2026-09-03",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-04",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-05",
+            "status": "餘額",
+            "avail": 34,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 66
+          },
+          {
+            "date": "2026-09-06",
+            "status": "餘額",
+            "avail": 11,
+            "queue": 1,
+            "reviewing": 0,
+            "approved": 88
+          },
+          {
+            "date": "2026-09-07",
+            "status": "餘額",
+            "avail": 99,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 1
+          },
+          {
+            "date": "2026-09-08",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-09",
+            "status": "餘額",
+            "avail": 89,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 11
+          },
+          {
+            "date": "2026-09-10",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-11",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-12",
+            "status": "餘額",
+            "avail": 2,
+            "queue": 46,
+            "reviewing": 0,
+            "approved": 98
+          },
+          {
+            "date": "2026-09-13",
+            "status": "餘額",
+            "avail": 24,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 76
+          },
+          {
+            "date": "2026-09-14",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-15",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-16",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-17",
+            "status": "餘額",
+            "avail": 97,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 3
+          },
+          {
+            "date": "2026-09-18",
+            "status": "餘額",
+            "avail": 95,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 5
+          },
+          {
+            "date": "2026-09-19",
+            "status": "餘額",
+            "avail": 63,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 37
+          },
+          {
+            "date": "2026-09-20",
+            "status": "餘額",
+            "avail": 70,
+            "queue": 2,
+            "reviewing": 0,
+            "approved": 28
+          },
+          {
+            "date": "2026-09-21",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-22",
+            "status": "餘額",
+            "avail": 97,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 3
+          },
+          {
+            "date": "2026-09-23",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-24",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-25",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-26",
+            "status": "餘額",
+            "avail": 74,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 26
+          },
+          {
+            "date": "2026-09-27",
+            "status": "餘額",
+            "avail": 74,
+            "queue": 5,
+            "reviewing": 0,
+            "approved": 21
+          },
+          {
+            "date": "2026-09-28",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-29",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          }
+        ]
+      },
+      {
+        "capacity_weekday": 60,
+        "capacity_weekend": 60,
+        "note": "一、單日往返入園時間原則為上午",
+        "name": "玉山線單日往返",
+        "value": "4",
+        "type": "route_quota",
+        "days": [
+          {
+            "date": "2026-09-01",
+            "status": "餘額",
+            "avail": 60,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-02",
+            "status": "餘額",
+            "avail": 53,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 7
+          },
+          {
+            "date": "2026-09-03",
+            "status": "餘額",
+            "avail": 35,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 25
+          },
+          {
+            "date": "2026-09-04",
+            "status": "餘額",
+            "avail": 20,
+            "queue": 2,
+            "reviewing": 0,
+            "approved": 38
+          },
+          {
+            "date": "2026-09-05",
+            "status": "餘額",
+            "avail": 6,
+            "queue": 15,
+            "reviewing": 0,
+            "approved": 54
+          },
+          {
+            "date": "2026-09-06",
+            "status": "餘額",
+            "avail": 1,
+            "queue": 58,
+            "reviewing": 5,
+            "approved": 54
+          },
+          {
+            "date": "2026-09-07",
+            "status": "餘額",
+            "avail": 10,
+            "queue": 9,
+            "reviewing": 27,
+            "approved": 14
+          },
+          {
+            "date": "2026-09-08",
+            "status": "餘額",
+            "avail": 41,
+            "queue": 9,
+            "reviewing": 10,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-09",
+            "status": "餘額",
+            "avail": 53,
+            "queue": 0,
+            "reviewing": 7,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-10",
+            "status": "餘額",
+            "avail": 60,
+            "queue": 5,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-11",
+            "status": "餘額",
+            "avail": 60,
+            "queue": 25,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-12",
+            "status": "餘額",
+            "avail": 60,
+            "queue": 82,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-13",
+            "status": "餘額",
+            "avail": 60,
+            "queue": 165,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-14",
+            "status": "餘額",
+            "avail": 60,
+            "queue": 13,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-15",
+            "status": "餘額",
+            "avail": 60,
+            "queue": 7,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-16",
+            "status": "餘額",
+            "avail": 60,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-17",
+            "status": "餘額",
+            "avail": 60,
+            "queue": 1,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-18",
+            "status": "餘額",
+            "avail": 60,
+            "queue": 11,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-19",
+            "status": "餘額",
+            "avail": 60,
+            "queue": 83,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-20",
+            "status": "餘額",
+            "avail": 60,
+            "queue": 122,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-21",
+            "status": "餘額",
+            "avail": 60,
+            "queue": 14,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-22",
+            "status": "餘額",
+            "avail": 60,
+            "queue": 10,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-23",
+            "status": "餘額",
+            "avail": 60,
+            "queue": 2,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-24",
+            "status": "餘額",
+            "avail": 60,
+            "queue": 1,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-25",
+            "status": "餘額",
+            "avail": 60,
+            "queue": 10,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-26",
+            "status": "餘額",
+            "avail": 60,
+            "queue": 50,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-27",
+            "status": "餘額",
+            "avail": 60,
+            "queue": 81,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-28",
+            "status": "餘額",
+            "avail": 60,
+            "queue": 9,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-29",
+            "status": "餘額",
+            "avail": 60,
+            "queue": 6,
+            "reviewing": 0,
+            "approved": 0
+          }
+        ]
+      },
+      {
+        "capacity_weekday": 100,
+        "capacity_weekend": 100,
+        "note": "[登山路線路況]",
+        "name": "庫哈諾辛山/關山單日往返",
+        "value": "81",
+        "type": "route_quota",
+        "days": [
+          {
+            "date": "2026-09-01",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-02",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-03",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-04",
+            "status": "餘額",
+            "avail": 98,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 2
+          },
+          {
+            "date": "2026-09-05",
+            "status": "餘額",
+            "avail": 71,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 29
+          },
+          {
+            "date": "2026-09-06",
+            "status": "餘額",
+            "avail": 52,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 48
+          },
+          {
+            "date": "2026-09-07",
+            "status": "餘額",
+            "avail": 96,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 4
+          },
+          {
+            "date": "2026-09-08",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-09",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-10",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-11",
+            "status": "餘額",
+            "avail": 98,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 2
+          },
+          {
+            "date": "2026-09-12",
+            "status": "餘額",
+            "avail": 55,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 45
+          },
+          {
+            "date": "2026-09-13",
+            "status": "餘額",
+            "avail": 64,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 36
+          },
+          {
+            "date": "2026-09-14",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-15",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-16",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-17",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-18",
+            "status": "餘額",
+            "avail": 95,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 5
+          },
+          {
+            "date": "2026-09-19",
+            "status": "餘額",
+            "avail": 98,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 2
+          },
+          {
+            "date": "2026-09-20",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-21",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-22",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-23",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-24",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-25",
+            "status": "餘額",
+            "avail": 96,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 4
+          },
+          {
+            "date": "2026-09-26",
+            "status": "餘額",
+            "avail": 74,
+            "queue": 2,
+            "reviewing": 3,
+            "approved": 21
+          },
+          {
+            "date": "2026-09-27",
+            "status": "餘額",
+            "avail": 72,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 28
+          },
+          {
+            "date": "2026-09-28",
+            "status": "餘額",
+            "avail": 91,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 9
+          },
+          {
+            "date": "2026-09-29",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-30",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          }
+        ]
+      },
+      {
+        "capacity_weekday": 100,
+        "capacity_weekend": 100,
+        "note": "一、行經東埔至八通關步道2.2",
+        "name": "乙女瀑布單日往返",
+        "value": "1",
+        "type": "route_quota",
+        "days": [
+          {
+            "date": "2026-09-01",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-02",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-03",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-04",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-05",
+            "status": "餘額",
+            "avail": 98,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 2
+          },
+          {
+            "date": "2026-09-06",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-07",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-08",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-09",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-10",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-11",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-12",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-13",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-14",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-15",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-16",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-17",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-18",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-19",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-20",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-21",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-22",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-23",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-24",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-25",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-26",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-27",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-28",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-29",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-30",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          }
+        ]
+      },
+      {
+        "capacity_weekday": 100,
+        "capacity_weekend": 100,
+        "note": "一、山風登山口至東段步道7K里",
+        "name": "瓦拉米單日往返",
+        "value": "7",
+        "type": "route_quota",
+        "days": [
+          {
+            "date": "2026-09-01",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-02",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-03",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-04",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-05",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-06",
+            "status": "餘額",
+            "avail": 78,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 22
+          },
+          {
+            "date": "2026-09-07",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-08",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-09",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-10",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-11",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-12",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-13",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-14",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-15",
+            "status": "餘額",
+            "avail": 97,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 3
+          },
+          {
+            "date": "2026-09-16",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-17",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-18",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-19",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-20",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-21",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-22",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-23",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-24",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-25",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-26",
+            "status": "餘額",
+            "avail": 99,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 1
+          },
+          {
+            "date": "2026-09-27",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-28",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-29",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-30",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          }
+        ]
+      }
+    ]
   }
 }
