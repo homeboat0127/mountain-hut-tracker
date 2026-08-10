@@ -1,6 +1,7 @@
 import json
 import os
 import re
+import sys
 from urllib.parse import quote
 from datetime import datetime, timezone, timedelta
 from playwright.sync_api import sync_playwright
@@ -626,16 +627,13 @@ def write_search_index(data, path="search-index.json"):
         print(f"[提醒] 以下山屋尚無別名，山名搜不到：{'、'.join(no_alias)}")
 
 
-if __name__ == "__main__":
-    data = scrape()
+def write_derived(data):
+    """由 data.json 產生兩個衍生檔。
 
-    # 寫檔前先驗證，避免壞資料覆蓋好資料
-    verify_before_write(data)
-
-    # 完整資料（查詢頁用）
-    with open("data.json", "w", encoding="utf-8") as f:
-        json.dump(data, f, ensure_ascii=False, indent=2)
-
+    這兩個檔一定要跟 data.json 同進同出：首頁讀 summary.json、查詢頁讀 data.json，
+    只要其中一個沒更新，兩個頁面就會對同一份資料講出不同的更新時間
+    （實際發生過：自動更新只提交了 data.json，首頁因此誤報「12 小時未更新」）。
+    """
     # 輕量摘要（首頁用）。首頁只需要各系統的節點數與更新時間，
     # 不必為了 4 個數字就載入整份上百 KB 的完整資料。
     summary = {
@@ -654,6 +652,47 @@ if __name__ == "__main__":
     # 搜尋索引（首頁搜尋框用）。只含搜尋必要欄位，體積遠小於完整資料，
     # 首頁才能維持「不載入 data.json」的輕量設計。
     write_search_index(data)
+
+
+def assert_timestamps_match():
+    """確認三個檔案的 updated_at 一致，不一致就讓排程失敗而不是默默上線。
+
+    首頁與查詢頁讀不同檔案，時間戳一旦分岔，使用者會在兩個頁面看到互相矛盾的
+    更新時間，而「資料到底新不新」正是這個網站最需要講清楚的一件事。
+    """
+    with open("data.json", encoding="utf-8") as f:
+        data_ts = json.load(f).get("updated_at")
+    with open("summary.json", encoding="utf-8") as f:
+        summary_ts = json.load(f).get("updated_at")
+    if data_ts != summary_ts:
+        raise SystemExit(
+            f"[中止] data.json（{data_ts}）與 summary.json（{summary_ts}）更新時間不一致"
+        )
+    print(f"時間戳一致：{data_ts}")
+
+
+if __name__ == "__main__":
+    # --derive：不重新爬，只用現有的 data.json 重建 summary.json 與 search-index.json。
+    # 用在衍生檔漏更新、需要補齊的時候，不必等下一次排程或重跑 20 分鐘的爬蟲。
+    if "--derive" in sys.argv:
+        with open("data.json", encoding="utf-8") as f:
+            data = json.load(f)
+        write_derived(data)
+        assert_timestamps_match()
+        print("已由現有 data.json 重建 summary.json 與 search-index.json")
+        raise SystemExit(0)
+
+    data = scrape()
+
+    # 寫檔前先驗證，避免壞資料覆蓋好資料
+    verify_before_write(data)
+
+    # 完整資料（查詢頁用）
+    with open("data.json", "w", encoding="utf-8") as f:
+        json.dump(data, f, ensure_ascii=False, indent=2)
+
+    write_derived(data)
+    assert_timestamps_match()
     for hut in data["huts"]:
         print(f"{hut['name']}: 寫入 {len(hut['days'])} 天資料")
     for hut in data["huts_next_month"]["huts"]:

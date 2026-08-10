@@ -8,6 +8,15 @@
   body {
     font-family: -apple-system, "PingFang TC", sans-serif; max-width: 900px; margin: 0 auto; padding: 40px 16px; color: #223324;
     background: linear-gradient(160deg, #eef7ee 0%, #f8f6ec 45%, #eaf4ec 100%) fixed;
+
+    /* 中文斷行：瀏覽器預設可以在任兩個漢字之間換行，於是「嘉明湖」會被拆成
+       「嘉明」＋「湖」，山名、山屋名被切斷後很難讀。
+       keep-all 讓漢字連續段落視為不可拆，換行只發生在空白與標點（、，。｜）上，
+       正好對應中文本來的語意停頓點。
+       overflow-wrap 是保險：萬一某個詞長到單獨一行都塞不下，仍允許拆開，
+       避免文字溢出容器造成整頁橫向捲動。 */
+    word-break: keep-all;
+    overflow-wrap: break-word;
   }
   h1 { font-size: 22px; margin-bottom: 4px; }
   .sub { color: #666; font-size: 14px; margin-bottom: 4px; }
@@ -35,6 +44,10 @@
   /* 日曆整組包成白色卡片，避免格子跟頁面的綠色底色混在一起分不清邊界 */
   .calendar { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; background: #fff; border: 1px solid #e8e8e0; border-radius: 12px; padding: 14px; box-shadow: 0 2px 10px rgba(31,92,59,0.05); }
   .weekday-header { text-align: center; font-size: 13px; font-weight: 600; color: #666; padding-bottom: 6px; }
+  /* 月曆是 7 欄固定格線，格子很窄。這裡要的是「格子塞得下」，不是「詞不被拆開」——
+     若沿用全站的 keep-all，「無資料」「剩餘」這類短詞會變成不可拆，把每格從 37px
+     撐到 84px，整個月曆撐破手機螢幕造成整頁橫向捲動。密集格線因此還原成預設斷行。 */
+  .calendar, .weekday-header, .day-cell, .day-cell * { word-break: normal; overflow-wrap: anywhere; }
 
   .day-cell { border: 1px solid #eee; border-radius: 6px; min-height: 96px; padding: 6px; font-size: 11px; background: #fff; }
   .day-cell.empty { background: #f7f7f4; border: none; }
@@ -87,7 +100,13 @@
 
 
 
-  .system-tabs { display: flex; gap: 8px; margin-bottom: 16px; }
+  /* 四個系統標籤在手機上一定排不下（「林業及自然保育署系統」本身就很長）。
+     讓標籤列自己橫向捲動，而不是把整個頁面撐寬 —— 整頁左右捲動會讓所有內容都難讀。
+     flex-shrink: 0 避免標籤被壓扁成兩三個字一行。 */
+  .system-tabs { display: flex; gap: 8px; margin-bottom: 16px; overflow-x: auto; padding-bottom: 4px; -webkit-overflow-scrolling: touch; }
+  .system-tabs::-webkit-scrollbar { height: 4px; }
+  .system-tabs::-webkit-scrollbar-thumb { background: #d5ddd7; border-radius: 2px; }
+  .system-tab { flex-shrink: 0; }
   .system-tab { padding: 8px 16px; border-radius: 8px; border: 1px solid #ddd; background: #fff; font-size: 14px; cursor: pointer; color: #333; }
   .system-tab.active { background: #2f7d52; color: #fff; border-color: #2f7d52; }
 
@@ -159,6 +178,14 @@
 
   @media (max-width: 640px) {
     .day-cell { min-height: 76px; font-size: 10px; }
+  }
+
+  /* 極窄螢幕（iPhone SE 等 320px）：7 欄月曆加上內外邊距會超出畫面約 6px，
+     整頁因此可以左右微幅捲動。縮小邊距與間隙讓它塞回去。 */
+  @media (max-width: 360px) {
+    body { padding-left: 10px; padding-right: 10px; }
+    .calendar { padding: 8px; gap: 4px; }
+    .day-cell { padding: 4px; }
   }
 </style>
   <!-- Google Analytics 4：評估 ID：G-Q1B3W3YWED -->
@@ -1478,8 +1505,12 @@
       const t = Date.parse(String(updatedAt).replace(' ', 'T') + '+08:00');
       if (isNaN(t)) return;
 
+      // 爬蟲排程為每天 07:00／11:00／15:00／19:00（台灣時間），
+      // 最長的正常間隔是 19:00 到隔天 07:00，整整 12 小時。
+      // 門檻若設 12 小時，等於每天早上健康的資料都會被誤報一次；
+      // 設 14 小時可容納單次執行延遲，而真的漏掉一輪（16 小時）仍然抓得到。
       const hours = (Date.now() - t) / 36e5;
-      if (hours < 12) return;
+      if (hours < 14) return;
 
       const day = Math.floor(hours / 24);
       const ago = day >= 1 ? day + ' 天' : Math.floor(hours) + ' 小時';
