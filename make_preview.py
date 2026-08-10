@@ -31,7 +31,7 @@ PAGES = ["index.html", "huts.html"]
 
 # 這些是放在根目錄的資料檔，預覽站要往上一層取，
 # 才能跟正式站看同一份資料，不必複製一份 1.2 MB 的 data.json
-DATA_FILES = ["data.json", "summary.json", "search-index.json"]
+DATA_FILES = ["data.json", "summary.json", "search-index.json", "apply-rules.json"]
 
 BANNER = """<div style="position:sticky;top:0;z-index:999;background:#8a5f16;color:#fff;
 padding:7px 12px;font-size:12.5px;line-height:1.6;text-align:center;
