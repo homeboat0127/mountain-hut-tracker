@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>版面預覽台｜台灣百岳資訊站</title>
+<meta name="robots" content="noindex, nofollow">
+<style>
+  :root { --bg:#eef1ee; --panel:#fff; --line:#dde3de; --ink:#223324; --muted:#7d8a80; --accent:#2f7d52; }
+  * { box-sizing: border-box; }
+  body { margin:0; font-family:-apple-system,"PingFang TC",sans-serif; background:var(--bg); color:var(--ink); }
+
+  header { position:sticky; top:0; z-index:10; background:var(--panel); border-bottom:1px solid var(--line);
+    padding:12px 16px; box-shadow:0 2px 8px rgba(31,92,59,.06); }
+  h1 { margin:0 0 3px; font-size:16px; color:#1f5c3b; }
+  .sub { font-size:12px; color:var(--muted); margin-bottom:10px; line-height:1.6; }
+
+  .controls { display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+  .ctl { display:flex; align-items:center; gap:6px; }
+  .ctl label { font-size:12px; font-weight:600; color:#4a5a4e; }
+  select, input[type=text] { padding:7px 10px; border:1px solid var(--line); border-radius:8px;
+    font-size:13px; font-family:inherit; color:var(--ink); background:#fdfefd; }
+  input[type=text] { min-width:280px; }
+  button { padding:7px 14px; border:1px solid var(--line); border-radius:8px; background:#fff;
+    font-size:13px; font-family:inherit; color:var(--accent); cursor:pointer; font-weight:600; }
+  button:hover { background:#f3f9f5; border-color:#9bd0af; }
+  button.on { background:var(--accent); color:#fff; border-color:var(--accent); }
+
+  .stage { display:flex; gap:18px; padding:18px 16px 40px; overflow-x:auto; align-items:flex-start; }
+
+  .device { flex:0 0 auto; }
+  .device-head { display:flex; justify-content:space-between; align-items:baseline; margin-bottom:6px; gap:8px; }
+  .device-name { font-size:12.5px; font-weight:700; color:#1f5c3b; }
+  .device-size { font-size:11px; color:var(--muted); }
+  .frame { background:#111; border-radius:26px; padding:9px; box-shadow:0 8px 24px rgba(31,92,59,.16); }
+  .frame.tablet { border-radius:16px; padding:11px; }
+  .frame.desktop { border-radius:8px; padding:8px 8px 14px; }
+  .frame iframe { display:block; border:0; border-radius:18px; background:#fff; }
+  .frame.tablet iframe, .frame.desktop iframe { border-radius:6px; }
+
+  .note { padding:0 16px 24px; font-size:12px; color:var(--muted); line-height:1.9; max-width:900px; }
+  .note code { background:#fff; border:1px solid var(--line); border-radius:4px; padding:1px 5px; font-size:11.5px; }
+  .warn { background:#fff8ec; border:1px solid #f3d9a4; color:#8a5f16; border-radius:8px;
+    padding:10px 13px; margin:0 16px 18px; font-size:12.5px; line-height:1.8; max-width:900px; }
+</style>
+</head>
+<body>
+  <header>
+    <h1>版面預覽台</h1>
+    <div class="sub">同一個頁面在不同螢幕寬度下的實際樣子。CSS 的 media query 依 iframe 寬度生效，因此看到的版面與真機一致。</div>
+    <div class="controls">
+      <div class="ctl">
+        <label for="target">版本</label>
+        <select id="target">
+          <option value="preview/">預覽版（preview/）</option>
+          <option value="">正式版（線上）</option>
+        </select>
+      </div>
+      <div class="ctl">
+        <label for="page">頁面</label>
+        <select id="page">
+          <option value="index.html">首頁</option>
+          <option value="huts.html?route=yushan" selected>路線頁－玉山</option>
+          <option value="huts.html?route=qilai">路線頁－奇萊主北（含無法成行）</option>
+          <option value="huts.html?route=snow">路線頁－雪山</option>
+          <option value="huts.html?route=jiaming">路線頁－嘉明湖</option>
+          <option value="huts.html?route=nanhu">路線頁－南湖大山</option>
+          <option value="huts.html?system=yushan&hut=%E6%8E%92%E9%9B%B2%E5%B1%B1%E8%8E%8A">山屋頁－排雲（含封園）</option>
+          <option value="huts.html?system=snow">系統頁－雪霸</option>
+          <option value="huts.html?system=taroko">系統頁－太魯閣</option>
+          <option value="huts.html?system=forest">系統頁－林業保育署</option>
+          <option value="__custom__">自訂網址…</option>
+        </select>
+      </div>
+      <div class="ctl" id="custom-wrap" style="display:none;">
+        <label for="custom">路徑</label>
+        <input type="text" id="custom" placeholder="huts.html?route=yushan">
+      </div>
+      <button id="reload">重新載入</button>
+      <button id="sync" class="on" title="捲動其中一台時，其他台跟著捲">捲動同步：開</button>
+    </div>
+  </header>
+
+  <div class="warn">
+    這裡看到的是<strong>版面</strong>，不是觸控體驗。字級、換行、格子寬度、可讀性都準確；
+    但手指點擊的準度、慣性捲動、iOS Safari 的網址列縮放這些只有真機能測。
+    版面在這裡看，最後一步仍建議用手機開一次預覽站。
+  </div>
+
+  <div class="stage" id="stage"></div>
+
+  <div class="note">
+    <strong>裝置寬度對照</strong>：320 = iPhone SE／小螢幕 Android；390 = iPhone 14／15；430 = iPhone Pro Max；768 = iPad 直式；1280 = 一般筆電。<br>
+    <strong>更新預覽版</strong>：在專案目錄執行 <code>python3 make_preview.py</code>，再推送即可。<br>
+    <strong>兩個版本讀同一份資料</strong>：預覽版與正式版都讀根目錄的 <code>data.json</code>，所以名額與公告一致，差別只在版面與程式碼。
+  </div>
+
+<script>
+  const DEVICES = [
+    { name: 'iPhone SE',      w: 320,  h: 720, cls: '' },
+    { name: 'iPhone 14',      w: 390,  h: 780, cls: '' },
+    { name: 'iPhone Pro Max', w: 430,  h: 800, cls: '' },
+    { name: 'iPad 直式',       w: 768,  h: 900, cls: 'tablet' },
+    { name: '筆電',            w: 1280, h: 820, cls: 'desktop' },
+  ];
+
+  const stage = document.getElementById('stage');
+  const targetSel = document.getElementById('page');
+  const versionSel = document.getElementById('target');
+  const customWrap = document.getElementById('custom-wrap');
+  const customInput = document.getElementById('custom');
+  let syncScroll = true;
+
+  function currentPath() {
+    const v = targetSel.value;
+    return v === '__custom__' ? (customInput.value.trim() || 'index.html') : v;
+  }
+
+  // 預覽版在 preview/ 底下，正式版在根目錄。這個頁面本身放在根目錄，
+  // 所以正式版用相對路徑、預覽版加上 preview/ 前綴即可。
+  function currentUrl() {
+    return versionSel.value + currentPath();
+  }
+
+  function build() {
+    stage.innerHTML = '';
+    const url = currentUrl();
+    DEVICES.forEach(d => {
+      const wrap = document.createElement('div');
+      wrap.className = 'device';
+      wrap.innerHTML = `
+        <div class="device-head">
+          <span class="device-name">${d.name}</span>
+          <span class="device-size">${d.w} × ${d.h}</span>
+        </div>
+        <div class="frame ${d.cls}">
+          <iframe src="${url}" width="${d.w}" height="${d.h}" loading="lazy"></iframe>
+        </div>`;
+      stage.appendChild(wrap);
+    });
+    hookScrollSync();
+  }
+
+  // 捲動同步：改版面時最常做的動作就是「五台一起往下看同一段」，
+  // 一台一台捲很難比對。用比例同步而非絕對位置，因為各裝置頁面總高不同。
+  function hookScrollSync() {
+    const frames = Array.from(stage.querySelectorAll('iframe'));
+    let lock = false;
+    frames.forEach(f => {
+      f.addEventListener('load', () => {
+        let doc;
+        try { doc = f.contentWindow.document; } catch (e) { return; }
+        f.contentWindow.addEventListener('scroll', () => {
+          if (!syncScroll || lock) return;
+          lock = true;
+          const el = doc.documentElement;
+          const ratio = el.scrollTop / Math.max(1, el.scrollHeight - el.clientHeight);
+          frames.forEach(other => {
+            if (other === f) return;
+            try {
+              const oe = other.contentWindow.document.documentElement;
+              oe.scrollTop = ratio * (oe.scrollHeight - oe.clientHeight);
+            } catch (e) { /* 跨來源時略過 */ }
+          });
+          requestAnimationFrame(() => { lock = false; });
+        }, { passive: true });
+      });
+    });
+  }
+
+  targetSel.addEventListener('change', () => {
+    customWrap.style.display = targetSel.value === '__custom__' ? 'flex' : 'none';
+    if (targetSel.value !== '__custom__') build();
+  });
+  customInput.addEventListener('change', build);
+  versionSel.addEventListener('change', build);
+  document.getElementById('reload').addEventListener('click', build);
+  document.getElementById('sync').addEventListener('click', (e) => {
+    syncScroll = !syncScroll;
+    e.target.classList.toggle('on', syncScroll);
+    e.target.textContent = '捲動同步：' + (syncScroll ? '開' : '關');
+  });
+
+  build();
+</script>
+</body>
+</html>

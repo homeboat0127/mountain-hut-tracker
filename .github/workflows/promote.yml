@@ -1,0 +1,72 @@
+name: 發布到正式站
+
+# 在 GitHub 網頁上按「Run workflow」即可把 preview 分支的內容發布到正式站。
+# 這是整個流程唯一會改動正式站頁面的地方，刻意做成手動觸發，
+# 不讓任何自動排程有機會把未確認的版面推上線。
+#
+# 發布前會先跑一次檢查：首頁卡片數字與路線資料必須同步，否則拒絕發布。
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirm:
+        description: '已在預覽站確認過版面？輸入 yes 才會發布'
+        required: true
+        default: 'no'
+
+permissions:
+  contents: write
+
+jobs:
+  promote:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: 檢查確認輸入
+        run: |
+          if [ "${{ github.event.inputs.confirm }}" != "yes" ]; then
+            echo "未確認（需輸入 yes），停止發布。"
+            echo "預覽站：https://homeboat0127.github.io/mountain-hut-tracker/preview/"
+            exit 1
+          fi
+
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 安裝 Playwright
+        run: |
+          pip install playwright
+          playwright install --with-deps chromium
+
+      - name: 發布前檢查（首頁卡片數字是否與路線資料同步）
+        run: |
+          git checkout preview
+          python3 sync_cards.py --check
+
+      - name: 把 preview 合併進 main
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout main
+          git merge preview --no-ff -m "發布到正式站 $(TZ=Asia/Taipei date '+%Y-%m-%d %H:%M')"
+
+          for i in 1 2 3 4 5; do
+            if git push origin main; then
+              echo "已發布到正式站"
+              exit 0
+            fi
+            echo "推送被拒（第 $i 次），同步後重試…"
+            git pull --rebase --autostash origin main || exit 1
+            sleep 5
+          done
+          exit 1
+
+      - name: 提示
+        run: |
+          echo "正式站：https://homeboat0127.github.io/mountain-hut-tracker/"
+          echo "約一分鐘後生效。"

@@ -1,0 +1,83 @@
+name: 更新預覽站
+
+# 流程設計
+#
+#   preview 分支 = 施工中　　main 分支 = 正式站
+#
+#   改動推到 preview 分支 → 這個工作流程把版面編譯進 main 的 preview/ 資料夾
+#   → 預覽網址立刻更新，但正式站的頁面完全沒動
+#   → 確認沒問題後，用「發布到正式站」工作流程把 preview 合併進 main
+#
+# 為什麼不直接改 main：改了就等於上線，使用者會是第一個試用的人。
+# 這個流程讓預覽站承擔試錯，正式站只接受確認過的版本。
+
+on:
+  push:
+    branches: [preview]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-preview:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: 取出施工中的版本
+        uses: actions/checkout@v4
+        with:
+          ref: preview
+          path: work
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 編譯預覽版頁面
+        run: |
+          cd work
+          python3 make_preview.py
+
+      - name: 取出正式站
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          path: site
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 把預覽版放進正式站的 preview/ 資料夾
+        run: |
+          # 只複製預覽相關檔案。正式站的 index.html / huts.html 一個字都不會動。
+          mkdir -p site/preview
+          cp work/preview/*.html work/preview/robots.txt site/preview/
+          cp work/preview-devices.html site/preview-devices.html
+
+          cd site
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          if [ -z "$(git status --porcelain preview preview-devices.html)" ]; then
+            echo "預覽站無變動，略過提交"
+            exit 0
+          fi
+
+          git add preview preview-devices.html
+          git commit -m "更新預覽站 $(TZ=Asia/Taipei date '+%Y-%m-%d %H:%M')"
+
+          for i in 1 2 3 4 5; do
+            if git push; then
+              echo "預覽站已更新"
+              exit 0
+            fi
+            echo "推送被拒（第 $i 次），同步後重試…"
+            git pull --rebase --autostash origin main || exit 1
+            sleep 5
+          done
+          echo "重試多次仍失敗"
+          exit 1
+
+      - name: 提示網址
+        run: |
+          echo "預覽站：https://homeboat0127.github.io/mountain-hut-tracker/preview/"
+          echo "版面預覽台：https://homeboat0127.github.io/mountain-hut-tracker/preview-devices.html"
