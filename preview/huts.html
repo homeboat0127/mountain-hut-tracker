@@ -103,6 +103,24 @@
   .apply-steps .step-src { font-size: 11px; color: #a0a89f; margin-top: 3px; }
   .apply-steps .step-src a { color: #6f9c82; }
   .ics-row { margin-top: 12px; padding-top: 12px; border-top: 1px solid #eef2ef; }
+  .ics-intro { background: #f3f9f5; border: 1px solid #d9ecdf; border-radius: 10px;
+    padding: 12px 14px; margin-bottom: 11px; }
+  .ics-intro-title { font-size: 14px; font-weight: 700; color: #1f5c3b; margin-bottom: 4px; }
+  .ics-intro-sub { font-size: 12px; color: #5a6a5e; line-height: 1.8; }
+  .ics-preview-label { font-size: 12px; font-weight: 700; color: #4a5a4e; margin: 10px 0 5px; }
+  .ics-preview { list-style: none; padding: 0; margin: 0; }
+  .ics-preview li { display: flex; gap: 9px; align-items: baseline; font-size: 12.5px;
+    line-height: 1.85; color: #223324; }
+  .ics-preview .ics-when { flex: 0 0 auto; font-weight: 700; color: #2f7d52;
+    font-variant-numeric: tabular-nums; min-width: 62px; }
+  .ics-preview .ics-what { flex: 1 1 auto; min-width: 0; }
+  .ics-preview li.key .ics-what { font-weight: 700; color: #a5342a; }
+  .ics-preview li.key .ics-when { color: #a5342a; }
+  @media (max-width: 640px) {
+    .ics-intro-sub { font-size: 11.5px; }
+    .ics-preview li { font-size: 12px; }
+    .ics-preview .ics-when { min-width: 56px; }
+  }
   .ics-btn { padding: 9px 18px; background: #2f7d52; color: #fff; border: none; border-radius: 8px;
     font-size: 14px; font-weight: 700; font-family: inherit; cursor: pointer; }
   .ics-btn:hover { background: #256644; }
@@ -1495,6 +1513,16 @@ font-family:-apple-system,'PingFang TC',sans-serif;">
         </div>
         <div class="apply-result" id="apply-result">選擇日期後，顯示該日的官方公告抽籤時間。</div>
         <div class="ics-row" id="ics-row" style="display:none;">
+          <div class="ics-intro">
+            <div class="ics-intro-title">📅 把申請流程加進行事曆</div>
+            <div class="ics-intro-sub">
+              申請不是填完就沒事 —— 中籤後有繳費期限、出發前要查天氣與封園狀態，
+              錯過任何一個都可能白跑或失去資格。匯入後由你自己的行事曆負責提醒，
+              本站不需要你註冊帳號，也不會收到任何通知權限。
+            </div>
+            <div class="ics-preview-label">會加入以下提醒：</div>
+            <ul class="ics-preview" id="ics-preview"></ul>
+          </div>
           <button type="button" class="ics-btn" id="ics-btn">📅 加入行事曆</button>
           <div class="ics-note">
             匯入的是目前的公告時間，官方日後若變更，行事曆不會自動更新。<br>
@@ -1558,6 +1586,27 @@ font-family:-apple-system,'PingFang TC',sans-serif;">
         const v = route && route.variants && route.variants[currentVariantIndex];
         return (v && v.applySite) || null;
       }
+      // 清單直接列出「會產生哪幾筆、各是哪一天」，而不是寫一段抽象說明。
+      // 按下去之前就能核對日期，也順便讓使用者看到繳費期限這種容易漏掉的事。
+      const KEY_KINDS = ['payment', 'closure', 'weather'];   // 錯過代價最高的三筆
+      function renderIcsPreview(site) {
+        const list = document.getElementById('ics-preview');
+        if (!list) return;
+        // 依日期排序後再顯示。產生順序是照流程階段，但預覽是給人「照時間讀」的，
+        // 不排序會出現 09/06 排在 09/04 前面。ics 檔本身不需要排序。
+        const events = buildApplyEvents(routeKey, site, input.value)
+          .slice()
+          .sort((a, b) => (a.date + (a.time ? a.time[0] : '')).localeCompare(b.date + (b.time ? b.time[0] : '')));
+        list.innerHTML = events.map(ev => {
+          const d = ev.date.slice(5).replace('-', '/');
+          const when = ev.time ? `${d} ${ev.time[0]}` : d;
+          const key = KEY_KINDS.includes(ev.kind);
+          return `<li class="${key ? 'key' : ''}">` +
+                 `<span class="ics-when">${when}</span>` +
+                 `<span class="ics-what">${escapeHtml(ev.title)}</span></li>`;
+        }).join('');
+      }
+
       function syncApplyUi() {
         const site = currentSite();
         const rules = applyRules && applyRules.yushan && applyRules.yushan.sites[site];
@@ -1566,7 +1615,9 @@ font-family:-apple-system,'PingFang TC',sans-serif;">
             ? '預計住宿日／單日往返日' : '預計出發日';
         }
         // 沒填日期就不顯示按鈕
-        if (icsRow) icsRow.style.display = (input.value && site && rules) ? 'block' : 'none';
+        const show = !!(input.value && site && rules);
+        if (icsRow) icsRow.style.display = show ? 'block' : 'none';
+        if (show) renderIcsPreview(site);
       }
       window.__syncApplyUi = syncApplyUi;
 
