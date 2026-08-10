@@ -918,7 +918,13 @@ font-family:-apple-system,'PingFang TC',sans-serif;">
     function changeMonth(offset) {
       monthOffset = offset;
       updateMonthNavButtons();
-      if (currentSystem === 'yushan') {
+      // 每個系統都要有自己的分支。少一個分支不會報錯，而是靜靜地渲染出
+      // 別的系統的資料 —— 錐麓古道按下個月跑出排雲山莊就是這樣來的。
+      if (currentSystem === 'quota') {
+        renderQuotaRoute(currentHutIndex);
+      } else if (currentSystem === 'trail') {
+        renderTrailQuota(currentTrailName);
+      } else if (currentSystem === 'yushan') {
         renderHut(currentHutIndex);
       } else if (currentSystem === 'forest') {
         renderForestHut(currentHutIndex);
@@ -2030,6 +2036,7 @@ font-family:-apple-system,'PingFang TC',sans-serif;">
           setCalendarAreaVisible(true);
           routeFilter = [qName];
           currentSystem = 'quota';
+          currentProgressArgs = null;
           renderQuotaTabs();
           setBottomCta(applyUrl);
           updateMonthNavButtons();
@@ -2045,6 +2052,7 @@ font-family:-apple-system,'PingFang TC',sans-serif;">
           setCalendarAreaVisible(true);
           currentSystem = 'trail';
           currentTrailName = tName;
+          currentProgressArgs = null;   // 避免殘留別的系統的渲染參數
           renderTrailQuota(tName);
           setBottomCta(applyUrl);
           updateMonthNavButtons();
@@ -2429,17 +2437,19 @@ font-family:-apple-system,'PingFang TC',sans-serif;">
           }
         } else {
           const requested = params.get('system');
-          const validKeys = systems.map(s => s.key);
-          switchSystem(validKeys.includes(requested) ? requested : 'yushan');
-
-          // 從首頁搜尋結果進來時會帶 ?hut=，直接選中該山屋並捲到日曆，
-          // 省去使用者自己在一長排頁籤裡找的步驟
           const wantHut = params.get('hut');
-          if (wantHut && requested === 'trail') {
-            currentTrailName = wantHut;
-            renderTrailQuota(wantHut);
-          } else if (wantHut) {
-            focusHut(wantHut);
+
+          // trail 沒有自己的系統頁籤（項目太多不適合並排），但仍是合法網址。
+          // 不列入 validKeys 的話會被當成無效而退回玉山，currentSystem 就錯了。
+          if (requested === 'trail') {
+            currentTrailName = wantHut || null;
+            switchSystem('trail');
+          } else {
+            const validKeys = systems.map(s => s.key);
+            switchSystem(validKeys.includes(requested) ? requested : 'yushan');
+            // 從首頁搜尋結果進來時會帶 ?hut=，直接選中該山屋並捲到日曆，
+            // 省去使用者自己在一長排頁籤裡找的步驟
+            if (wantHut) focusHut(wantHut);
           }
         }
       });
