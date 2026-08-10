@@ -1,6 +1,7 @@
 import json
 import os
 import re
+from urllib.parse import quote
 from datetime import datetime, timezone, timedelta
 from playwright.sync_api import sync_playwright
 
@@ -575,6 +576,56 @@ def verify_before_write(new_data, previous_path="data.json", min_ratio=0.5):
     print("資料量檢查通過，寫入檔案")
 
 
+def write_search_index(data, path="search-index.json"):
+    """產生首頁搜尋用的輕量索引。
+
+    使用者搜的是山名（玉山、雪山），資料裡存的是山屋名（排雲山莊、七卡山莊），
+    兩者字面對不起來，因此每筆都帶上 aliases.py 維護的別名。
+    """
+    from aliases import HUT_ALIASES, NO_HUT_ROUTES
+
+    SYSTEM_LABEL = {
+        "huts": ("yushan", "玉山國家公園"),
+        "snow_huts": ("snow", "雪霸國家公園"),
+        "taroko_huts": ("taroko", "太魯閣國家公園"),
+        "forest_huts": ("forest", "林業及自然保育署"),
+    }
+
+    index = []
+    for key, (sys_key, sys_label) in SYSTEM_LABEL.items():
+        for hut in data.get(key, []):
+            name = hut["name"]
+            kind = "營地" if ("營地" in name and "山屋" not in name and "山莊" not in name) else "山屋"
+            index.append({
+                "name": name,
+                "alias": HUT_ALIASES.get(name, []),
+                "system": sys_key,
+                "systemLabel": sys_label,
+                "type": kind,
+                "url": f"huts.html?system={sys_key}&hut={quote(name)}",
+            })
+
+    for r in NO_HUT_ROUTES:
+        index.append({
+            "name": r["name"],
+            "alias": r["alias"],
+            "system": None,
+            "systemLabel": "免申請山屋",
+            "type": "單攻路線",
+            "note": r["note"],
+            "url": None,
+        })
+
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(index, f, ensure_ascii=False, indent=1)
+
+    size = os.path.getsize(path) / 1024
+    no_alias = [x["name"] for x in index if x["system"] and not x["alias"]]
+    print(f"\n搜尋索引：{len(index)} 筆，{size:.1f} KB")
+    if no_alias:
+        print(f"[提醒] 以下山屋尚無別名，山名搜不到：{'、'.join(no_alias)}")
+
+
 if __name__ == "__main__":
     data = scrape()
 
@@ -599,6 +650,10 @@ if __name__ == "__main__":
     summary["counts"]["total"] = sum(summary["counts"].values())
     with open("summary.json", "w", encoding="utf-8") as f:
         json.dump(summary, f, ensure_ascii=False, indent=2)
+
+    # 搜尋索引（首頁搜尋框用）。只含搜尋必要欄位，體積遠小於完整資料，
+    # 首頁才能維持「不載入 data.json」的輕量設計。
+    write_search_index(data)
     for hut in data["huts"]:
         print(f"{hut['name']}: 寫入 {len(hut['days'])} 天資料")
     for hut in data["huts_next_month"]["huts"]:

@@ -1276,8 +1276,33 @@
           const requested = params.get('system');
           const validKeys = systems.map(s => s.key);
           switchSystem(validKeys.includes(requested) ? requested : 'yushan');
+
+          // 從首頁搜尋結果進來時會帶 ?hut=，直接選中該山屋並捲到日曆，
+          // 省去使用者自己在一長排頁籤裡找的步驟
+          const wantHut = params.get('hut');
+          if (wantHut) focusHut(wantHut);
         }
       });
+
+    // 依名稱選中指定山屋：找到對應頁籤按下去，再捲動到日曆區
+    function focusHut(name) {
+      const tabs = Array.from(document.querySelectorAll('#hut-tabs .hut-tab'));
+      const target = tabs.find(function (t) {
+        return t.textContent.replace(/^⚠\s*/, '').trim() === name.trim();
+      });
+      if (!target) return;
+
+      target.click();
+      target.scrollIntoView({ block: 'nearest', inline: 'center' });
+
+      // 讓使用者一眼看到是哪一個被選中
+      target.style.transition = 'box-shadow .3s';
+      target.style.boxShadow = '0 0 0 4px rgba(47,125,82,0.28)';
+      setTimeout(function () { target.style.boxShadow = ''; }, 2200);
+
+      const title = document.getElementById('hut-title');
+      if (title) title.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
   </script>
 
   <script>

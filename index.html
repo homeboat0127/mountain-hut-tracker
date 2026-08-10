@@ -51,6 +51,39 @@
   .sys-count { font-size: 12.5px; color: var(--accent); font-weight: 700; }
   .sys-note { font-size: 11.5px; color: #999; margin-top: 2px; line-height: 1.5; }
 
+
+  /* 搜尋框：新手的第一個動作，位置在 hero 正下方、熱門路線之上 */
+  .search-box { position: relative; margin-bottom: 26px; }
+  .search-input {
+    width: 100%; box-sizing: border-box; padding: 14px 16px 14px 44px;
+    border: 2px solid #d8ddd9; border-radius: 12px; font-size: 15.5px; font-family: inherit;
+    color: #223324; background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%237d8a80' stroke-width='2.4' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='M21 21l-4.3-4.3'/%3E%3C/svg%3E") no-repeat 15px center;
+    box-shadow: 0 2px 8px rgba(31,92,59,0.05);
+  }
+  .search-input:focus { outline: none; border-color: #2f7d52; box-shadow: 0 0 0 4px rgba(47,125,82,0.12); }
+  .search-hint { font-size: 12px; color: #8d968f; margin-top: 7px; }
+
+  .search-results {
+    display: none; position: absolute; z-index: 30; left: 0; right: 0; top: calc(100% + 6px);
+    background: #fff; border: 1px solid #dfe5e0; border-radius: 12px; box-shadow: 0 8px 26px rgba(31,92,59,0.16);
+    max-height: 380px; overflow-y: auto; padding: 6px;
+  }
+  .search-results.open { display: block; }
+  .sr-item {
+    display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 8px;
+    text-decoration: none; color: #223324; cursor: pointer;
+  }
+  .sr-item:hover, .sr-item.active { background: #eef7f1; }
+  .sr-badge { font-size: 10.5px; padding: 2px 7px; border-radius: 8px; white-space: nowrap; flex-shrink: 0; }
+  .sr-badge.yushan { background:#e6f3ea; color:#2f7d52; }
+  .sr-badge.snow { background:#e8f1fa; color:#3f72a0; }
+  .sr-badge.taroko { background:#f9f0df; color:#a86a12; }
+  .sr-badge.forest { background:#e9f7ee; color:#2f8a52; }
+  .sr-badge.none { background:#f0f0f0; color:#777; }
+  .sr-name { font-size: 14px; font-weight: 600; }
+  .sr-sub { font-size: 11.5px; color: #97a09a; margin-top: 1px; }
+  .sr-empty { padding: 16px 14px; font-size: 13px; color: #8d968f; line-height: 1.8; }
+
   .footer-note { margin-top: 32px; font-size: 12px; color: #999; line-height: 1.8; }
   .disclaimer { margin-top: 20px; padding: 14px 16px; background: #fbfaf5; border: 1px solid #e8e6db; border-radius: 8px; font-size: 11.5px; color: #8a8578; line-height: 1.9; }
   .disclaimer strong { color: #6b6659; }
@@ -92,6 +125,14 @@
     <h1>台灣百岳資訊站</h1>
     <div class="sub">山屋・營地即時訂位狀況，路線難度與行程規劃一次查詢</div>
     <div class="updated" id="updated"></div>
+  </div>
+
+
+  <div class="search-box">
+    <input type="text" class="search-input" id="site-search" autocomplete="off"
+           placeholder="搜尋山名或山屋，例如：玉山、嘉明湖、大霸尖山" aria-label="搜尋山名或山屋">
+    <div class="search-hint">直接輸入山名即可，不必知道它歸哪個管理機關</div>
+    <div class="search-results" id="search-results"></div>
   </div>
 
   <!-- 區塊一：熱門路線（已整理好行程、難度、剖面圖的精選路線） -->
@@ -341,6 +382,110 @@
           const m = sysCard.getAttribute('href').match(/system=([^&]+)/);
           track('select_system', { system: m ? m[1] : 'unknown' });
         }
+      });
+    })();
+  </script>
+
+  <script>
+    // 首頁搜尋：載入輕量索引（約 23 KB），純前端字串比對，不需 fuzzy 套件。
+    // 索引每筆帶 alias，因為使用者搜的是山名（玉山），資料存的是山屋名（排雲山莊）。
+    (function () {
+      const input = document.getElementById('site-search');
+      const box = document.getElementById('search-results');
+      if (!input || !box) return;
+
+      let index = [];
+      let items = [];
+      let cursor = -1;
+
+      fetch('search-index.json')
+        .then(function (r) { return r.json(); })
+        .then(function (d) { index = d; })
+        .catch(function () { input.placeholder = '搜尋暫時無法使用'; input.disabled = true; });
+
+      function search(q) {
+        q = q.trim().toLowerCase();
+        if (!q) return [];
+        const starts = [], contains = [];
+        index.forEach(function (it) {
+          const name = it.name.toLowerCase();
+          const aliasHit = (it.alias || []).some(function (a) { return a.toLowerCase().indexOf(q) !== -1; });
+          if (name.indexOf(q) === 0) starts.push(it);
+          else if (name.indexOf(q) !== -1 || aliasHit) contains.push(it);
+        });
+        return starts.concat(contains).slice(0, 12);
+      }
+
+      function render(list, q) {
+        box.innerHTML = '';
+        cursor = -1;
+        items = [];
+
+        if (!q.trim()) { box.classList.remove('open'); return; }
+
+        if (list.length === 0) {
+          box.innerHTML = '<div class="sr-empty">找不到「' + escapeHtml(q) + '」<br>' +
+            '可試試山名（玉山、雪山、嘉明湖）或山屋名（排雲山莊）。<br>' +
+            '若這座山應該要有，歡迎用下方回饋表單告訴我。</div>';
+          box.classList.add('open');
+          if (window.gtag) gtag('event', 'search', { search_term: q.trim(), has_result: false });
+          return;
+        }
+
+        list.forEach(function (it) {
+          const a = document.createElement(it.url ? 'a' : 'div');
+          a.className = 'sr-item';
+          if (it.url) a.href = it.url;
+          a.innerHTML =
+            '<span class="sr-badge ' + (it.system || 'none') + '">' + it.systemLabel + '</span>' +
+            '<span><span class="sr-name">' + escapeHtml(it.name) + '</span>' +
+            '<span class="sr-sub">' + (it.note ? escapeHtml(it.note) : it.type) + '</span></span>';
+          if (it.url) {
+            a.addEventListener('click', function () {
+              if (window.gtag) gtag('event', 'search_result_click', { search_term: q.trim(), hut: it.name });
+            });
+          }
+          box.appendChild(a);
+          items.push(a);
+        });
+        box.classList.add('open');
+        if (window.gtag) gtag('event', 'search', { search_term: q.trim(), has_result: true });
+      }
+
+      function escapeHtml(t) {
+        return String(t).replace(/[&<>"]/g, function (c) {
+          return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
+        });
+      }
+
+      // 輸入停頓後才送 GA 事件，避免每打一個字就記一次
+      let timer = null;
+      input.addEventListener('input', function () {
+        const q = input.value;
+        clearTimeout(timer);
+        timer = setTimeout(function () { render(search(q), q); }, 220);
+      });
+
+      // 鍵盤操作：上下選擇、Enter 前往、Esc 關閉
+      input.addEventListener('keydown', function (e) {
+        if (!box.classList.contains('open') || items.length === 0) return;
+        if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+          e.preventDefault();
+          items.forEach(function (el) { el.classList.remove('active'); });
+          cursor = e.key === 'ArrowDown'
+            ? (cursor + 1) % items.length
+            : (cursor - 1 + items.length) % items.length;
+          items[cursor].classList.add('active');
+          items[cursor].scrollIntoView({ block: 'nearest' });
+        } else if (e.key === 'Enter' && cursor >= 0) {
+          if (items[cursor].href) { window.location.href = items[cursor].href; }
+        } else if (e.key === 'Escape') {
+          box.classList.remove('open');
+        }
+      });
+
+      document.addEventListener('click', function (e) {
+        if (!e.target.closest('.search-box')) box.classList.remove('open');
       });
     })();
   </script>

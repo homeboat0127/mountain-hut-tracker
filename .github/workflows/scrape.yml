@@ -32,11 +32,11 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          if [ -z "$(git status --porcelain data.json)" ]; then
+          if [ -z "$(git status --porcelain data.json summary.json search-index.json)" ]; then
             echo "資料無變動，略過提交"
             exit 0
           fi
-          git add data.json
+          git add data.json summary.json search-index.json
           git commit -m "自動更新山屋資料 $(TZ=Asia/Taipei date '+%Y-%m-%d %H:%M')"
           # 爬蟲執行期間若有人推了其他修改，直接推會被拒絕。
           # 這裡先 rebase 再推，並重試數次，避免整批資料因為時間碰撞而白跑。
