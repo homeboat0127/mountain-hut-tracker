@@ -50,9 +50,17 @@ def build():
             continue
         html = src.read_text(encoding="utf-8")
 
-        # 資料檔改指向上一層，兩站共用同一份資料
+        # 資料檔：優先讀 preview/ 自己的一份，沒有才回退到根目錄。
+        #
+        # 為什麼要有這個回退：預覽站原本一律讀 ../data.json（正式站那份），
+        # 結果只要新功能需要新的資料欄位，預覽站就測不出來 ——
+        # 實際踩過：單日往返名額的 route_quota 欄位在正式站的 data.json 還不存在，
+        # 預覽站看起來像是功能壞掉，其實是資料沒跟上。
+        # 資料結構沒變時 preview/ 不會有副本，兩站共用同一份，不佔空間。
         for f in DATA_FILES:
-            html = html.replace(f"fetch('{f}')", f"fetch('../{f}')")
+            html = html.replace(
+                f"fetch('{f}')",
+                f"fetch('{f}').then(function(r){{return r.ok?r:fetch('../{f}');}})")
 
         # 頁面之間的連結留在預覽站內部，才不會點一下就跳回正式站
         # （huts.html / index.html 都已複製到 preview/，相對連結本來就會對）
