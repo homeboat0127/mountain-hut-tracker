@@ -289,6 +289,7 @@
     padding: 11px 14px; margin-bottom: 14px; font-size: 13px; line-height: 1.75; color: #1f5c3b; }
   .quota-box .quota-line { margin-bottom: 3px; }
   .quota-box .quota-line strong { color: #a5342a; }
+  .quota-box .quota-note { font-size: 11.5px; color: #4a5a4e; margin-top: 6px; line-height: 1.7; }
   .quota-box .quota-src { font-size: 10.5px; color: #6f9c82; margin-top: 7px;
     padding-top: 6px; border-top: 1px solid #d9ecdf; line-height: 1.6; }
   .quota-box a { color: #2f7d52; }
@@ -742,6 +743,9 @@
           {
             key: 'day',
             officialRoute: '(4級) 雪山主峰(單日往返)',
+            // 雪霸的人數限制是「登山口」層級，由該登山口進入的所有路線共用，
+            // 不是單攻專屬額度。UI 必須標明，否則會被誤讀成單攻有 160 個名額。
+            trailQuota: '雪山登山口',
             label: '單攻．當日不過夜',
             days: '單日來回',
             distanceKm: 21.8,
@@ -884,6 +888,10 @@
       if (currentSystem === 'taroko') return !!currentData?.taroko_huts_next_month;
       if (currentSystem === 'snow') return !!currentData?.snow_huts_next_month;
       if (currentSystem === 'quota') return !!currentData?.route_quota_next_month;
+      if (currentSystem === 'trail') {
+        const e = trailQuotaEntry(currentTrailName);
+        return !!(e && (e.days_next_month || []).length);
+      }
       return false;
     }
 
@@ -904,7 +912,13 @@
     function changeMonth(offset) {
       monthOffset = offset;
       updateMonthNavButtons();
-      if (currentSystem === 'yushan') {
+      // 每個系統都要有自己的分支。少一個分支不會報錯，而是靜靜地渲染出
+      // 別的系統的資料 —— 錐麓古道按下個月跑出排雲山莊就是這樣來的。
+      if (currentSystem === 'quota') {
+        renderQuotaRoute(currentHutIndex);
+      } else if (currentSystem === 'trail') {
+        renderTrailQuota(currentTrailName);
+      } else if (currentSystem === 'yushan') {
         renderHut(currentHutIndex);
       } else if (currentSystem === 'forest') {
         renderForestHut(currentHutIndex);
@@ -1613,6 +1627,18 @@
       return (src && src.routes) || [];
     }
 
+    // 太魯閣（依路線）與雪霸（依登山口）的人數限制。
+    // 兩者性質不同，scope 欄位帶著走，顯示時必須標明是哪一種。
+    function trailQuotaEntry(name) {
+      const list = (currentData && currentData.trail_quota) || [];
+      return list.find(e => e.name === name) || null;
+    }
+
+    function trailQuotaDays(entry, offset) {
+      if (!entry) return [];
+      return (offset === 1 ? entry.days_next_month : entry.days) || [];
+    }
+
     // 是否採抽籤制：比對官方 bed_8 頁面敘述解析出來的適用範圍，不寫死。
     function isLotteryRoute(name) {
       const scope = (currentData && currentData.lottery_scope) || [];
@@ -1714,6 +1740,110 @@
         `<a href="${QUOTA_SOURCE_URL}" target="_blank" rel="noopener">玉山單日往返路線查詢</a>` +
         (lottery ? ` · <a href="${APPLY_SOURCES.lottery}" target="_blank" rel="noopener">玉山抽籤日期</a>` : '') +
         `</div></div>`;
+    }
+
+    let currentTrailName = null;
+
+    const TRAIL_LEGEND = [
+      ['餘額', '當日剩餘名額'], ['待處理／待審查', '申請中尚未審核'],
+      ['補件', '需補件的申請'], ['已通過', '已核准入園'],
+      ['待系統排定／候補中', '等候空位釋出'],
+    ];
+
+    function renderTrailQuota(name) {
+      const entry = trailQuotaEntry(name);
+      if (!entry) return;
+      currentTrailName = name;
+
+      const container = document.getElementById('hut-tabs');
+      container.innerHTML = '';
+      // 同系統其他有上限的項目也列出來，方便橫向比較
+      const siblings = ((currentData && currentData.trail_quota) || [])
+        .filter(e => e.system === entry.system && !e.unlimited);
+      if (siblings.length > 1) {
+        const tabs = document.createElement('div');
+        tabs.className = 'hut-tabs';
+        siblings.forEach(e => {
+          const btn = document.createElement('div');
+          btn.className = 'hut-tab' + (e.name === name ? ' active' : '');
+          btn.innerHTML = `<span>${escapeHtml(e.name)}</span>`;
+          btn.addEventListener('click', () => renderTrailQuota(e.name));
+          tabs.appendChild(btn);
+        });
+        container.appendChild(tabs);
+      }
+      renderLegend(TRAIL_LEGEND);
+
+      const capBits = [];
+      if (entry.capacity_weekday) capBits.push(`平日每日 ${entry.capacity_weekday} 人`);
+      if (entry.capacity_weekend && entry.capacity_weekend !== entry.capacity_weekday) {
+        capBits.push(`假日每日 ${entry.capacity_weekend} 人`);
+      }
+      document.getElementById('hut-title').textContent =
+        `${entry.name}（${capBits.join('｜') || '無人數限制'}）`;
+
+      const days = trailQuotaDays(entry, monthOffset);
+      const ref = days.length ? days[0].date : null;
+      const year = ref ? Number(ref.slice(0, 4)) : new Date().getFullYear();
+      const month = ref ? Number(ref.slice(5, 7)) : new Date().getMonth() + 1;
+
+      const calendar = buildCalendarShell(year, month);
+      renderTrailNotice(entry);
+
+      const dayMap = {};
+      days.forEach(d => { dayMap[d.date] = d; });
+      const { lastDay, firstWeekdayMon0 } = monthGrid(year, month);
+      for (let i = 0; i < firstWeekdayMon0; i++) {
+        const empty = document.createElement('div');
+        empty.className = 'day-cell empty';
+        calendar.appendChild(empty);
+      }
+      for (let d = 1; d <= lastDay; d++) {
+        const dateStr = `${year}-${String(month).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+        const day = dayMap[dateStr];
+        const cell = document.createElement('div');
+        if (!day) {
+          cell.className = 'day-cell no-data';
+          cell.innerHTML = `<div class="day-num">${d}</div>`;
+        } else if (day.closed) {
+          cell.className = 'day-cell';
+          cell.innerHTML = `<div class="day-num">${d}</div>` +
+            `<span class="status closed">${statusSpans('關閉', '閉')}</span>` +
+            `<div class="line">${escapeHtml(day.note || '暫停申請')}</div>`;
+        } else {
+          const f = day.fields || {};
+          const remain = f['餘額'];
+          const isFull = remain === 0 || remain === undefined;
+          cell.className = 'day-cell';
+          cell.innerHTML = `<div class="day-num">${d}</div>` +
+            `<span class="status ${isFull ? 'full' : 'avail'}">${
+              isFull ? statusSpans('額滿', '滿') : statusSpans(`餘額 ${remain}`, String(remain))}</span>` +
+            Object.entries(f).filter(([k]) => k !== '餘額')
+              .map(([k, v]) => `<div class="line">${escapeHtml(k)} ${v}</div>`).join('');
+        }
+        calendar.appendChild(cell);
+      }
+    }
+
+    function renderTrailNotice(entry) {
+      const box = document.getElementById('closure-notice');
+      if (!box) return;
+      const url = entry.system === 'taroko'
+        ? 'https://hike.taiwan.gov.tw/bed_5.aspx'
+        : 'https://hike.taiwan.gov.tw/bed_10.aspx';
+      const srcName = entry.system === 'taroko' ? '太魯閣路線查詢' : '雪霸路線查詢';
+      // 雪霸是登山口層級，額度由該登山口進入的所有路線共用 ——
+      // 不講清楚會被讀成「這條路線有 160 個名額」，實際上是整個登山口共用。
+      const scopeLine = entry.scope === '登山口'
+        ? `<div class="quota-line">這是<strong>登山口層級</strong>的每日承載量，由該登山口進入的<strong>所有路線共用</strong>，不是單一走法的專屬名額。</div>`
+        : `<div class="quota-line">這是<strong>該路線</strong>的每日承載量。</div>`;
+      box.innerHTML =
+        `<div class="quota-box">` +
+        `<div class="quota-line">此路線有<strong>每日人數上限</strong>，需申請入園，不是隨到隨辦。</div>` +
+        scopeLine +
+        (entry.note ? `<div class="quota-note">${escapeHtml(entry.note)}</div>` : '') +
+        `<div class="quota-src">出處：內政部國家公園署 臺灣登山申請一站式服務網 · ` +
+        `<a href="${url}" target="_blank" rel="noopener">${srcName}</a></div></div>`;
     }
 
     function renderYushanTabs() {
@@ -1900,7 +2030,24 @@
           setCalendarAreaVisible(true);
           routeFilter = [qName];
           currentSystem = 'quota';
+          currentProgressArgs = null;
           renderQuotaTabs();
+          setBottomCta(applyUrl);
+          updateMonthNavButtons();
+          return;
+        }
+
+        // 太魯閣／雪霸的人數限制。雪霸是登山口層級，額度由該登山口的所有路線共用，
+        // 因此顯示時要標明範圍，不能講成這個走法的專屬名額。
+        const tName = variant && variant.trailQuota;
+        const tEntry = tName ? trailQuotaEntry(tName) : null;
+        if (tEntry && !tEntry.unlimited) {
+          noCalendarNote.style.display = 'none';
+          setCalendarAreaVisible(true);
+          currentSystem = 'trail';
+          currentTrailName = tName;
+          currentProgressArgs = null;   // 避免殘留別的系統的渲染參數
+          renderTrailQuota(tName);
           setBottomCta(applyUrl);
           updateMonthNavButtons();
           return;
@@ -2200,6 +2347,9 @@
         renderProgressTabs('snow_huts', '雪霸', SNOW_LEGEND);
       } else if (system === 'quota') {
         renderQuotaTabs();
+      } else if (system === 'trail') {
+        const list = ((currentData && currentData.trail_quota) || []).filter(e => !e.unlimited);
+        renderTrailQuota(currentTrailName || (list[0] && list[0].name));
       }
       updateMonthNavButtons();
     }
@@ -2281,13 +2431,20 @@
           }
         } else {
           const requested = params.get('system');
-          const validKeys = systems.map(s => s.key);
-          switchSystem(validKeys.includes(requested) ? requested : 'yushan');
-
-          // 從首頁搜尋結果進來時會帶 ?hut=，直接選中該山屋並捲到日曆，
-          // 省去使用者自己在一長排頁籤裡找的步驟
           const wantHut = params.get('hut');
-          if (wantHut) focusHut(wantHut);
+
+          // trail 沒有自己的系統頁籤（項目太多不適合並排），但仍是合法網址。
+          // 不列入 validKeys 的話會被當成無效而退回玉山，currentSystem 就錯了。
+          if (requested === 'trail') {
+            currentTrailName = wantHut || null;
+            switchSystem('trail');
+          } else {
+            const validKeys = systems.map(s => s.key);
+            switchSystem(validKeys.includes(requested) ? requested : 'yushan');
+            // 從首頁搜尋結果進來時會帶 ?hut=，直接選中該山屋並捲到日曆，
+            // 省去使用者自己在一長排頁籤裡找的步驟
+            if (wantHut) focusHut(wantHut);
+          }
         }
       });
 

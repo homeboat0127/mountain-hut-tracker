@@ -530,7 +530,10 @@ def scrape_permits(page):
     再觸發查詢按鈕。
     """
     page.goto(PERMIT_URL, wait_until="networkidle", timeout=60000)
-    page.wait_for_timeout(1200)
+    # 前一次抓取可能讓頁面停在別的狀態，等下拉真的出現再繼續，
+    # 否則會拿到 null 而整批失敗（實際發生過）。
+    page.wait_for_selector("#con_line", timeout=20000)
+    page.wait_for_timeout(800)
 
     permits = {}
     for name in PERMIT_ROUTES:
@@ -670,42 +673,171 @@ def scrape_route_quota(page, year, month, next_year, next_month):
     options = page.evaluate("""() => Array.from(document.getElementById('con_rooms').options)
         .filter(o => o.value).map(o => ({name: o.text.trim(), value: o.value}))""")
 
-    cur, nxt = [], []
-    for opt in options:
-        name, value = opt["name"], opt["value"]
+    # 固定等待時間在這個頁面不可靠 —— 實測會出現「延遲一拍」：
+    # 讀到的是上一次查詢的結果，導致次月天數全部變成本月的天數。
+    # 改成等 postback 回應，再輪詢確認頁面狀態真的等於目標值才讀。
+    def _wait_state(expect_room=None, expect_month=None, tries=25):
+        for _ in range(tries):
+            st = page.evaluate("""() => {
+                const r = document.getElementById('con_rooms');
+                const m = document.getElementById('con_ddlMonth');
+                return {room: r ? r.value : null, month: m ? m.value : null};
+            }""")
+            ok_room = expect_room is None or str(st["room"]) == str(expect_room)
+            ok_month = expect_month is None or str(st["month"]) == str(expect_month)
+            if ok_room and ok_month:
+                return True
+            page.wait_for_timeout(400)
+        print(f"  [警告] 頁面狀態未同步（路線={expect_room} 月={expect_month}）")
+        return False
+
+    def select_route(value):
         page.evaluate("""(v) => {
             const s = document.getElementById('con_rooms');
             s.value = v; s.dispatchEvent(new Event('change', { bubbles: true }));
         }""", value)
-        page.wait_for_timeout(250)
-        page.evaluate("""() => {
-            const a = Array.from(document.querySelectorAll('a,input[type=button],input[type=submit]'))
-              .find(e => (e.innerText || e.value || '').trim() === '查詢' && e.id !== 'btngoogle');
-            if (a) a.click();
-        }""")
-        page.wait_for_timeout(2200)
+        page.wait_for_timeout(200)
+        try:
+            with page.expect_response(lambda r: "bed_7" in r.url, timeout=20000):
+                page.evaluate("""() => {
+                    const a = Array.from(document.querySelectorAll('a,input[type=button],input[type=submit]'))
+                      .find(e => (e.innerText || e.value || '').trim() === '查詢' && e.id !== 'btngoogle');
+                    if (a) a.click();
+                }""")
+        except Exception:
+            pass
+        _wait_state(expect_room=value)
+        page.wait_for_timeout(500)
 
+    def set_month(mm):
+        try:
+            with page.expect_response(lambda r: "bed_7" in r.url, timeout=20000):
+                page.evaluate("""(mm) => {
+                    const m = document.getElementById('con_ddlMonth');
+                    if (m) { m.value = String(mm); m.dispatchEvent(new Event('change', { bubbles: true })); }
+                }""", mm)
+        except Exception:
+            pass
+        _wait_state(expect_month=mm)
+        page.wait_for_timeout(500)
+
+    # 兩段式：先把所有路線的本月跑完，再整批切到次月跑第二輪。
+    # 原本每條路線來回切月份，postback 還沒完成就讀下一輪，
+    # 結果次月讀到的其實是本月（次月天數全都變成 17 天，九月卻有 30 天）。
+    cur, nxt = [], []
+    for opt in options:
+        name, value = opt["name"], opt["value"]
+        select_route(value)
         base = dict(caps.get(name, {}), name=name, value=value, type="route_quota")
         cur.append(dict(base, days=_read_quota_calendar(page, year, month)))
 
-        # 次月：改 con_ddlMonth 會自動 postback
-        page.evaluate("""(mm) => {
-            const m = document.getElementById('con_ddlMonth');
-            if (m) { m.value = String(mm); m.dispatchEvent(new Event('change', { bubbles: true })); }
-        }""", next_month)
-        page.wait_for_timeout(2200)
+    for opt in options:
+        name, value = opt["name"], opt["value"]
+        select_route(value)
+        set_month(next_month)
+        base = dict(caps.get(name, {}), name=name, value=value, type="route_quota")
         nxt.append(dict(base, days=_read_quota_calendar(page, next_year, next_month)))
-
-        # 切回本月，避免影響下一條路線
-        page.evaluate("""(mm) => {
-            const m = document.getElementById('con_ddlMonth');
-            if (m) { m.value = String(mm); m.dispatchEvent(new Event('change', { bubbles: true })); }
-        }""", month)
-        page.wait_for_timeout(1600)
+        set_month(month)
 
     total = sum(len(r["days"]) for r in cur) + sum(len(r["days"]) for r in nxt)
     print(f"  單日往返路線：{len(cur)} 條，共 {total} 天")
     return cur, nxt
+
+
+# 太魯閣與雪霸的路線／登山口人數限制。
+#
+# 與玉山的差別要講清楚，否則會把兩種不同性質的數字混為一談：
+#   太魯閣 bed_5   ：以「路線」為單位，例如錐麓古道每日 96 人
+#   雪霸   bed_10  ：以「登山口」為單位，例如雪山登山口每日 160 人 ——
+#                    這個額度由該登山口進入的所有路線共用，不是單攻專屬
+#
+# 另一個實測結果：太魯閣多數單攻路線其實標示「無限制」
+#（閂山單攻、羊頭山單攻、清水山、畢祿山），只有錐麓古道有上限。
+# 對無限制的路線硬套一個名額日曆會是錯的，因此只對有數字上限的抓逐日資料。
+TRAIL_QUOTA_SOURCES = [
+    {"system": "taroko", "label": "太魯閣國家公園", "scope": "路線",
+     "url": "https://hike.taiwan.gov.tw/bed_5.aspx"},
+    {"system": "snow", "label": "雪霸國家公園", "scope": "登山口",
+     "url": "https://hike.taiwan.gov.tw/bed_10.aspx"},
+]
+
+
+def _quota_number(text):
+    """把承載量欄位轉成數字。「無限制」回傳 None，代表沒有人數上限。"""
+    t = (text or "").strip()
+    if not t or "無限制" in t or "不限" in t:
+        return None
+    m = re.search(r"\d+", t.replace(",", ""))
+    return int(m.group(0)) if m else None
+
+
+def scrape_trail_quota(page, year, month, next_year, next_month):
+    """抓太魯閣／雪霸的路線與登山口人數限制，有數字上限者一併抓逐日名額。"""
+    out = []
+    for src in TRAIL_QUOTA_SOURCES:
+        page.goto(src["url"], wait_until="networkidle", timeout=60000)
+        page.wait_for_timeout(1200)
+
+        table = page.evaluate("""() => {
+            const t = document.querySelector('table');
+            if (!t) return [];
+            return Array.from(t.rows).slice(1)
+              .map(r => Array.from(r.cells).map(c => c.innerText.trim().replace(/\\s+/g, ' ')))
+              .filter(r => r.length >= 3 && r[0]);
+        }""")
+        options = page.evaluate("""() => Array.from(document.getElementById('con_rooms').options)
+            .filter(o => o.value).map(o => ({name: o.text.trim(), value: o.value}))""")
+        by_name = {o["name"]: o["value"] for o in options}
+
+        entries = []
+        for r in table:
+            name = r[0]
+            wk, we = _quota_number(r[1]), _quota_number(r[2])
+            entries.append({
+                "name": name,
+                "system": src["system"],
+                "systemLabel": src["label"],
+                "scope": src["scope"],
+                "value": by_name.get(name),
+                "capacity_weekday": wk,
+                "capacity_weekend": we,
+                "unlimited": wk is None and we is None,
+                "note": (r[3] if len(r) > 3 else "").strip() or None,
+                "days": [],
+                "days_next_month": [],
+            })
+
+        limited = [e for e in entries if not e["unlimited"] and e["value"]]
+        for e in limited:
+            cur = safe_scrape(
+                f"{src['label']}／{e['name']}",
+                lambda e=e: scrape_progress_hut(page, src["url"], e["value"], e["name"], year, month),
+                {"name": e["name"], "days": []})
+            e["days"] = cur.get("days", [])
+
+        # 次月：整批切換月份後再跑一次，比每條路線來回切省時間
+        try:
+            page.evaluate("""(mm) => {
+                const m = document.getElementById('con_ddlMonth');
+                if (m) { m.value = String(mm); m.dispatchEvent(new Event('change', { bubbles: true })); }
+            }""", next_month)
+            page.wait_for_timeout(2000)
+            for e in limited:
+                nxt = safe_scrape(
+                    f"{src['label']}／{e['name']}（下個月）",
+                    lambda e=e: scrape_progress_hut(page, src["url"], e["value"], e["name"], next_year, next_month),
+                    {"name": e["name"], "days": []})
+                e["days_next_month"] = nxt.get("days", [])
+        except Exception as ex:
+            print(f"  [警告] {src['label']} 次月資料略過：{type(ex).__name__}")
+
+        n_lim = len(limited)
+        n_unlim = sum(1 for e in entries if e["unlimited"])
+        total_days = sum(len(e["days"]) + len(e["days_next_month"]) for e in entries)
+        print(f"  {src['label']}（依{src['scope']}）：{len(entries)} 項"
+              f"（有上限 {n_lim}、無限制 {n_unlim}），共 {total_days} 天")
+        out.extend(entries)
+    return out
 
 
 def scrape_lottery(page):
@@ -856,6 +988,10 @@ def scrape():
             "單日往返路線",
             lambda: scrape_route_quota(page, now.year, now.month, next_year, next_month),
             ([], []))
+        trail_quota = safe_scrape(
+            "路線人數限制",
+            lambda: scrape_trail_quota(page, now.year, now.month, next_year, next_month),
+            [])
 
         browser.close()
 
@@ -867,6 +1003,7 @@ def scrape():
         "permits": permits,
         "route_quota": {"year": now.year, "month": now.month, "routes": route_cur},
         "route_quota_next_month": {"year": next_year, "month": next_month, "routes": route_next},
+        "trail_quota": trail_quota,
         "year": now.year,
         "month": now.month,
         "huts": huts_result,
@@ -1156,6 +1293,33 @@ def write_search_index(data, path="search-index.json"):
             "url": f"huts.html?system=quota&hut={quote(name)}",
         })
 
+    # 有人數上限的路線／登山口也收進索引，搜「錐麓古道」要能看到名額。
+    # 無限制的不收 —— 沒有名額可查，點進去只會看到空日曆。
+    TRAIL_ALIASES = {
+        "錐麓古道": ["錐麓", "錐麓吊橋", "太魯閣錐麓"],
+        "雪山登山口": ["雪山", "雪山主峰", "雪山單攻", "武陵雪山"],
+        "武陵四秀登山口": ["武陵四秀", "桃山", "池有山", "品田山", "喀拉業山"],
+        "大霸登山口": ["大霸尖山", "大霸", "小霸尖山"],
+        "志佳陽登山口": ["志佳陽大山", "志佳陽"],
+        "奇萊主、北峰線": ["奇萊主北", "奇萊北峰", "奇萊主峰"],
+        "南湖大山線(因承載量異動，入園日期為114.7.1以後者適用)": ["南湖大山", "南湖"],
+    }
+    for e in data.get("trail_quota", []):
+        if e.get("unlimited"):
+            continue
+        cap = e.get("capacity_weekday")
+        note = f"每日 {cap} 人" if cap else ""
+        note += f"・依{e.get('scope', '路線')}計算" if e.get("scope") else ""
+        index.append({
+            "name": e["name"],
+            "alias": TRAIL_ALIASES.get(e["name"], []),
+            "system": e.get("system", ""),
+            "systemLabel": e.get("systemLabel", ""),
+            "type": "人數限制",
+            "note": note,
+            "url": f"huts.html?system=trail&hut={quote(e['name'])}",
+        })
+
     for r in NO_HUT_ROUTES:
         index.append({
             "name": r["name"],
@@ -1241,20 +1405,35 @@ if __name__ == "__main__":
     if "--notices" in sys.argv:
         with open("data.json", encoding="utf-8") as f:
             data = json.load(f)
+
+        def keep_on_fail(key, value):
+            """抓取失敗時保留既有資料，不要用空值覆蓋。
+
+            實際踩過：路線證件那次抓取失敗，safe_scrape 回傳空字典，
+            直接寫回去就把原本 8 筆已查證的證件資料清成 0 —— 
+            輔助資料抓不到只是少一塊，把好資料蓋掉卻是把站上的內容弄壞。
+            """
+            empty = value is None or (hasattr(value, "__len__") and len(value) == 0)
+            if empty and data.get(key):
+                print(f"  [保留] {key} 本次抓取為空，維持既有 {len(data[key])} 筆")
+                return
+            data[key] = value
         with sync_playwright() as p:
             browser = p.chromium.launch()
             page = browser.new_page()
-            data["closures"] = safe_scrape("封園公告", lambda: scrape_closures(page), [])
+            keep_on_fail("closures", safe_scrape("封園公告", lambda: scrape_closures(page), []))
             lot = safe_scrape("抽籤日期", lambda: scrape_lottery(page), {"draws": [], "scope": []})
-            data["lottery"] = lot.get("draws", [])
-            data["lottery_scope"] = lot.get("scope", [])
-            data["permits"] = safe_scrape("路線證件", lambda: scrape_permits(page), {})
+            keep_on_fail("lottery", lot.get("draws", []))
+            keep_on_fail("lottery_scope", lot.get("scope", []))
+            keep_on_fail("permits", safe_scrape("路線證件", lambda: scrape_permits(page), {}))
             y, mo = data.get("year"), data.get("month")
             ny, nm = (y + 1, 1) if mo == 12 else (y, mo + 1)
             rc, rn = safe_scrape("單日往返路線",
                                  lambda: scrape_route_quota(page, y, mo, ny, nm), ([], []))
             data["route_quota"] = {"year": y, "month": mo, "routes": rc}
             data["route_quota_next_month"] = {"year": ny, "month": nm, "routes": rn}
+            keep_on_fail("trail_quota", safe_scrape(
+                "路線人數限制", lambda: scrape_trail_quota(page, y, mo, ny, nm), []))
             browser.close()
         with open("data.json", "w", encoding="utf-8") as f:
             json.dump(data, f, ensure_ascii=False, indent=2)
