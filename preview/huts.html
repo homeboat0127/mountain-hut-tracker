@@ -17,6 +17,9 @@
        避免文字溢出容器造成整頁橫向捲動。 */
     word-break: keep-all;
     overflow-wrap: break-word;
+    /* 中文行頭禁則：不讓「，」「。」這類標點掉到行首。
+       實際發生過 —— 封園公告的第二行以逗號開頭，讀起來很凌亂。 */
+    line-break: strict;
   }
   h1 { font-size: 22px; margin-bottom: 4px; }
   .sub { color: #666; font-size: 14px; margin-bottom: 4px; }
@@ -54,11 +57,23 @@
   .closure-box { border-radius: 10px; padding: 12px 16px; margin-bottom: 14px; font-size: 13px; line-height: 1.75; }
   .closure-box.confirmed { background: #fdecea; border: 1px solid #f5c6c0; color: #a5342a; }
   .closure-box.notice { background: #fff8ec; border: 1px solid #f3d9a4; color: #8a5f16; }
-  .closure-box .closure-head { font-weight: 700; margin-bottom: 4px; }
-  .closure-box .closure-period { font-weight: 700; }
-  .closure-box .closure-msg { font-size: 12px; opacity: .92; margin-top: 2px; }
-  .closure-box .closure-src { font-size: 11px; opacity: .75; margin-top: 6px; }
+  .closure-box .closure-head { font-weight: 700; font-size: 14.5px; margin-bottom: 5px; letter-spacing: .3px; }
+  .closure-box .closure-when { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-bottom: 7px; }
+  .closure-box .closure-period { font-weight: 700; font-size: 14px; font-variant-numeric: tabular-nums; }
+  .closure-box .closure-tag { font-size: 11px; font-weight: 600; padding: 2px 7px; border-radius: 10px;
+    background: rgba(0,0,0,.07); white-space: nowrap; }
+  .closure-box .closure-tag.light { opacity: .7; font-weight: 400; }
+  /* 官方原文與本站說明要能一眼分開：原文縮排並加引言標籤，本站說明不縮排 */
+  .closure-box .closure-msg { font-size: 12px; line-height: 1.65; opacity: .88; margin-top: 4px;
+    padding-left: 9px; border-left: 2px solid rgba(0,0,0,.12); }
+  .closure-box .closure-quote { font-size: 10px; font-weight: 700; opacity: .65;
+    letter-spacing: .5px; margin-right: 5px; }
+  .closure-box .closure-act { font-size: 12.5px; line-height: 1.7; margin-top: 7px; font-weight: 600; }
+  .closure-box .closure-src { font-size: 10.5px; line-height: 1.6; opacity: .7; margin-top: 8px;
+    padding-top: 6px; border-top: 1px solid rgba(0,0,0,.08); }
   .closure-box a { color: inherit; }
+  /* 標點與前一字綁在一起，避免標點落在行首（中文行頭禁則） */
+  .np { white-space: nowrap; }
   /* 封園期間的名額數字：灰化加刪除線，沿用過期資料的視覺語言 ——
      兩者要傳達的是同一件事「這個數字現在不可信」。 */
   .day-cell.park-closed { background: #fbf3f2; border-color: #f0d3cf; }
@@ -153,6 +168,9 @@
   body.data-stale-danger .day-cell .line { opacity: .45; text-decoration: line-through; }
 
   .legend { margin-top: 24px; font-size: 12px; color: #888; line-height: 1.8; }
+  /* 每個項目自成一塊不可拆，換行只會發生在項目之間，行首不會出現標點 */
+  .legend .lg-item { display: inline-block; margin: 0 14px 2px 0; white-space: normal; }
+  .legend .lg-item b { color: #6b7a70; font-weight: 700; margin-right: 5px; }
   .disclaimer { margin-top: 28px; padding: 14px 16px; background: #fbfaf5; border: 1px solid #e8e6db; border-radius: 8px; font-size: 11.5px; color: #8a8578; line-height: 1.9; }
   .disclaimer strong { color: #6b6659; }
 
@@ -295,6 +313,30 @@
     .day-detail .line { display: block; color: #555; }
   }
 
+  /* 手機：輔助性的灰字（圖例、免責、註解）本來就是次要資訊，
+     用桌機的字級會佔掉太多版面，把主要內容擠到很下面。 */
+  @media (max-width: 640px) {
+    .legend { font-size: 11px; line-height: 1.7; margin-top: 18px; }
+    .disclaimer { font-size: 10.5px; line-height: 1.75; padding: 11px 13px; }
+    .profile-box .profile-note { font-size: 10.5px; }
+    .route-variants-note { font-size: 10.5px; line-height: 1.7; }
+    .apply-note { font-size: 10.5px; line-height: 1.7; }
+    .permit-src { font-size: 10px; }
+    .apply-steps .step-src { font-size: 10px; }
+    .fb-desc, .fb-privacy { font-size: 11px; }
+    .footer-note { font-size: 11px; }
+
+    .closure-box { padding: 11px 13px; }
+    .closure-box .closure-head { font-size: 13.5px; }
+    .closure-box .closure-period { font-size: 13px; }
+    .closure-box .closure-msg { font-size: 11px; }
+    .closure-box .closure-act { font-size: 11.5px; }
+    .closure-box .closure-src { font-size: 10px; }
+    /* 「颱風期間」與「白海豚颱風」在小螢幕上是重複資訊，留主要的那個就好 */
+    .closure-box .closure-tag.light { display: none; }
+    .legend { font-size: 10.5px; line-height: 1.65; }
+  }
+
   /* 極窄螢幕（iPhone SE 等 320px）：7 欄月曆加上內外邊距會超出畫面約 6px，
      整頁因此可以左右微幅捲動。縮小邊距與間隙讓它塞回去。 */
   @media (max-width: 360px) {
@@ -412,10 +454,33 @@ font-family:-apple-system,'PingFang TC',sans-serif;">
 
   <script>
     const weekdayHeaders = ['一', '二', '三', '四', '五', '六', '日'];
-    const YS_LEGEND = '藍點：有床位｜綠點：有營位｜餘額：剩餘床位或營位名額｜排隊預約：等候抽籤或遞補｜審核中：已核發名額尚未完成手續｜核准入園：已核准，可上網列印入園許可證';
-    const FOREST_LEGEND = '剩餘數量：目前可申請的名額｜現在申請數：目前已有多少人申請（可能超過剩餘數量，數字越高代表越搶手）';
-    const TAROKO_LEGEND = '餘額：剩餘名額｜待處理：申請中尚未審核｜已通過：已核准入園';
-    const SNOW_LEGEND = '餘額：剩餘名額｜待處理／補件：申請中尚未完成手續｜已通過：已核准入園｜待系統排定／宿營地不足候補：等候空位釋出';
+    // 圖例用「詞：解釋」的成對結構，不要串成一長串。
+    // 串成一長串時換行點會落在分隔符前，行首出現「｜」或「，」——中文排版的行頭禁則不允許，
+    // 讀起來會很凌亂。改成每個項目自成一塊、不可拆，就不會有這個問題。
+    const YS_LEGEND = [
+      ['藍點', '有床位'], ['綠點', '有營位'], ['餘額', '剩餘床位或營位名額'],
+      ['排隊預約', '等候抽籤或遞補'], ['審核中', '已核發名額尚未完成手續'],
+      ['核准入園', '已核准，可上網列印入園許可證'],
+    ];
+    const FOREST_LEGEND = [
+      ['剩餘數量', '目前可申請的名額'],
+      ['現在申請數', '目前已有多少人申請，數字越高代表越搶手'],
+    ];
+    const TAROKO_LEGEND = [
+      ['餘額', '剩餘名額'], ['待處理', '申請中尚未審核'], ['已通過', '已核准入園'],
+    ];
+    const SNOW_LEGEND = [
+      ['餘額', '剩餘名額'], ['待處理／補件', '申請中尚未完成手續'],
+      ['已通過', '已核准入園'], ['待系統排定／宿營地不足候補', '等候空位釋出'],
+    ];
+
+    function renderLegend(pairs) {
+      const el = document.getElementById('legend');
+      if (!el) return;
+      el.innerHTML = pairs
+        .map(([term, desc]) => `<span class="lg-item"><b>${term}</b>${desc}</span>`)
+        .join('');
+    }
 
     // 「臺灣登山申請一站式服務網」玉山國家公園管理處入園申請深連結
     // 這組 unit/cid/fid 參數是官網自己的申請按鈕（apply_1.aspx 的 OtherRoute()）在用的同一組連結格式，
@@ -964,23 +1029,45 @@ font-family:-apple-system,'PingFang TC',sans-serif;">
         const confirmed = !!c.confirmed;
         const el = document.createElement('div');
         el.className = 'closure-box ' + (confirmed ? 'confirmed' : 'notice');
-        const head = confirmed
-          ? `⚠ ${c.reason}：本期間全面禁止入園`
-          : `${c.reason}：本期間屬可退費期間`;
+        const head = confirmed ? '⚠ 全面禁止入園' : '可退費期間';
         const tail = confirmed
           ? '下方該期間的名額數字已標示為失效，請勿據以規劃行程。'
           : (c.recovery_date
               ? `官方已公告 ${c.recovery_date} 起恢復入園，實際開放狀態請以官方公告為準。`
               : '本站未將此期間標示為封園，實際開放狀態請以官方公告為準。');
+        // 版面層次：標題 → 期間 → 官方原文 → 本站處理方式 → 出處，
+        // 由大到小、由重到輕。原本五塊文字大小相近，在 320px 上會糊成一團。
+        const period = `${c.start.replace(/^\d{4}-/, '')} – ${c.end.replace(/^\d{4}-/, '')}`;
+        const year = c.start.slice(0, 4);
         el.innerHTML =
           `<div class="closure-head">${escapeHtml(head)}</div>` +
-          `<div><span class="closure-period">${c.start} ~ ${c.end}</span>　${escapeHtml(c.reason_type || '')}</div>` +
-          (c.message ? `<div class="closure-msg">${escapeHtml(c.message)}</div>` : '') +
-          `<div class="closure-msg">${escapeHtml(tail)}</div>` +
-          `<div class="closure-src">資料來源：內政部國家公園署 臺灣登山申請一站式服務網　` +
+          `<div class="closure-when">` +
+            `<span class="closure-period">${year} / ${period.replace(/-/g, '.')}</span>` +
+            (c.reason ? `<span class="closure-tag">${escapeHtml(c.reason)}</span>` : '') +
+            (c.reason_type && c.reason_type !== c.reason
+              ? `<span class="closure-tag light">${escapeHtml(c.reason_type)}</span>` : '') +
+          `</div>` +
+          (c.message ? `<div class="closure-msg"><span class="closure-quote">官方公告</span>${noOrphanPunct(escapeHtml(c.message))}</div>` : '') +
+          `<div class="closure-act">${noOrphanPunct(escapeHtml(tail))}</div>` +
+          `<div class="closure-src">出處：內政部國家公園署 臺灣登山申請一站式服務網 · ` +
           `<a href="${CLOSURE_SOURCE_URL}" target="_blank" rel="noopener">玉山可申請退費日期查詢</a></div>`;
         box.appendChild(el);
       });
+    }
+
+    // 行頭禁則：不讓標點掉到行首。
+    // 全站用 word-break: keep-all（避免山名被拆開），副作用是瀏覽器把標點當成
+    // 獨立單位，換行點可能落在標點「之前」，於是出現「，本處自…」這種以逗號
+    // 開頭的行。CSS 的 line-break: strict 在 keep-all 下無效，
+    // 因此在標點前插入 word joiner（U+2060），把標點黏在前一個字後面。
+    // 實測：word joiner（U+2060）在 word-break: keep-all 下會被 Chromium 忽略，
+    // 標點仍會掉到行首。改成把標點與前一個字包成 white-space: nowrap 的單位，
+    // 這樣瀏覽器沒有辦法從中間拆開。只在前面是中文字或數字時才處理，
+    // 避免動到 HTML 實體（例如 &amp;）。
+    function noOrphanPunct(t) {
+      return String(t == null ? '' : t)
+        .replace(/([\u4e00-\u9fff0-9a-zA-Z])([，。、；：！？…）」』〕】])/g,
+                 '<span class="np">$1$2</span>');
     }
 
     function escapeHtml(t) {
@@ -1508,7 +1595,7 @@ font-family:-apple-system,'PingFang TC',sans-serif;">
         container.appendChild(group);
       });
 
-      document.getElementById('legend').textContent = YS_LEGEND;
+      renderLegend(YS_LEGEND);
       const firstIndex = currentData.huts.findIndex(hut => !routeFilter || routeFilter.includes(hut.name));
       renderHut(firstIndex >= 0 ? firstIndex : 0);
     }
@@ -1530,7 +1617,7 @@ font-family:-apple-system,'PingFang TC',sans-serif;">
       });
       container.appendChild(tabs);
 
-      document.getElementById('legend').textContent = FOREST_LEGEND;
+      renderLegend(FOREST_LEGEND);
       const firstIndex = currentData.forest_huts.findIndex(hut => !routeFilter || routeFilter.includes(hut.name));
       renderForestHut(firstIndex >= 0 ? firstIndex : 0);
     }
@@ -1563,7 +1650,7 @@ font-family:-apple-system,'PingFang TC',sans-serif;">
       });
       container.appendChild(tabs);
 
-      document.getElementById('legend').textContent = legend;
+      renderLegend(legend);
       const firstIndex = currentData[dataKey].findIndex(hut =>
         (!routeFilter || routeFilter.includes(hut.name)) && !isFullyClosed(dataKey, hut)
       );
