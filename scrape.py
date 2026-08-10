@@ -498,6 +498,83 @@ def scrape_closures(page):
     return closures
 
 
+# 登山路線開放狀態頁：四個機關通用，提供每條路線需要哪些證件。
+# 這是唯一一份能一次涵蓋四系統的官方結構化資料，用來補「入園證／入山證的
+# 適用差異」—— 兩者主管機關不同（國家公園署／警政署），新手常以為申請了
+# 入園證就好。實測差異是實質的：玉山與南湖要兩證，雪山與奇萊只要入園證，
+# 嘉明湖不在國家公園內，是住宿申請加入山證。
+PERMIT_URL = "https://hike.taiwan.gov.tw/open.aspx"
+
+# 官方路線名稱清單。必須與 huts.html 各走法的 officialRoute 完全一致，
+# 對不上就查不到證件資料（前端會顯示「尚未查證」而非猜測）。
+PERMIT_ROUTES = [
+    "2~5天(塔塔加 - 玉山線 - 塔塔加)",
+    "玉山線單日往返",
+    "(3級) 雪山主峰(多日行程)",
+    "(4級) 雪山主峰(單日往返)",
+    "奇萊主、北峰線",
+    "南湖大山線(因承載量異動，入園日期為114.7.1以後者適用)",
+    "嘉明湖山屋/營地",
+    "向陽山屋",
+]
+
+PERMIT_COLS = ["機關", "登山主路線", "路線名稱", "可否申請", "路線現況",
+               "入園證", "自然保護留區", "住宿", "入山證", "難度等級"]
+
+
+def scrape_permits(page):
+    """逐條查詢路線所需證件。
+
+    只查我們實際收錄的 8 條官方路線，不掃全部 437 條 —— 沒用到的資料不抓，
+    對政府網站的負擔也小。原生 select 被自訂下拉蓋住，因此用 JS 設值後
+    再觸發查詢按鈕。
+    """
+    page.goto(PERMIT_URL, wait_until="networkidle", timeout=60000)
+    page.wait_for_timeout(1200)
+
+    permits = {}
+    for name in PERMIT_ROUTES:
+        found = page.evaluate("""(name) => {
+            const s = document.getElementById('con_line');
+            const o = Array.from(s.options).find(x => x.text.trim() === name);
+            if (!o) return false;
+            s.value = o.value;
+            s.dispatchEvent(new Event('change', { bubbles: true }));
+            return true;
+        }""", name)
+        if not found:
+            print(f"  [警告] 找不到官方路線選項：{name}")
+            continue
+        page.wait_for_timeout(250)
+        page.evaluate("""() => {
+            const a = Array.from(document.querySelectorAll('a,button,input[type=button],input[type=submit]'))
+              .find(e => (e.innerText || e.value || '').trim() === '查詢' && e.id !== 'btngoogle');
+            if (a) a.click();
+        }""")
+        page.wait_for_timeout(2200)
+
+        rows = page.evaluate("""() => {
+            const t = document.querySelector('table');
+            if (!t) return [];
+            return Array.from(t.rows).slice(2)
+              .map(r => Array.from(r.cells).map(c => c.innerText.trim().replace(/\\s+/g, ' ')));
+        }""")
+        rows = [r for r in rows if len(r) >= 10 and r[2] == name]
+        if not rows:
+            print(f"  [警告] {name} 查無資料")
+            continue
+        d = dict(zip(PERMIT_COLS, rows[0]))
+        permits[name] = {
+            "agency": d["機關"],
+            "needs": [k for k in ("入園證", "自然保護留區", "住宿", "入山證") if d.get(k)],
+            "difficulty": d.get("難度等級") or None,
+            "can_apply": d.get("可否申請") or None,
+            "status": d.get("路線現況") or None,
+        }
+    print(f"  路線證件：{len(permits)} / {len(PERMIT_ROUTES)} 條查得")
+    return permits
+
+
 def scrape_lottery(page):
     """爬「玉山抽籤日期」的住宿日↔抽籤時間對照表。
 
@@ -626,6 +703,7 @@ def scrape():
         # 這兩項失敗不該讓整批名額資料白跑 —— 名額是主資料，公告是加值。
         closures = safe_scrape("封園公告", lambda: scrape_closures(page), [])
         lottery = safe_scrape("抽籤日期", lambda: scrape_lottery(page), [])
+        permits = safe_scrape("路線證件", lambda: scrape_permits(page), {})
 
         browser.close()
 
@@ -633,6 +711,7 @@ def scrape():
         "updated_at": now.strftime("%Y-%m-%d %H:%M"),
         "closures": closures,
         "lottery": lottery,
+        "permits": permits,
         "year": now.year,
         "month": now.month,
         "huts": huts_result,
@@ -986,6 +1065,7 @@ if __name__ == "__main__":
             page = browser.new_page()
             data["closures"] = safe_scrape("封園公告", lambda: scrape_closures(page), [])
             data["lottery"] = safe_scrape("抽籤日期", lambda: scrape_lottery(page), [])
+            data["permits"] = safe_scrape("路線證件", lambda: scrape_permits(page), {})
             browser.close()
         with open("data.json", "w", encoding="utf-8") as f:
             json.dump(data, f, ensure_ascii=False, indent=2)

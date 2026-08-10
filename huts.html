@@ -89,6 +89,22 @@
   .apply-steps .step-src a { color: #6f9c82; }
   .apply-note { font-size: 11.5px; color: #97a09a; line-height: 1.8; margin-top: 12px; padding-top: 10px; border-top: 1px solid #eef2ef; }
 
+  /* 所需證件：收合狀態也看得到，因為「要辦哪幾張證」是申請前的第一個問題 */
+  .permit-row { display: flex; gap: 10px; align-items: flex-start; flex-wrap: wrap; margin-top: 12px; }
+  .permit-label { flex: 0 0 auto; font-size: 12.5px; font-weight: 700; color: #4a5a4e; padding-top: 4px; }
+  .permit-chips { display: flex; gap: 6px; flex-wrap: wrap; }
+  .permit-chip { display: inline-flex; flex-direction: column; background: #eef7f1; border: 1px solid #d9ecdf;
+    border-radius: 8px; padding: 4px 10px; font-size: 13px; font-weight: 700; color: #1f6b45; line-height: 1.35; }
+  .permit-chip .permit-by { font-size: 10.5px; font-weight: 400; color: #7d8a80; }
+  .permit-unknown { font-size: 12.5px; color: #8a5f16; background: #fff8ec; border: 1px solid #f3d9a4;
+    border-radius: 8px; padding: 4px 10px; }
+  .permit-hint { margin-top: 8px; font-size: 12.5px; line-height: 1.75; color: #8a5f16;
+    background: #fff8ec; border: 1px solid #f3d9a4; border-radius: 8px; padding: 8px 11px; }
+  .permit-src { margin-top: 7px; font-size: 11px; color: #a0a89f; line-height: 1.7; }
+  .permit-src a { color: #6f9c82; }
+  .apply-gap { margin-top: 12px; font-size: 12px; line-height: 1.8; color: #8a5f16;
+    background: #fff8ec; border: 1px solid #f3d9a4; border-radius: 8px; padding: 9px 12px; }
+
   /* 申請流程預設收合。收合時只留一行摘要（最近一次抽籤）＋出發日輸入框，
      讓「查抽籤時間」這個高頻動作不必展開就能做。 */
   .apply-summary { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; cursor: pointer; }
@@ -456,6 +472,7 @@
         variants: [
           {
             key: 'baiyun',
+            officialRoute: '2~5天(塔塔加 - 玉山線 - 塔塔加)',
             label: '2天1夜．住排雲山莊',
             days: '2天1夜',
             distanceKm: 21.8,
@@ -477,6 +494,7 @@
           },
           {
             key: 'day',
+            officialRoute: '玉山線單日往返',
             label: '單攻．當日不過夜',
             days: '單日來回',
             distanceKm: 21.8,
@@ -500,6 +518,7 @@
         variants: [
           {
             key: 'main',
+            officialRoute: '嘉明湖山屋/營地',
             label: '3天2夜．向陽山屋＋嘉明湖山屋',
             days: '3天2夜',
             distanceKm: 28.4,
@@ -539,6 +558,7 @@
           {
             key: 'three-day',
             label: '3天2夜．七卡＋三六九',
+            officialRoute: '(3級) 雪山主峰(多日行程)',
             days: '3天2夜',
             distanceKm: 21.8,
             difficultyLevel: 3,
@@ -559,6 +579,7 @@
           {
             key: 'two-day',
             label: '2天1夜．直接上三六九',
+            officialRoute: '(3級) 雪山主峰(多日行程)',
             days: '2天1夜',
             distanceKm: 21.8,
             difficultyLevel: 3,
@@ -577,6 +598,7 @@
           },
           {
             key: 'day',
+            officialRoute: '(4級) 雪山主峰(單日往返)',
             label: '單攻．當日不過夜',
             days: '單日來回',
             distanceKm: 21.8,
@@ -603,6 +625,7 @@
           {
             key: 'three-day',
             label: '3天2夜．官方建議天數',
+            officialRoute: '奇萊主、北峰線',
             days: '3天2夜',
             distanceKm: 23.9,
             difficultyLevel: 5,
@@ -628,6 +651,7 @@
           {
             key: 'two-day',
             label: '2天1夜．直接上奇萊山屋',
+            officialRoute: '奇萊主、北峰線',
             days: '2天1夜',
             distanceKm: 23.9,
             difficultyLevel: 5,
@@ -655,6 +679,7 @@
         variants: [
           {
             key: 'five-day',
+            officialRoute: '南湖大山線(因承載量異動，入園日期為114.7.1以後者適用)',
             label: '5天4夜．官方建議天數',
             days: '5天4夜',
             distanceKm: 45.88,
@@ -677,6 +702,7 @@
           },
           {
             key: 'four-day',
+            officialRoute: '南湖大山線(因承載量異動，入園日期為114.7.1以後者適用)',
             label: '4天3夜．壓縮行程',
             days: '4天3夜',
             distanceKm: 45.88,
@@ -989,33 +1015,62 @@
       return list.filter(x => x.stay_date === dateStr);
     }
 
+    const PERMIT_SOURCE_URL = 'https://hike.taiwan.gov.tw/open.aspx';
+    const PERMIT_LABELS = {
+      '入園證': { name: '入園證', by: '國家公園管理處' },
+      '入山證': { name: '入山證', by: '警政署' },
+      '住宿': { name: '山屋／營地住宿申請', by: '林業及自然保育署' },
+      '自然保護留區': { name: '自然保護留區進入許可', by: '林業及自然保育署' },
+    };
+
+    // 所需證件：四個系統都有官方結構化資料，是目前唯一能一次涵蓋四系統的
+    // 已查證欄位。入園證與入山證主管機關不同，新手常以為申請了入園證就好，
+    // 實際上玉山與南湖兩者都要。
+    function renderPermits(officialRoute) {
+      const el = document.getElementById('apply-permits');
+      if (!el) return;
+      const all = (currentData && currentData.permits) || {};
+      const info = officialRoute ? all[officialRoute] : null;
+
+      if (!info || !info.needs || info.needs.length === 0) {
+        el.innerHTML = `<div class="permit-row"><span class="permit-label">所需證件</span>` +
+          `<span class="permit-unknown">尚未查證，請以官方申請頁面為準</span></div>`;
+        return;
+      }
+      const chips = info.needs.map(k => {
+        const L = PERMIT_LABELS[k] || { name: k, by: '' };
+        return `<span class="permit-chip">${escapeHtml(L.name)}` +
+               (L.by ? `<span class="permit-by">${escapeHtml(L.by)}</span>` : '') + `</span>`;
+      }).join('');
+      const twoPermits = info.needs.includes('入園證') && info.needs.includes('入山證');
+      el.innerHTML =
+        `<div class="permit-row"><span class="permit-label">所需證件</span><span class="permit-chips">${chips}</span></div>` +
+        (twoPermits
+          ? `<div class="permit-hint">這條路線<strong>兩種證件都要</strong>，主管機關不同，需分別申請。只辦其中一種會在入口被擋下。</div>`
+          : '') +
+        `<div class="permit-src">官方登錄路線：${escapeHtml(officialRoute)}` +
+        (info.difficulty ? `（難度${escapeHtml(info.difficulty)}）` : '') +
+        `　出處：<a href="${PERMIT_SOURCE_URL}" target="_blank" rel="noopener">登山路線開放狀態</a>` +
+        `　最後查證 ${APPLY_VERIFIED_AT}</div>`;
+    }
+
+    // 封園公告只有玉山系統有官方的期間型資料源。其他系統要明講沒有，
+    // 否則使用者會把「沒有警示」讀成「已確認安全」。
+    function closureCoverageNote(system) {
+      if (system === 'yushan') return '';
+      return `<div class="apply-gap">本站目前<strong>無法提供本系統的封園期間警示</strong>：` +
+             `官方僅玉山國家公園有「可申請退費日期」這類期間型公告，其餘系統沒有對應資料源。` +
+             `出發前請自行向管理處確認是否因天災封園。</div>`;
+    }
+
     function renderApplyTimeline(routeKey, route) {
       const box = document.getElementById('apply-timeline');
       if (!box) return;
       const rules = APPLY_RULES[routeKey];
+      const system = route ? route.system : null;
 
-      if (!rules) {
-        // 沒查證過的系統：說明現況並導向官方，不猜規則
-        box.style.display = 'block';
-        box.innerHTML =
-          `<h3>申請流程說明</h3>` +
-          `<div class="apply-sub">${escapeHtml(route ? route.label : '本路線')}的申請規則尚未完成查證，` +
-          `本站不提供未經查證的流程說明，以免誤導。請直接查閱官方申請頁面。</div>` +
-          `<div class="apply-result unknown">目前僅玉山國家公園系統的申請流程已查證完成。</div>` +
-          `<div class="apply-note">資料來源：內政部國家公園署 臺灣登山申請一站式服務網　` +
-          `<a href="${APPLY_SOURCES.apply}" target="_blank" rel="noopener">登山線上申請</a></div>`;
-        return;
-      }
-
-      box.style.display = 'block';
-      const stepsHtml = rules.steps.map(st => `
-        <li>
-          <div class="step-label">${escapeHtml(st.label)}</div>
-          <div class="step-detail">${escapeHtml(st.detail)}</div>
-          <div class="step-src">出處：<a href="${st.source}" target="_blank" rel="noopener">${escapeHtml(st.sourceName)}</a>　最後查證 ${APPLY_VERIFIED_AT}</div>
-        </li>`).join('');
-
-      box.innerHTML = `
+      // 抽籤相關內容目前只有玉山系統有官方資料
+      const lotteryHtml = rules ? `
         <div class="apply-summary" id="apply-summary">
           <div class="apply-summary-text">${nextDrawSummary()}</div>
           <button type="button" class="apply-toggle" id="apply-toggle"
@@ -1025,16 +1080,40 @@
           <label for="apply-date">預計住宿日／單日往返日</label>
           <input type="date" id="apply-date">
         </div>
-        <div class="apply-result" id="apply-result">選擇日期後，顯示該日的官方公告抽籤時間。</div>
+        <div class="apply-result" id="apply-result">選擇日期後，顯示該日的官方公告抽籤時間。</div>` : `
+        <div class="apply-summary" id="apply-summary">
+          <div class="apply-summary-text">🎫 申請前先確認所需證件</div>
+          <button type="button" class="apply-toggle" id="apply-toggle"
+                  aria-expanded="false" aria-controls="apply-detail">申請說明 <span class="chev">▾</span></button>
+        </div>`;
+
+      const stepsHtml = rules ? rules.steps.map(st => `
+        <li>
+          <div class="step-label">${escapeHtml(st.label)}</div>
+          <div class="step-detail">${escapeHtml(st.detail)}</div>
+          <div class="step-src">出處：<a href="${st.source}" target="_blank" rel="noopener">${escapeHtml(st.sourceName)}</a>　最後查證 ${APPLY_VERIFIED_AT}</div>
+        </li>`).join('') : '';
+
+      const unverified = rules
+        ? rules.unverified
+        : ['申請類型（抽籤／先到先得／審核制）', '開放申請時點', '繳費期限與逾期後果',
+           '候補與釋出名額規則', '隊伍人數與資格限制'];
+
+      box.style.display = 'block';
+      box.innerHTML = `
+        <h3>申請流程與所需證件</h3>
+        ${lotteryHtml}
+        <div id="apply-permits"></div>
         <div class="apply-detail" id="apply-detail">
-        <div class="apply-sub">${escapeHtml(rules.systemName)}．${escapeHtml(rules.applyType)}　｜　適用：${escapeHtml(rules.appliesTo)}</div>
-        <ol class="apply-steps">${stepsHtml}</ol>
-        <div class="apply-note">
-          <strong>尚未查證，本站不提供</strong>：${rules.unverified.map(escapeHtml).join('、')}。
-          這些項目請以官方公告為準。<br>
-          抽籤時間一律採官方公告值，本站不以日期規律推算 —— 實際間隔為 28～31 天不等，推算會出錯。<br>
-          資料來源：內政部國家公園署 臺灣登山申請一站式服務網。所有規則以官方最新公告為準。
-        </div>
+          ${rules ? `<div class="apply-sub">${escapeHtml(rules.systemName)}．${escapeHtml(rules.applyType)}　｜　適用：${escapeHtml(rules.appliesTo)}</div>` : ''}
+          ${stepsHtml ? `<ol class="apply-steps">${stepsHtml}</ol>` : ''}
+          ${closureCoverageNote(system)}
+          <div class="apply-note">
+            <strong>尚未查證，本站不提供</strong>：${unverified.map(escapeHtml).join('、')}。
+            這些項目請以官方公告為準。<br>
+            ${rules ? '抽籤時間一律採官方公告值，本站不以日期規律推算 —— 實際間隔為 28～31 天不等，推算會出錯。<br>' : ''}
+            資料來源：內政部國家公園署 臺灣登山申請一站式服務網。所有規則以官方最新公告為準。
+          </div>
         </div>`;
 
       const toggle = document.getElementById('apply-toggle');
@@ -1045,11 +1124,12 @@
         if (window.gtag) gtag('event', 'apply_steps_toggle', { route: routeKey, open: open });
       };
       toggle.addEventListener('click', e => { e.stopPropagation(); toggleOpen(); });
-      // 整行可點，手機上比只點小按鈕好按
       summary.addEventListener('click', toggleOpen);
 
       const input = document.getElementById('apply-date');
+      if (!input) return;
       const result = document.getElementById('apply-result');
+      input.addEventListener('click', e => e.stopPropagation());
       input.addEventListener('change', () => {
         const v = input.value;
         if (!v) return;
@@ -1066,7 +1146,7 @@
           result.innerHTML = `住宿日 <strong>${escapeHtml(v)}</strong> 的抽籤時間：<br>${lines}` +
             `<br><span style="font-size:12px;color:#6c7a70;">官方公告值，出處：玉山抽籤日期（bed_8）</span>`;
         }
-        if (window.gtag) gtag('event', 'apply_date_lookup', { route: 'yushan', has_result: hits.length > 0 });
+        if (window.gtag) gtag('event', 'apply_date_lookup', { route: routeKey, has_result: hits.length > 0 });
       });
     }
 
@@ -1644,6 +1724,9 @@
 
       routeFilter = variant.huts.length ? variant.huts : [];
       renderRouteBanner(route, variant.huts, onExitToFullList, variant.applyUrl, true);
+      // 證件需求依走法而異（例如單日往返與多日行程是不同的官方登錄路線），
+      // 只更新這一小塊，不重建整個申請流程區塊，避免展開狀態與已填日期被重置
+      renderPermits(variant.officialRoute);
 
       if (variant.profile) {
         renderElevationProfile(`${route.label}．${variant.label}`, variant.profile);

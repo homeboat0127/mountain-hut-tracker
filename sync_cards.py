@@ -42,6 +42,20 @@ CARD_ROUTES = ["yushan", "jiaming", "snow", "qilai", "nanhu"]
 DASH = "—"
 
 # 在頁面裡執行：用 huts.html 自己的函式算，不要在 Python 這邊重寫一份邏輯
+# 順便把每個走法的官方登錄路線與難度撈出來，跟官方頁面的難度等級對帳
+EXTRACT_VARIANTS_JS = """
+() => {
+  const out = [];
+  for (const [key, r] of Object.entries(ROUTES)) {
+    r.variants.forEach(v => out.push({
+      route: key, variant: v.key, label: v.label,
+      difficulty: v.difficultyLevel, officialRoute: v.officialRoute || null,
+    }));
+  }
+  return out;
+}
+"""
+
 EXTRACT_JS = """
 (keys) => {
   const out = {};
@@ -84,12 +98,13 @@ def collect_stats():
             page.wait_for_function("typeof ROUTES !== 'undefined' && typeof cumulativeAscent === 'function'",
                                    timeout=15000)
             stats = page.evaluate(EXTRACT_JS, CARD_ROUTES)
+            variants = page.evaluate(EXTRACT_VARIANTS_JS)
             browser.close()
             if errors:
                 print("[提醒] 頁面有 JS 錯誤（不一定影響取數，但值得看一下）：")
                 for e in errors[:5]:
                     print("   ", e)
-            return stats
+            return stats, variants
     finally:
         httpd.shutdown()
 
@@ -148,11 +163,49 @@ def rewrite(html, stats):
     return html, changes
 
 
+def check_difficulty(variants):
+    """把站上顯示的難度跟官方「登山路線開放狀態」頁的難度等級對帳。
+
+    站上聲明難度引用自官方分級表，兩者對不上就是展示了與原資料不符的資訊。
+    這裡只提醒不中止 —— 官方有多份分級資料，要改哪一邊需要人判斷，
+    但不能讓落差無聲無息地留著。
+    """
+    try:
+        with open(ROOT / "data.json", encoding="utf-8") as f:
+            permits = json.load(f).get("permits", {})
+    except (OSError, json.JSONDecodeError):
+        return
+    if not permits:
+        return
+
+    gaps = []
+    for v in variants:
+        oc = v.get("officialRoute")
+        info = permits.get(oc) if oc else None
+        if not info or not info.get("difficulty"):
+            continue
+        m = re.search(r"(\d+)", info["difficulty"])
+        if not m:
+            continue
+        official = int(m.group(1))
+        if v.get("difficulty") != official:
+            gaps.append((v["route"], v["label"], v["difficulty"], official, oc))
+
+    if gaps:
+        print("\n[提醒] 站上難度與官方頁面不一致（只提醒，不中止）：")
+        for route, label, ours, official, oc in gaps:
+            print(f"  {route}／{label}：站上 {ours} 級，官方「{oc}」為第 {official} 級")
+    else:
+        print("\n難度與官方頁面一致。")
+
+
 def main():
     check_only = "--check" in sys.argv
-    stats = collect_stats()
+    stats, variants = collect_stats()
     print("由 huts.html 算出的數字：")
     print(json.dumps(stats, ensure_ascii=False, indent=2))
+
+    check_difficulty(variants)
 
     original = INDEX.read_text(encoding="utf-8")
     updated, changes = rewrite(original, stats)
