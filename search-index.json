@@ -5,7 +5,6 @@
    "玉山",
    "玉山主峰",
    "玉山西峰",
-   "玉山前峰",
    "百岳之首"
   ],
   "system": "yushan",
@@ -946,6 +945,70 @@
   "url": "huts.html?system=forest&hut=%E6%AA%9C%E8%B0%B7%E5%B1%B1%E8%8E%8A/%E7%87%9F%E5%9C%B0"
  },
  {
+  "name": "玉山前峰單日往返",
+  "alias": [
+   "玉山前峰",
+   "前峰",
+   "玉山前峰單攻"
+  ],
+  "system": "yushan",
+  "systemLabel": "玉山國家公園",
+  "type": "單日往返",
+  "note": "每日 100 人",
+  "url": "huts.html?system=quota&hut=%E7%8E%89%E5%B1%B1%E5%89%8D%E5%B3%B0%E5%96%AE%E6%97%A5%E5%BE%80%E8%BF%94"
+ },
+ {
+  "name": "玉山線單日往返",
+  "alias": [
+   "玉山單攻",
+   "玉山主峰單攻",
+   "玉山線單攻",
+   "玉山當日往返"
+  ],
+  "system": "yushan",
+  "systemLabel": "玉山國家公園",
+  "type": "單日往返",
+  "note": "每日 60 人・抽籤制",
+  "url": "huts.html?system=quota&hut=%E7%8E%89%E5%B1%B1%E7%B7%9A%E5%96%AE%E6%97%A5%E5%BE%80%E8%BF%94"
+ },
+ {
+  "name": "庫哈諾辛山/關山單日往返",
+  "alias": [
+   "庫哈諾辛山",
+   "關山",
+   "庫哈諾辛"
+  ],
+  "system": "yushan",
+  "systemLabel": "玉山國家公園",
+  "type": "單日往返",
+  "note": "每日 100 人",
+  "url": "huts.html?system=quota&hut=%E5%BA%AB%E5%93%88%E8%AB%BE%E8%BE%9B%E5%B1%B1/%E9%97%9C%E5%B1%B1%E5%96%AE%E6%97%A5%E5%BE%80%E8%BF%94"
+ },
+ {
+  "name": "乙女瀑布單日往返",
+  "alias": [
+   "乙女瀑布",
+   "乙女"
+  ],
+  "system": "yushan",
+  "systemLabel": "玉山國家公園",
+  "type": "單日往返",
+  "note": "每日 100 人",
+  "url": "huts.html?system=quota&hut=%E4%B9%99%E5%A5%B3%E7%80%91%E5%B8%83%E5%96%AE%E6%97%A5%E5%BE%80%E8%BF%94"
+ },
+ {
+  "name": "瓦拉米單日往返",
+  "alias": [
+   "瓦拉米",
+   "瓦拉米步道"
+  ],
+  "system": "yushan",
+  "systemLabel": "玉山國家公園",
+  "type": "單日往返",
+  "note": "每日 100 人",
+  "url": "huts.html?system=quota&hut=%E7%93%A6%E6%8B%89%E7%B1%B3%E5%96%AE%E6%97%A5%E5%BE%80%E8%BF%94"
+ },
+ {
   "name": "合歡群峰",
   "alias": [
    "合歡山",
@@ -959,17 +1022,6 @@
   "systemLabel": "免申請山屋",
   "type": "單攻路線",
   "note": "多為單日往返，不需申請山屋；部分路線需入園申請",
-  "url": null
- },
- {
-  "name": "玉山前峰",
-  "alias": [
-   "玉山前峰"
-  ],
-  "system": null,
-  "systemLabel": "免申請山屋",
-  "type": "單攻路線",
-  "note": "可單日往返，不需住宿山屋",
   "url": null
  },
  {
