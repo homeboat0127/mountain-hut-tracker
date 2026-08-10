@@ -46880,5 +46880,84 @@
         ]
       }
     ]
+  },
+  "permits": {
+    "2~5天(塔塔加 - 玉山線 - 塔塔加)": {
+      "agency": "玉管處",
+      "needs": [
+        "入園證",
+        "入山證"
+      ],
+      "difficulty": "第4級",
+      "can_apply": null,
+      "status": null
+    },
+    "玉山線單日往返": {
+      "agency": "玉管處",
+      "needs": [
+        "入園證",
+        "入山證"
+      ],
+      "difficulty": "第3級",
+      "can_apply": null,
+      "status": null
+    },
+    "(3級) 雪山主峰(多日行程)": {
+      "agency": "雪管處",
+      "needs": [
+        "入園證"
+      ],
+      "difficulty": "第3級",
+      "can_apply": null,
+      "status": null
+    },
+    "(4級) 雪山主峰(單日往返)": {
+      "agency": "雪管處",
+      "needs": [
+        "入園證"
+      ],
+      "difficulty": "第4級",
+      "can_apply": null,
+      "status": null
+    },
+    "奇萊主、北峰線": {
+      "agency": "太管處",
+      "needs": [
+        "入園證"
+      ],
+      "difficulty": "第5級",
+      "can_apply": null,
+      "status": null
+    },
+    "南湖大山線(因承載量異動，入園日期為114.7.1以後者適用)": {
+      "agency": "太管處",
+      "needs": [
+        "入園證",
+        "入山證"
+      ],
+      "difficulty": "第4級",
+      "can_apply": null,
+      "status": null
+    },
+    "嘉明湖山屋/營地": {
+      "agency": "國家步道(山屋/營地)",
+      "needs": [
+        "住宿",
+        "入山證"
+      ],
+      "difficulty": "第4級",
+      "can_apply": null,
+      "status": null
+    },
+    "向陽山屋": {
+      "agency": "國家步道(山屋/營地)",
+      "needs": [
+        "住宿",
+        "入山證"
+      ],
+      "difficulty": "第4級",
+      "can_apply": null,
+      "status": null
+    }
   }
 }
