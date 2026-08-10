@@ -175,6 +175,12 @@
   .disclaimer strong { color: #6b6659; }
 
   /* 網友回饋表單 */
+  /* 維護者資訊：與首頁同一份樣式 */
+  .maintainer { margin-top: 26px; padding: 14px 16px; background: #fff; border: 1px solid #e4e4e4;
+    border-left: 3px solid #2f7d52; border-radius: 8px; font-size: 13px; color: #5a6a5e; line-height: 1.85; }
+  .maintainer p { margin: 0; }
+  .maintainer a { color: #2f7d52; font-weight: 700; text-decoration: none; border-bottom: 1px solid #9bd0af; }
+  .maintainer a:hover { background: #eef7f1; }
   .fb-box { margin-top: 30px; background: #fff; border: 1px solid #e4e4e4; border-top: 4px solid #2f7d52; border-radius: 12px; padding: 18px 20px; }
   .fb-title { font-size: 16px; font-weight: 700; color: #1f5c3b; margin-bottom: 4px; }
   .fb-desc { font-size: 12.5px; color: #7d8a80; line-height: 1.7; margin-bottom: 14px; }
@@ -324,6 +330,7 @@
     .permit-src { font-size: 10px; }
     .apply-steps .step-src { font-size: 10px; }
     .fb-desc, .fb-privacy { font-size: 11px; }
+    .maintainer { font-size: 12px; line-height: 1.8; padding: 12px 14px; }
     .footer-note { font-size: 11px; }
 
     .closure-box { padding: 11px 13px; }
@@ -392,6 +399,15 @@
   <div class="apply-box" id="apply-timeline" style="display:none;"></div>
   <div id="apply-cta-bottom"></div>
 
+
+  <!-- 維護者資訊。與首頁同一份內容 —— 表單出現在哪裡，
+       「這是誰做的、為什麼做」就要出現在哪裡，否則從搜尋直接進到內頁的人
+       看到的是一個沒有作者的表單，不會想填。 -->
+  <div class="maintainer">
+    <p>這個站由 <a href="https://www.instagram.com/hb__log__/" target="_blank" rel="noopener">hb.log</a> 維護。</p>
+    <p>自己爬山時被四個政府系統的申請流程搞得很煩，所以整理了這個。</p>
+    <p>發現資料有誤請用下方表單告訴我，會盡快更新。</p>
+  </div>
 
   <!-- 網友回饋：送出後寫入 Google 試算表，每天 20:00 彙整寄信通知 -->
   <div class="fb-box">
