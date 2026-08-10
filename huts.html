@@ -89,6 +89,30 @@
   .apply-steps .step-src a { color: #6f9c82; }
   .apply-note { font-size: 11.5px; color: #97a09a; line-height: 1.8; margin-top: 12px; padding-top: 10px; border-top: 1px solid #eef2ef; }
 
+  /* 申請流程預設收合。收合時只留一行摘要（最近一次抽籤）＋出發日輸入框，
+     讓「查抽籤時間」這個高頻動作不必展開就能做。 */
+  .apply-summary { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; cursor: pointer; }
+  .apply-summary-text { flex: 1 1 auto; font-size: 13.5px; color: #223324; font-weight: 600; line-height: 1.6; min-width: 0; }
+  .apply-summary-text .muted { font-weight: 400; color: #7d8a80; font-size: 12.5px; }
+  .apply-toggle { flex: 0 0 auto; background: none; border: 1px solid #d8ddd9; border-radius: 8px;
+    padding: 6px 11px; font-size: 12.5px; font-family: inherit; color: #2f7d52; cursor: pointer; white-space: nowrap; }
+  .apply-toggle:hover { background: #f3f9f5; border-color: #9bd0af; }
+  .apply-toggle .chev { display: inline-block; transition: transform .18s; }
+  .apply-box.open .apply-toggle .chev { transform: rotate(180deg); }
+  .apply-detail { display: none; margin-top: 14px; padding-top: 14px; border-top: 1px solid #eef2ef; }
+  .apply-box.open .apply-detail { display: block; }
+
+  /* 路線走法：第一個預設展開，其餘收合。兩個走法都攤開時，光是行程與提醒
+     就超過 1000px，把日曆推到很下面，而使用者多半只看主要走法。 */
+  .variant-card .variant-body { display: none; }
+  .variant-card.expanded .variant-body { display: block; }
+  .variant-expand { display: block; width: 100%; margin-top: 10px; padding: 7px 0; background: none;
+    border: 1px dashed #d8ddd9; border-radius: 8px; font-size: 12.5px; font-family: inherit;
+    color: #2f7d52; cursor: pointer; }
+  .variant-expand:hover { background: #f3f9f5; border-color: #9bd0af; }
+  .variant-expand .chev { display: inline-block; transition: transform .18s; }
+  .variant-card.expanded .variant-expand .chev { transform: rotate(180deg); }
+
   .day-cell { border: 1px solid #eee; border-radius: 6px; min-height: 96px; padding: 6px; font-size: 11px; background: #fff; }
   .day-cell.empty { background: #f7f7f4; border: none; }
   .day-cell.no-data { color: #bbb; }
@@ -245,9 +269,11 @@
   </div>
 
   <div class="stale-banner" id="stale-banner"></div>
+  <!-- 封園警示在頁首再顯示一次。內容由同一個 renderClosureNotice 產生，
+       兩處共用同一份邏輯與同一份資料，不各寫一份。 -->
+  <div id="closure-top"></div>
   <div class="profile-box" id="profile-box" style="display:none;"></div>
   <div class="route-variants" id="route-variants" style="display:none;"></div>
-  <div class="apply-box" id="apply-timeline" style="display:none;"></div>
   <div class="route-banner" id="route-banner" style="display:none;"></div>
   <div class="no-calendar-note" id="no-calendar-note" style="display:none;"></div>
 
@@ -265,6 +291,11 @@
   <div class="calendar" id="calendar"></div>
 
   <div class="legend" id="legend"></div>
+
+  <!-- 申請流程排在日曆之後：使用者是先看有沒有位，再想怎麼申請。
+       外連官方申請是整個流程的終點，因此擺在最後。 -->
+  <div class="apply-box" id="apply-timeline" style="display:none;"></div>
+  <div id="apply-cta-bottom"></div>
 
 
   <!-- 網友回饋：送出後寫入 Google 試算表，每天 20:00 彙整寄信通知 -->
@@ -825,6 +856,11 @@
       );
     }
 
+    function nowHM() {
+      const d = new Date();
+      return `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
+    }
+
     function todayStr() {
       const d = new Date();
       return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
@@ -838,9 +874,14 @@
     }
 
     function renderClosureNotice(hutName) {
-      const box = document.getElementById('closure-notice');
-      if (!box) return;
-      box.innerHTML = '';
+      // 兩個容器：頁首（#closure-top）與日曆上方（#closure-notice）。
+      // 只有一份判定邏輯與一份 HTML 產生器，兩處輸出同樣的內容 ——
+      // 各寫一份遲早會有一邊漏改，而這是安全相關的警示。
+      const targets = ['closure-notice', 'closure-top']
+        .map(id => document.getElementById(id)).filter(Boolean);
+      if (targets.length === 0) return;
+      targets.forEach(t => { t.innerHTML = ''; });
+      const box = { appendChild: el => targets.forEach(t => t.appendChild(el.cloneNode(true))) };
       closuresForHut(hutName).forEach(c => {
         const confirmed = !!c.confirmed;
         const el = document.createElement('div');
@@ -923,6 +964,24 @@
       },
     };
 
+    // 收合狀態顯示的一行摘要：取「今天之後最近一場」抽籤。
+    // 用抽籤日排序而非住宿日 —— 使用者關心的是「下一次要盯著搶的時間點」。
+    function nextDrawSummary() {
+      const list = (currentData && currentData.lottery) || [];
+      // 比到「分」，不能只比日期 —— 今天稍早已經結束的場次不是「下次抽籤」。
+      // 用場次結束時間判斷，抽籤進行中的那一場仍算數。
+      const now = todayStr() + ' ' + nowHM();
+      const upcoming = list.filter(x => (x.draw_date + ' ' + x.draw_end) >= now)
+                           .sort((a, b) => (a.draw_date + a.draw_start).localeCompare(b.draw_date + b.draw_start));
+      if (upcoming.length === 0) {
+        return '📅 <span class="muted">目前沒有已公告的抽籤場次</span>';
+      }
+      const n = upcoming[0];
+      const md = d => `${Number(d.slice(5, 7))}/${Number(d.slice(8, 10))}`;
+      return `📅 下次抽籤：${md(n.draw_date)} ${n.draw_start}–${n.draw_end}` +
+             `<span class="muted">（住宿日 ${md(n.stay_date)}）</span>`;
+    }
+
     function lotteryForStayDate(dateStr) {
       const list = (currentData && currentData.lottery) || [];
       return list.filter(x => x.stay_date === dateStr);
@@ -955,20 +1014,37 @@
         </li>`).join('');
 
       box.innerHTML = `
-        <h3>申請流程與抽籤時間</h3>
-        <div class="apply-sub">${escapeHtml(rules.systemName)}．${escapeHtml(rules.applyType)}　｜　適用：${escapeHtml(rules.appliesTo)}</div>
+        <div class="apply-summary" id="apply-summary">
+          <div class="apply-summary-text">${nextDrawSummary()}</div>
+          <button type="button" class="apply-toggle" id="apply-toggle"
+                  aria-expanded="false" aria-controls="apply-detail">完整申請流程 <span class="chev">▾</span></button>
+        </div>
         <div class="apply-date-row">
           <label for="apply-date">預計住宿日／單日往返日</label>
           <input type="date" id="apply-date">
         </div>
         <div class="apply-result" id="apply-result">選擇日期後，顯示該日的官方公告抽籤時間。</div>
+        <div class="apply-detail" id="apply-detail">
+        <div class="apply-sub">${escapeHtml(rules.systemName)}．${escapeHtml(rules.applyType)}　｜　適用：${escapeHtml(rules.appliesTo)}</div>
         <ol class="apply-steps">${stepsHtml}</ol>
         <div class="apply-note">
           <strong>尚未查證，本站不提供</strong>：${rules.unverified.map(escapeHtml).join('、')}。
           這些項目請以官方公告為準。<br>
           抽籤時間一律採官方公告值，本站不以日期規律推算 —— 實際間隔為 28～31 天不等，推算會出錯。<br>
           資料來源：內政部國家公園署 臺灣登山申請一站式服務網。所有規則以官方最新公告為準。
+        </div>
         </div>`;
+
+      const toggle = document.getElementById('apply-toggle');
+      const summary = document.getElementById('apply-summary');
+      const toggleOpen = () => {
+        const open = box.classList.toggle('open');
+        toggle.setAttribute('aria-expanded', String(open));
+        if (window.gtag) gtag('event', 'apply_steps_toggle', { route: routeKey, open: open });
+      };
+      toggle.addEventListener('click', e => { e.stopPropagation(); toggleOpen(); });
+      // 整行可點，手機上比只點小按鈕好按
+      summary.addEventListener('click', toggleOpen);
 
       const input = document.getElementById('apply-date');
       const result = document.getElementById('apply-result');
@@ -996,8 +1072,10 @@
       document.getElementById('month-label').textContent = `${year}年${month}月`;
       // 封園警示只有玉山系統有資料。切到其他系統時要清掉，
       // 否則會留著上一個山屋的警示，變成張冠李戴的錯誤資訊。
-      const cn = document.getElementById('closure-notice');
-      if (cn) cn.innerHTML = '';
+      ['closure-notice', 'closure-top'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.innerHTML = '';
+      });
 
       const calendar = document.getElementById('calendar');
       calendar.innerHTML = '';
@@ -1320,6 +1398,11 @@
       return `<a class="apply-cta" href="${applyUrl}" target="_blank" rel="noopener">🎫 前往申請入園證／入山證 →</a>`;
     }
 
+    function setBottomCta(applyUrl) {
+      const el = document.getElementById('apply-cta-bottom');
+      if (el) el.innerHTML = renderApplyCta(applyUrl);
+    }
+
     // 「所需申請山屋」提示卡，若該走法不需過夜（例如單攻）則不顯示日曆，改顯示說明文字
     function renderRouteBanner(route, huts, onExitToFullList, applyUrl) {
       const banner = document.getElementById('route-banner');
@@ -1351,9 +1434,11 @@
       banner.innerHTML = `
         <div class="route-desc">所需申請山屋：${huts.join('、')}</div>
         ${warningHtml}
-        ${renderApplyCta(applyUrl)}
         <div><a href="#" id="show-all-link">查看該系統完整山屋列表 →</a></div>
       `;
+      // 外連申請按鈕改放頁面最後（日曆與申請流程之後），
+      // 讓版面順序符合「先看有沒有位 → 再看怎麼申請 → 才去申請」
+      setBottomCta(applyUrl);
       document.getElementById('show-all-link').addEventListener('click', (e) => {
         e.preventDefault();
         onExitToFullList();
@@ -1499,9 +1584,26 @@
           <div class="variant-huts-row">
             <span class="variant-huts-badge ${needsHuts ? 'needs' : 'free'}">${hutsBadge}</span>
           </div>
-          ${renderItinerary(variant.itinerary)}
-          ${renderVariantAlerts(variant.alerts)}
+          <div class="variant-body">
+            ${renderItinerary(variant.itinerary)}
+            ${renderVariantAlerts(variant.alerts)}
+          </div>
+          <button type="button" class="variant-expand" data-expand="${i}">
+            ${i === 0 ? '收合' : '看每日行程與提醒'} <span class="chev">▾</span>
+          </button>
         `;
+        // 第一個走法（官方建議天數）預設展開，其餘收合。
+        // 天數／里程／爬升／難度這四個比較用的數字一律保持可見，
+        // 收起來的只有逐日行程與提醒 —— 那是決定要走哪條之後才需要細看的內容。
+        if (i === 0) card.classList.add('expanded');
+        card.querySelector('.variant-expand').addEventListener('click', (e) => {
+          e.stopPropagation();   // 展開／收合不等於選擇這個走法
+          const expanded = card.classList.toggle('expanded');
+          e.currentTarget.innerHTML =
+            (expanded ? '收合' : '看每日行程與提醒') + ' <span class="chev">▾</span>';
+          if (window.gtag) gtag('event', 'variant_expand', { variant: variant.key, open: expanded });
+        });
+
         card.addEventListener('click', () => {
           if (window.gtag) gtag('event', 'select_variant', { route: new URLSearchParams(location.search).get('route') || route.label, variant: variant.key || variant.label });
           selectVariant(route, i, onExitToFullList);
