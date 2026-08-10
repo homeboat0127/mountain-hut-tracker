@@ -333,11 +333,11 @@ font-family:-apple-system,'PingFang TC',sans-serif;">
       }
     }
 
-    fetch('../summary.json')
+    fetch('summary.json').then(function(r){return r.ok?r:fetch('../summary.json');})
       .then(function (r) { if (!r.ok) throw new Error('no summary'); return r.json(); })
       .then(function (d) { applyCounts(d.counts, d.updated_at); })
       .catch(function () {
-        return fetch('../data.json')
+        return fetch('data.json').then(function(r){return r.ok?r:fetch('../data.json');})
           .then(function (r) { return r.json(); })
           .then(function (d) {
             const c = {
@@ -446,7 +446,7 @@ font-family:-apple-system,'PingFang TC',sans-serif;">
       let items = [];
       let cursor = -1;
 
-      fetch('../search-index.json')
+      fetch('search-index.json').then(function(r){return r.ok?r:fetch('../search-index.json');})
         .then(function (r) { return r.json(); })
         .then(function (d) { index = d; })
         .catch(function () { input.placeholder = '搜尋暫時無法使用'; input.disabled = true; });

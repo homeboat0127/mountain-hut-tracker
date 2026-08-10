@@ -2219,7 +2219,7 @@ font-family:-apple-system,'PingFang TC',sans-serif;">
       changeMonth(1);
     });
 
-    fetch('../data.json')
+    fetch('data.json').then(function(r){return r.ok?r:fetch('../data.json');})
       .then(res => res.json())
       .then(data => {
         currentData = data;
