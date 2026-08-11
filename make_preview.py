@@ -71,6 +71,16 @@ def build():
         # 頁面之間的連結留在預覽站內部，才不會點一下就跳回正式站
         # （huts.html / index.html 都已複製到 preview/，相對連結本來就會對）
 
+        # 移除 GA 追蹤碼。預覽站與正式站原本送到同一個 GA 資源，
+        # 等於每次自己測版面都在灌正式站的流量數字 —— 之後要靠這些數字
+        # 判斷「新手還老手」「哪些關鍵字查無結果」，被自己的測試污染就沒有參考價值。
+        html = re.sub(
+            r'\s*<script async src="https://www\.googletagmanager\.com/gtag/js\?id=[^"]*"></script>',
+            '', html)
+        html = re.sub(
+            r'\s*<script>\s*window\.dataLayer = window\.dataLayer \|\| \[\];.*?</script>',
+            '\n  <!-- 預覽站不載入 GA，避免污染正式站的流量數據 -->', html, flags=re.S)
+
         # 加上明顯的預覽標示，避免把預覽站誤當正式站
         html = html.replace("<body>", "<body>\n" + BANNER, 1)
         html = html.replace("<title>", "<title>[預覽] ", 1)
