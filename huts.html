@@ -427,7 +427,19 @@
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-    gtag('config', 'G-Q1B3W3YWED');
+    // 網址加上 ?debug=1 就會把這次瀏覽送進 GA4 的 DebugView，
+    // 方便確認事件與參數有沒有正確送出。
+    // 一般訪客不會帶這個參數，所以正式數據不受影響。
+    // 註：gtag.js 沒有 GTM 的 ?gtm_debug 機制，只能用 debug_mode 開啟。
+    // 只有帶 ?debug=1 時才加上 debug_mode。
+    // 不能無條件寫 debug_mode: false —— 那會讓每個一般訪客的事件
+    // 都多帶一個 ep.debug_mode=false 的垃圾參數。
+    if (new URLSearchParams(location.search).has('debug')) {
+      gtag('set', { debug_mode: true });
+      gtag('config', 'G-Q1B3W3YWED', { debug_mode: true });
+    } else {
+      gtag('config', 'G-Q1B3W3YWED');
+    }
   </script>
 </head>
 <body>
