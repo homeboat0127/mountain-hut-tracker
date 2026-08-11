@@ -284,6 +284,12 @@
 
   .apply-cta { display: inline-block; margin: 6px 0 8px; padding: 9px 18px; background: #2f7d52; color: #fff !important; border-radius: 8px; font-size: 13.5px; font-weight: 700; text-decoration: none !important; }
   .apply-cta:hover { background: #256644; }
+  .apply-cta-wrap { margin: 6px 0 8px; }
+  .apply-cta-note { margin-top: 5px; font-size: 11.5px; color: #7d8a80; line-height: 1.7; }
+  @media (max-width: 640px) {
+    .apply-cta { display: block; text-align: center; }
+    .apply-cta-note { font-size: 11px; }
+  }
 
   .route-variants { display: flex; gap: 12px; margin-bottom: 8px; flex-wrap: wrap; }
   .variant-card { flex: 1 1 260px; border: 1.5px solid #ddd; border-radius: 14px; cursor: pointer; background: #fff; overflow: hidden; transition: border-color .15s, box-shadow .15s; }
@@ -2437,14 +2443,28 @@
     }
 
     // 前往「臺灣登山申請一站式服務網」的按鈕，連結已帶好目前查看路線的分類參數
-    function renderApplyCta(applyUrl) {
+    // 按鈕要寫清楚「正在申請哪一條」。
+    // 連結本身是官網的深連結，已帶入機關與路線（實測各條顯示的注意事項都不同），
+    // 但使用者按之前看不出來，過去之後也不確定要不要重選 —— 所以把路線寫在按鈕上，
+    // 並在下方說明連結已指定該路線。
+    function renderApplyCta(applyUrl, routeLabel, variantLabel) {
       if (!applyUrl) return '';
-      return `<a class="apply-cta" href="${applyUrl}" target="_blank" rel="noopener">🎫 前往申請入園證／入山證 →</a>`;
+      const what = [routeLabel, variantLabel].filter(Boolean).join('　');
+      const title = what ? `前往申請：${escapeHtml(what)}` : '前往申請入園證／入山證';
+      return `<div class="apply-cta-wrap">` +
+        `<a class="apply-cta" href="${applyUrl}" target="_blank" rel="noopener">🎫 ${title} →</a>` +
+        (what ? `<div class="apply-cta-note">此連結已指定上述路線，直接接續官方申請流程，` +
+                `到官網後不需要再從頭挑一次路線。</div>` : '') +
+        `</div>`;
     }
 
-    function setBottomCta(applyUrl) {
+    // 目前選中的路線與走法，供按鈕顯示用
+    let currentApplyLabels = { route: null, variant: null };
+
+    function setBottomCta(applyUrl, routeLabel, variantLabel) {
+      if (routeLabel !== undefined) currentApplyLabels = { route: routeLabel, variant: variantLabel };
       const el = document.getElementById('apply-cta-bottom');
-      if (el) el.innerHTML = renderApplyCta(applyUrl);
+      if (el) el.innerHTML = renderApplyCta(applyUrl, currentApplyLabels.route, currentApplyLabels.variant);
     }
 
     // 找出同一條路線裡還走得成的其他走法，當作替代方案。
@@ -2515,7 +2535,7 @@
           currentSystem = 'quota';
           currentProgressArgs = null;
           renderQuotaTabs();
-          setBottomCta(applyUrl);
+          setBottomCta(applyUrl, route.label, variant && variant.label);
           updateMonthNavButtons();
           return;
         }
@@ -2531,7 +2551,7 @@
           currentTrailName = tName;
           currentProgressArgs = null;   // 避免殘留別的系統的渲染參數
           renderTrailQuota(tName);
-          setBottomCta(applyUrl);
+          setBottomCta(applyUrl, route.label, variant && variant.label);
           updateMonthNavButtons();
           return;
         }
@@ -2548,7 +2568,7 @@
           部分路線採抽籤制。本站目前只取得玉山國家公園的單日往返逐日名額，
           ${parkName}的名額與申請方式請以
           <a href="${APPLY_SOURCES.apply}" target="_blank" rel="noopener">官方登山線上申請</a>為準。</div>
-          ${renderApplyCta(applyUrl)}
+          ${renderApplyCta(applyUrl, route.label, variant && variant.label)}
         `;
         // 這條路徑的申請按鈕就放在說明文字底下，因此要清掉頁尾那顆，
         // 否則切換走法後會留著上一個走法的按鈕，同頁出現兩顆。
@@ -2598,7 +2618,7 @@
       `;
       // 外連申請按鈕改放頁面最後（日曆與申請流程之後），
       // 讓版面順序符合「先看有沒有位 → 再看怎麼申請 → 才去申請」
-      setBottomCta(applyUrl);
+      setBottomCta(applyUrl, route.label, variant && variant.label);
       document.getElementById('show-all-link').addEventListener('click', (e) => {
         e.preventDefault();
         onExitToFullList();
