@@ -8,7 +8,7 @@
     "verified_at": "2026-08-10",
     "common": {
       "apply_window": {
-        "text": "預定入園日期前5天至前2個月提出申請",
+        "text": "預定入園日期前5天至前2個月提出申請(其他路線請於入園日前10天前提出)",
         "open_months_before": 2,
         "close_days_before": 5,
         "source_url": "https://hike.taiwan.gov.tw/notice_a1.aspx",
@@ -46,6 +46,34 @@
         "text": "為確認登山隊伍平安下山，請於出園後至『臺灣登山申請一站式服務網』進行出園回報",
         "source_url": "https://hike.taiwan.gov.tw/notice_a1.aspx",
         "verified_at": "2026-08-10"
+      },
+      "permits_difference": {
+        "text": "入園證由國家公園管理處核發，依《國家公園法》第19條，進入生態保護區者應經國家公園管理處之許可；入山許可證由內政部警政署核發。於『臺灣登山申請一站式服務網』之申請案件，取得入園許可後，可於入山之日前3日至124日內代送申請入山許可證。自98年4月1日起免收入山手續作業費",
+        "order_note": "先取得入園許可，才能代送申請入山許可證",
+        "source_url": "https://hike.taiwan.gov.tw/notice_a1.aspx",
+        "verified_at": "2026-08-10"
+      },
+      "eligibility": {
+        "general": {
+          "text": "開放路線(一般)：路線為玉山線、南橫三山-庫哈諾辛山/關山線及瓦拉米線。申請人數：每隊1至12人，承載量依各宿營地點限額管理",
+          "source_url": "https://hike.taiwan.gov.tw/notice_a1.aspx",
+          "verified_at": "2026-08-10"
+        },
+        "long_traverse": {
+          "text": "開放路線(需具長程縱走登山經驗)：八通關線、南二段線、秀姑巒線、馬博拉斯橫斷線、新康山線、八通關越嶺線及其他路線。每隊1至12人，申請人/領隊請於申請前自行檢核所有隊員登山經驗能力，需具3天以上高海拔(3000公尺以上)長程縱走登山經驗。其他路線請上傳完整登山計畫書",
+          "source_url": "https://hike.taiwan.gov.tw/notice_a1.aspx",
+          "verified_at": "2026-08-10"
+        },
+        "snow_season": {
+          "text": "雪季期間：每隊以6人為限，每1名領隊＋5名隊員之比例原則，不得任意更換人員",
+          "source_url": "https://hike.taiwan.gov.tw/notice_a1.aspx",
+          "verified_at": "2026-08-10"
+        },
+        "common_rules": {
+          "text": "未成年者，應取得法定代理人或監護人之同意。領隊應為成年人，且應瞭解負有隊伍領導、隊員安全看顧及緊急事故處理之責。同時期進入本園生態保護區之人員，均不得重複申請",
+          "source_url": "https://hike.taiwan.gov.tw/notice_a1.aspx",
+          "verified_at": "2026-08-10"
+        }
       }
     },
     "lottery": {
@@ -77,6 +105,26 @@
         "text": "中籤隊伍請於中籤日後3日內完成繳納使用規費、遞補隊伍請於通知遞補日後3日內完成繳納使用規費。未依限繳費者系統將自動辦理退件作業",
         "example": "例如中籤日或通知遞補日為9月1日，應於9月4日完成繳納使用規費",
         "days_after_draw": 3,
+        "source_url": "https://hike.taiwan.gov.tw/notice_a1.aspx",
+        "verified_at": "2026-08-10",
+        "methods": {
+          "text": "收費方式：1.金融機構轉帳（臨櫃繳款、跨行匯款、自動櫃員機轉帳、網路ATM及繳費網、電話/行動銀行轉帳、網路銀行轉帳）2.郵政匯票 3.現金（繳納地點為本處入園服務小組）4.臺灣PAY（信用卡或金融卡）5.超商繳費",
+          "source_url": "https://hike.taiwan.gov.tw/notice_a1.aspx",
+          "verified_at": "2026-08-10"
+        },
+        "other_fees": {
+          "text": "「觀高山屋」使用規費：平日每人每宿新臺幣800元，假日每人每宿新臺幣1200元",
+          "source_url": "https://hike.taiwan.gov.tw/notice_a1.aspx",
+          "verified_at": "2026-08-10"
+        }
+      },
+      "reserve": {
+        "text": "「排雲山莊」抽籤結果列有「備取」隊伍，視同「未抽中」，但有優先於「排隊遞補」隊伍之遞補權，如正取隊伍取消行程，其遞補順序分別為備取1，備取2，備取3。當申請狀態為「備取」時，可擇他日另為申請；亦可繼續等待遞補，但如無正取隊伍取消行程，將可能無法遞補",
+        "source_url": "https://hike.taiwan.gov.tw/notice_a1.aspx",
+        "verified_at": "2026-08-10"
+      },
+      "retry_after_draw": {
+        "text": "如參加抽籤未中籤隊伍可另提申請案參加他日抽籤或再申請同日排隊等候遞補機會（例如，預定入園日為10/10，於9/10下午3時至4時間辦理宿營地抽籤，若未中籤隊伍，可於9/10下午4時以後申請排隊遞補機會）",
         "source_url": "https://hike.taiwan.gov.tw/notice_a1.aspx",
         "verified_at": "2026-08-10"
       }
@@ -137,6 +185,22 @@
         "permits_source_url": "https://hike.taiwan.gov.tw/notice_a1.aspx",
         "ui": false,
         "ui_note": "站上尚無前峰的獨立走法頁，依指令先只備資料不做 UI"
+      },
+      "觀高山屋": {
+        "apply_type": "lottery",
+        "stay": true,
+        "fee": {
+          "text": "「觀高山屋」使用規費：平日每人每宿新臺幣800元，假日每人每宿新臺幣1200元",
+          "amount": 800,
+          "amount_weekend": 1200,
+          "unit": "每人每宿",
+          "source_url": "https://hike.taiwan.gov.tw/notice_a1.aspx",
+          "verified_at": "2026-08-10"
+        },
+        "permits": [
+          "入園證",
+          "入山證"
+        ]
       }
     },
     "unverified": [

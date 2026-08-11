@@ -132,6 +132,8 @@
   .ics-preview .ics-what { flex: 1 1 auto; min-width: 0; }
   .ics-preview li.key .ics-what { font-weight: 700; color: #a5342a; }
   .ics-preview li.key .ics-when { color: #a5342a; }
+  .ics-missing { margin-top: 9px; padding: 8px 11px; background: #fff8ec; border: 1px solid #f3d9a4;
+    border-radius: 8px; font-size: 11.5px; color: #8a5f16; line-height: 1.75; }
   @media (max-width: 640px) {
     .ics-intro-sub { font-size: 11.5px; }
     .ics-preview li { font-size: 12px; }
@@ -172,6 +174,23 @@
   .apply-summary { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; cursor: pointer; }
   .apply-summary-text { flex: 1 1 auto; font-size: 13.5px; color: #223324; font-weight: 600; line-height: 1.6; min-width: 0; }
   .apply-summary-text .muted { font-weight: 400; color: #7d8a80; font-size: 12.5px; }
+  /* 逾期直接失去資格，是整個流程後果最嚴重的一項，
+     因此放在收合狀態也看得到的位置，不藏在展開區塊裡。 */
+  .apply-critical { margin-top: 12px; background: #fdecea; border: 1px solid #f5c6c0;
+    border-radius: 10px; padding: 11px 13px; }
+  .apply-critical .ac-tag { display: inline-block; font-size: 10.5px; font-weight: 700;
+    background: #a5342a; color: #fff; padding: 2px 8px; border-radius: 10px; margin-bottom: 6px; }
+  .apply-critical .ac-body { font-size: 12.5px; line-height: 1.8; color: #a5342a; }
+  .apply-critical .ac-body strong { display: block; font-size: 13.5px; margin-bottom: 2px; }
+  .apply-critical .ac-src { font-size: 10.5px; color: #b06a62; margin-top: 7px;
+    padding-top: 6px; border-top: 1px solid rgba(165,52,42,.18); }
+  .apply-critical a { color: #a5342a; }
+  .apply-steps li.critical .step-label { color: #a5342a; }
+  @media (max-width: 640px) {
+    .apply-critical { padding: 10px 12px; }
+    .apply-critical .ac-body { font-size: 11.5px; }
+  }
+
   .apply-toggle-row { margin-top: 10px; }
   .apply-toggle { flex: 0 0 auto; background: none; border: 1px solid #d8ddd9; border-radius: 8px;
     padding: 6px 11px; font-size: 12.5px; font-family: inherit; color: #2f7d52; cursor: pointer; white-space: nowrap; }
@@ -1218,6 +1237,7 @@
       result: 'https://hike.taiwan.gov.tw/bed_3.aspx',
       refund: 'https://hike.taiwan.gov.tw/bed_9.aspx',
       apply: 'https://hike.taiwan.gov.tw/apply_1.aspx',
+      notice: 'https://hike.taiwan.gov.tw/notice_a1.aspx',
     };
 
     // 目前只有玉山系統查證完成。其他系統沒有對應的公告資料源，
@@ -1245,14 +1265,45 @@
             source: APPLY_SOURCES.result, sourceName: '玉山抽籤結果查詢',
           },
           {
+            label: '中籤後 3 日內完成繳費',
+            critical: true,
+            detail: '中籤隊伍請於中籤日後3日內完成繳納使用規費、遞補隊伍請於通知遞補日後3日內完成繳納使用規費。未依限繳費者系統將自動辦理退件作業。'
+                    + '排雲山莊使用規費每人每宿新臺幣480元；觀高山屋平日每人每宿800元、假日1200元。'
+                    + '收費方式：金融機構轉帳、郵政匯票、現金、臺灣PAY、超商繳費。',
+            source: 'https://hike.taiwan.gov.tw/notice_a1.aspx', sourceName: '玉山國家公園登山須知',
+          },
+          {
+            label: '沒中籤還有兩條路：備取與排隊遞補',
+            detail: '「排雲山莊」抽籤結果列有「備取」隊伍，視同「未抽中」，但有優先於「排隊遞補」隊伍之遞補權，順序為備取1、備取2、備取3。'
+                    + '未中籤隊伍可另提申請案參加他日抽籤，或再申請同日排隊等候遞補（例如入園日10/10、9/10下午3時至4時抽籤，未中籤可於9/10下午4時以後申請排隊遞補）。'
+                    + '遞補期限至預定入園日前5天，不受理5日以內之申請。',
+            source: 'https://hike.taiwan.gov.tw/notice_a1.aspx', sourceName: '玉山國家公園登山須知',
+          },
+          {
+            label: '入園證與入山證是兩張，主管機關不同',
+            detail: '入園證由國家公園管理處核發，依《國家公園法》第19條，進入生態保護區者應經國家公園管理處之許可；入山許可證由內政部警政署核發。'
+                    + '取得入園許可後，可於入山之日前3日至124日內代送申請入山許可證。自98年4月1日起免收入山手續作業費。',
+            source: 'https://hike.taiwan.gov.tw/notice_a1.aspx', sourceName: '玉山國家公園登山須知',
+          },
+          {
+            label: '隊伍人數與資格限制',
+            detail: '開放路線(一般)每隊1至12人，承載量依各宿營地點限額管理。'
+                    + '玉山線單日往返每隊1至12人、每日60人，申請人/領隊須自行檢核所有隊員具備海拔3,000公尺以上登山經驗。'
+                    + '需具長程縱走經驗之路線，須具3天以上高海拔(3000公尺以上)長程縱走登山經驗。'
+                    + '雪季期間每隊以6人為限，每1名領隊＋5名隊員之比例原則，不得任意更換人員。'
+                    + '未成年者應取得法定代理人或監護人之同意；領隊應為成年人；同時期進入本園生態保護區之人員均不得重複申請。',
+            source: 'https://hike.taiwan.gov.tw/notice_a1.aspx', sourceName: '玉山國家公園登山須知',
+          },
+          {
             label: '無法成行時先取消，再申請退費',
             detail: '隊伍或隊員因故無法成行，須自行線上取消入園或以入園信箱告知；欲申請退費者，須先取消入園後再提出。排雲山莊供餐及睡袋租賃的退費另洽委外公司。',
             source: APPLY_SOURCES.refund, sourceName: '玉山可申請退費日期查詢',
           },
         ],
-        // 明列查證缺口，不留白。使用者看到「尚未查證」會去看官方，
-        // 看到空白則會以為沒這回事。
-        unverified: ['繳費期限與逾期後果', '候補與釋出名額規則', '入園證與入山證的適用差異', '隊伍人數與資格限制'],
+        // 這四項昨天已從官方須知查證完成並寫進步驟，因此不再列為「尚未查證」。
+        // 先前中段的「所需證件」已說明入園證與入山證的差別，下方卻同時說
+        // 「尚未查證，本站不提供」—— 同一頁自相矛盾，使用者不知道該信哪個。
+        unverified: [],
       },
 
       qilai: {
@@ -1678,6 +1729,7 @@
             </div>
             <div class="ics-preview-label">會加入以下提醒：</div>
             <ul class="ics-preview" id="ics-preview"></ul>
+            <div class="ics-missing" id="ics-missing-note" style="display:none;"></div>
           </div>
           <button type="button" class="ics-btn" id="ics-btn">📅 加入行事曆</button>
           <div class="ics-note">
@@ -1690,7 +1742,7 @@
         </div>`;
 
       const stepsHtml = rules ? rules.steps.map(st => `
-        <li>
+        <li class="${st.critical ? 'critical' : ''}">
           <div class="step-label">${escapeHtml(st.label)}</div>
           <div class="step-detail">${escapeHtml(st.detail)}</div>
           <div class="step-src">出處：<a href="${st.source}" target="_blank" rel="noopener">${escapeHtml(st.sourceName)}</a>　最後查證 ${APPLY_VERIFIED_AT}</div>
@@ -1706,6 +1758,13 @@
         <h3>申請流程與所需證件</h3>
         ${lotteryHtml}
         <div id="apply-permits"></div>
+        ${rules && rules.steps.some(st => st.critical) ? `
+        <div class="apply-critical">
+          <span class="ac-tag">最容易踩的坑</span>
+          ${rules.steps.filter(st => st.critical).map(st =>
+            `<div class="ac-body"><strong>${escapeHtml(st.label)}</strong>${escapeHtml(st.detail)}</div>`).join('')}
+          <div class="ac-src">出處：<a href="${APPLY_SOURCES.notice || 'https://hike.taiwan.gov.tw/notice_a1.aspx'}" target="_blank" rel="noopener">玉山國家公園登山須知</a>　最後查證 ${APPLY_VERIFIED_AT}</div>
+        </div>` : ''}
         <div class="apply-toggle-row">
           <button type="button" class="apply-toggle" id="apply-toggle"
                   aria-expanded="false" aria-controls="apply-detail">${rules ? '完整申請流程' : '申請說明'} <span class="chev">▾</span></button>
@@ -1715,8 +1774,8 @@
           ${stepsHtml ? `<ol class="apply-steps">${stepsHtml}</ol>` : ''}
           ${closureCoverageNote(system)}
           <div class="apply-note">
-            <strong>尚未查證，本站不提供</strong>：${unverified.map(escapeHtml).join('、')}。
-            這些項目請以官方公告為準。<br>
+            ${unverified.length ? `<strong>尚未查證，本站不提供</strong>：${unverified.map(escapeHtml).join('、')}。
+            這些項目請以官方公告為準。<br>` : ''}
             ${rules ? '抽籤時間一律採官方公告值，本站不以日期規律推算 —— 實際間隔為 28～31 天不等，推算會出錯。<br>' : ''}
             資料來源：內政部國家公園署 臺灣登山申請一站式服務網。所有規則以官方最新公告為準。
           </div>
@@ -1753,6 +1812,21 @@
         const events = buildApplyEvents(routeKey, site, input.value)
           .slice()
           .sort((a, b) => (a.date + (a.time ? a.time[0] : '')).localeCompare(b.date + (b.time ? b.time[0] : '')));
+        // 抽籤日未公告時，抽籤與繳費兩筆都不會產生（繳費日由中籤日推算）。
+        // 這兩筆正是最關鍵的，而申請視窗又是入園日前 2 個月就開始 ——
+        // 使用者最可能在抽籤還沒公告時就來規劃，若不說明會以為功能壞了。
+        const noteEl = document.getElementById('ics-missing-note');
+        if (noteEl) {
+          const rulesX = rulesForRoute(routeKey);
+          const isLottery = !!(rulesX && rulesX.lottery && !events.some(e => e.kind === 'lottery'));
+          noteEl.style.display = isLottery ? 'block' : 'none';
+          if (isLottery) {
+            noteEl.innerHTML = '這一天的<strong>抽籤時間官方尚未公告</strong>，因此「抽籤」與「繳費期限」'
+              + '兩筆不會加入（繳費日要從中籤日往後推算）。官方通常在入園日前一個月公告，'
+              + '屆時回本站重新匯入一次即可 —— 事件不會重複，會直接更新。';
+          }
+        }
+
         list.innerHTML = events.map(ev => {
           const d = ev.date.slice(5).replace('-', '/');
           const when = ev.time ? `${d} ${ev.time[0]}` : d;
