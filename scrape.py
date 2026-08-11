@@ -1399,6 +1399,32 @@ def assert_timestamps_match():
 if __name__ == "__main__":
     # --derive：不重新爬，只用現有的 data.json 重建 summary.json 與 search-index.json。
     # 用在衍生檔漏更新、需要補齊的時候，不必等下一次排程或重跑 20 分鐘的爬蟲。
+    # --closures：只重抓封園公告，數秒完成。
+    #
+    # 為什麼要跟 --notices 分開：--notices 現在還包含 28 項路線人數限制的
+    # 逐日資料，要跑好幾分鐘，而且只在全部完成後才寫檔 —— 中途逾時等於白跑。
+    # 但封園解除是急事（颱風過了、路線恢復開放，站上還顯示禁止入園會擋到人），
+    # 必須能單獨、快速地更新。
+    if "--closures" in sys.argv:
+        with open("data.json", encoding="utf-8") as f:
+            data = json.load(f)
+        with sync_playwright() as p:
+            browser = p.chromium.launch()
+            page = browser.new_page()
+            new_closures = safe_scrape("封園公告", lambda: scrape_closures(page), [])
+            browser.close()
+        if not new_closures and data.get("closures"):
+            print(f"  [保留] 本次抓取為空，維持既有 {len(data['closures'])} 筆")
+        else:
+            data["closures"] = new_closures
+            with open("data.json", "w", encoding="utf-8") as f:
+                json.dump(data, f, ensure_ascii=False, indent=2)
+            write_derived(data)
+            assert_timestamps_match()
+            n = sum(1 for c in new_closures if c.get("confirmed"))
+            print(f"已更新封園公告：{len(new_closures)} 筆，其中確認禁止入園 {n} 筆")
+        raise SystemExit(0)
+
     # --notices：只爬封園與抽籤兩張公告表，合併進現有的 data.json。
     # 公告的變動頻率與名額不同（颱風是突發的），而且只要幾秒鐘，
     # 不必為了更新一則封園公告重跑 20 分鐘的完整爬蟲。
