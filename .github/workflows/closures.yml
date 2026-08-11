@@ -1,0 +1,73 @@
+name: 更新封園公告
+
+# 為什麼要跟主爬蟲分開、而且跑得更頻繁
+#
+#   名額資料一天變四次夠用；封園公告不是。
+#   颱風警報發布或解除是突發的，而站上顯示「全面禁止入園」會直接擋掉
+#   真的要去的人；反過來，該封園卻沒顯示，使用者可能白跑一趟到登山口被擋回來。
+#
+#   實際發生過：官方在 07:00 排程之後才把排雲山莊改成「8/11 起恢復入園」，
+#   站上整整落後了數小時。
+#
+#   這支只抓 bed_9.aspx 一頁，實測 4.4 秒完成，對政府網站的負擔極小，
+#   因此可以每小時跑一次。內容沒變就不提交，不會灌爆 git 歷史。
+
+on:
+  schedule:
+    # 每小時的第 20 分（避開整點與主爬蟲的 0 分，減少同時推送的機會）
+    - cron: '20 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+# 同一時間只跑一個，避免前一次還沒推完就又啟動
+concurrency:
+  group: closures
+  cancel-in-progress: false
+
+jobs:
+  closures:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 安裝 Playwright
+        run: |
+          pip install playwright
+          playwright install --with-deps chromium
+
+      - name: 只重抓封園公告
+        run: python3 scrape.py --closures
+
+      - name: 有變動才提交
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          # 封園公告多數時候不會變，沒變就不提交，避免每小時都產生一筆空提交
+          if [ -z "$(git status --porcelain data.json summary.json search-index.json)" ]; then
+            echo "封園公告無變動，略過提交"
+            exit 0
+          fi
+
+          git add data.json summary.json search-index.json
+          git commit -m "自動更新封園公告 $(TZ=Asia/Taipei date '+%Y-%m-%d %H:%M')"
+
+          # 主爬蟲或預覽工作流程可能同時在推，被拒就同步後重試
+          for i in 1 2 3 4 5; do
+            if git push; then
+              echo "已更新封園公告"
+              exit 0
+            fi
+            echo "推送被拒（第 $i 次），同步遠端後重試…"
+            git pull --rebase --autostash origin main || exit 1
+            sleep 5
+          done
+          echo "重試多次仍失敗"
+          exit 1
