@@ -729,6 +729,7 @@
           {
             key: 'main',
             officialRoute: '嘉明湖山屋/營地',
+            applySite: '嘉明湖山屋/營地',
             label: '3天2夜．向陽山屋＋嘉明湖山屋',
             days: '3天2夜',
             distanceKm: 28.4,
@@ -772,6 +773,7 @@
             key: 'three-day',
             label: '3天2夜．七卡＋三六九',
             officialRoute: '(3級) 雪山主峰(多日行程)',
+            applySite: '雪山主峰線',
             days: '3天2夜',
             distanceKm: 21.8,
             difficultyLevel: 3,
@@ -793,6 +795,7 @@
             key: 'two-day',
             label: '2天1夜．直接上三六九',
             officialRoute: '(3級) 雪山主峰(多日行程)',
+            applySite: '雪山主峰線',
             days: '2天1夜',
             distanceKm: 21.8,
             difficultyLevel: 3,
@@ -812,6 +815,7 @@
           {
             key: 'day',
             officialRoute: '(4級) 雪山主峰(單日往返)',
+            applySite: '雪山主峰線',
             // 雪霸的人數限制是「登山口」層級，由該登山口進入的所有路線共用，
             // 不是單攻專屬額度。UI 必須標明，否則會被誤讀成單攻有 160 個名額。
             trailQuota: '雪山登山口',
@@ -842,6 +846,7 @@
             key: 'three-day',
             label: '3天2夜．官方建議天數',
             officialRoute: '奇萊主、北峰線',
+            applySite: '奇萊主、北峰線',
             days: '3天2夜',
             distanceKm: 23.9,
             difficultyLevel: 5,
@@ -868,6 +873,7 @@
             key: 'two-day',
             label: '2天1夜．直接上奇萊山屋',
             officialRoute: '奇萊主、北峰線',
+            applySite: '奇萊主、北峰線',
             days: '2天1夜',
             distanceKm: 23.9,
             difficultyLevel: 5,
@@ -896,6 +902,7 @@
           {
             key: 'five-day',
             officialRoute: '南湖大山線(因承載量異動，入園日期為114.7.1以後者適用)',
+            applySite: '南湖大山線',
             label: '5天4夜．官方建議天數',
             days: '5天4夜',
             distanceKm: 45.88,
@@ -919,6 +926,7 @@
           {
             key: 'four-day',
             officialRoute: '南湖大山線(因承載量異動，入園日期為114.7.1以後者適用)',
+            applySite: '南湖大山線',
             label: '4天3夜．壓縮行程',
             days: '4天3夜',
             distanceKm: 45.88,
@@ -1211,6 +1219,7 @@
     const APPLY_RULES = {
       yushan: {
         systemName: '玉山國家公園',
+        isLottery: true,
         applyType: '抽籤制',
         appliesTo: '排雲山莊、圓峰山屋/營地、瓦拉米山屋/營地、庫哈諾辛山屋/營地、玉山線單日往返',
         steps: [
@@ -1238,6 +1247,64 @@
         // 明列查證缺口，不留白。使用者看到「尚未查證」會去看官方，
         // 看到空白則會以為沒這回事。
         unverified: ['繳費期限與逾期後果', '候補與釋出名額規則', '入園證與入山證的適用差異', '隊伍人數與資格限制'],
+      },
+
+      qilai: {
+        systemName: '太魯閣國家公園', applyType: '依申請時間先後排序（非抽籤）',
+        appliesTo: '奇萊主、北峰線等生態保護區路線',
+        steps: [
+          { label: '線上提出入園申請', detail: '於一站式服務網線上申請生態保護區入園許可，取得許可證後另向警政署申請入山許可證。預定入園日前5天下午3時至前2個月提出，前5天內不予受理。',
+            source: 'https://hike.taiwan.gov.tw/notice_a4.aspx', sourceName: '太魯閣國家公園登山須知' },
+          { label: '額滿時進入候補', detail: '每天每一登山路線有10隊候補名額，承載量額滿時系統自動登錄為候補。床位候補時間為核准隊伍出發前1天下午3時止。',
+            source: 'https://hike.taiwan.gov.tw/notice_a4.aspx', sourceName: '太魯閣國家公園登山須知' },
+          { label: '不能成行要自行取消', detail: '應於入園前1日15:00前上網自行取消，釋出名額由候補名單遞補。未依期限取消而未到，可能半年內不予許可入園。',
+            source: 'https://hike.taiwan.gov.tw/notice_a4.aspx', sourceName: '太魯閣國家公園登山須知' },
+        ],
+        unverified: ['入園許可證下載時間', '出園回報規定', '行前講習要求'],
+      },
+
+      nanhu: {
+        systemName: '太魯閣國家公園', applyType: '依申請時間先後排序（非抽籤）',
+        appliesTo: '南湖大山線等生態保護區路線',
+        steps: [
+          { label: '線上提出入園申請', detail: '於一站式服務網線上申請生態保護區入園許可，取得許可證後另向警政署申請入山許可證。預定入園日前5天下午3時至前2個月提出，前5天內不予受理。',
+            source: 'https://hike.taiwan.gov.tw/notice_a4.aspx', sourceName: '太魯閣國家公園登山須知' },
+          { label: '額滿時進入候補', detail: '每天每一登山路線有10隊候補名額，承載量額滿時系統自動登錄為候補。床位候補時間為核准隊伍出發前1天下午3時止。',
+            source: 'https://hike.taiwan.gov.tw/notice_a4.aspx', sourceName: '太魯閣國家公園登山須知' },
+          { label: '不能成行要自行取消', detail: '應於入園前1日15:00前上網自行取消，釋出名額由候補名單遞補。未依期限取消而未到，可能半年內不予許可入園。',
+            source: 'https://hike.taiwan.gov.tw/notice_a4.aspx', sourceName: '太魯閣國家公園登山須知' },
+        ],
+        unverified: ['入園許可證下載時間', '出園回報規定', '行前講習要求'],
+      },
+
+      jiaming: {
+        systemName: '林業及自然保育署臺東分署', isLottery: true, applyType: '抽籤制',
+        appliesTo: '向陽山屋、嘉明湖山屋及嘉明湖營地',
+        steps: [
+          { label: '線上提出住宿申請', detail: '一般申請為住宿日前60日至前5日。採網路申請，不接受電話及現場預訂。每隊1〜12名，同日內同一人僅得申請一單位床位或營位。',
+            source: 'https://hike.taiwan.gov.tw/notice_b3.aspx', sourceName: '嘉明湖/向陽申請須知' },
+          { label: '住宿前30日下午3時抽籤', detail: '中籤者以電子郵件及手機簡訊通知；未中籤者列入候補抽籤名單（候補無順序），系統於住宿日前29日至前4日每日下午3時針對空餘床位抽籤。',
+            source: 'https://hike.taiwan.gov.tw/notice_b3.aspx', sourceName: '嘉明湖/向陽申請須知' },
+          { label: '中籤後在期限內繳費', detail: '住宿日前30至前10日中籤者為中籤日起算5日內；前9至前6日為2日內；前5至前4日為中籤通知日當日23時59分前。逾期視同放棄，系統自動取消入住資格。',
+            source: 'https://hike.taiwan.gov.tw/notice_b3.aspx', sourceName: '嘉明湖/向陽申請須知' },
+          { label: '出發當日至向陽服務站登記', detail: '進入步道前應至向陽服務站進行行程登記與住宿人員資料登記。服務時間為上午7時至下午5時，時間外請將核准證投入登記箱。',
+            source: 'https://hike.taiwan.gov.tw/notice_b3.aspx', sourceName: '嘉明湖/向陽申請須知' },
+        ],
+        unverified: ['住宿收費金額（依官方收費基準另訂）', '退費規則細節', '出園回報規定'],
+      },
+
+      snow: {
+        systemName: '雪霸國家公園', applyType: '依候補順位遞補（非抽籤）',
+        appliesTo: '雪山主峰線等生態保護區路線',
+        steps: [
+          { label: '線上提出入園申請', detail: '入園日前5日至入園日前2個月，每日07:00-23:00提出。所有行程日期皆須在此範圍內才接受申請，逾期不受理。',
+            source: 'https://hike.taiwan.gov.tw/notice_a7.aspx', sourceName: '雪霸國家公園登山須知' },
+          { label: '每晚 23:00 統一排定床位', detail: '系統統計每日釋出之床位總數後統一排定；若仍無床位，將於入園前5日（不含入園日）自動退件。',
+            source: 'https://hike.taiwan.gov.tw/notice_a7.aspx', sourceName: '雪霸國家公園登山須知' },
+          { label: '不能成行要自行註銷', detail: '應於入園前5日上網自行註銷。行前5日前取消，釋出名額可由候補名單遞補，或於隔日上午7:00供民眾申請。',
+            source: 'https://hike.taiwan.gov.tw/notice_a7.aspx', sourceName: '雪霸國家公園登山須知' },
+        ],
+        unverified: ['入園許可證下載時間', '出園回報規定', '雪季期間的額外要求'],
       },
     };
 
@@ -1430,8 +1497,15 @@
     }
 
     // 依 apply_type 決定事件組，不把判斷寫死在畫面邏輯裡
+    // 依路線所屬系統取規則。原本寫死 applyRules.yushan，
+    // 結果五條路線只有玉山能匯出行事曆 —— 其餘四條的規則其實各機關都有公告。
+    function rulesForRoute(routeKey) {
+      const sys = (ROUTES[routeKey] || {}).system;
+      return (applyRules && sys) ? applyRules[sys] : null;
+    }
+
     function buildApplyEvents(routeKey, siteKey, targetDate) {
-      const rules = applyRules && applyRules.yushan;
+      const rules = rulesForRoute(routeKey);
       if (!rules) return [];
       const site = rules.sites[siteKey];
       if (!site) return [];
@@ -1443,50 +1517,89 @@
       const iso = d => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
 
       // 申請開放：官方為「預定入園日前2個月」
-      const openDate = addMonths(D, -2);
+      const aw = rules.common.apply_window;
+      const openDate = aw.open_days_before ? addDays(D, -aw.open_days_before)
+                     : addMonths(D, -(aw.open_months_before || 2));
       let openDesc = `${rules.common.apply_window.text}。\n${rules.common.system_hours.text}。`
-        + `\n\n入山證：${rules.common.mountain_permit.text}。`
-        + `\n行前講習：${rules.common.briefing.text}。`;
+        + `\n\n${rules.common.mountain_permit.text}。`
+        + (rules.common.briefing ? `\n行前講習：${rules.common.briefing.text}。` : '')
+        + (rules.common.team_size ? `\n${rules.common.team_size.text}。` : '');
       if (site.experience) openDesc += `\n\n${site.experience.text}。`;
       if (site.capacity) openDesc += `\n${site.capacity.text}。`;
       ev.push({ date: iso(openDate), kind: 'apply-open', alarm: '-P1D',
         title: `可開始申請｜${siteKey}`, desc: openDesc + link, url: back });
 
       if (site.apply_type === 'lottery') {
-        // 抽籤日：只用官方公告值。查無資料就整筆不產生。
-        const draw = (currentData && currentData.lottery || []).find(x => x.stay_date === targetDate);
+        // 抽籤日的來源依系統而異：
+        //   玉山   逐日公告表（bed_8.aspx），查無該日就不產生這筆，不推算
+        //   嘉明湖 官方規則明訂「住宿前30日下午3時」，屬公告值而非推算
+        let draw = null;
+        const lt = rules.lottery && rules.lottery.draw_time;
+        if (lt && lt.days_before) {
+          const dd = addDays(D, -lt.days_before);
+          const t0 = lt.time || '15:00';
+          const [hh, mm] = t0.split(':').map(Number);
+          const t1 = `${String(hh + 1).padStart(2, '0')}:${String(mm).padStart(2, '0')}`;
+          draw = { draw_date: iso(dd), draw_start: t0, draw_end: t1, _rule: true };
+        } else {
+          draw = (currentData && currentData.lottery || []).find(x => x.stay_date === targetDate) || null;
+        }
         if (draw) {
           ev.push({ date: draw.draw_date, kind: 'lottery', time: [draw.draw_start, draw.draw_end],
             alarm: '-PT1H',
             title: `抽籤｜${siteKey}`,
-            desc: `官方公開抽籤時間（公告值）。\n${rules.lottery.draw_time.text}。`
-                  + `\n\n中籤與否會以電子郵件及簡訊通知。` + link, url: back });
+            desc: `${rules.lottery.draw_time.text}。`
+                  + (rules.lottery.draw_time.note ? `\n\n${rules.lottery.draw_time.note}。` : '')
+                  + link, url: back });
 
           // 繳費期限：只有需要住宿費的站點才有。單日往返不過夜，無此事件。
           if (site.fee) {
             const pay = addDays(parseYmd(draw.draw_date), rules.lottery.payment.days_after_draw);
             ev.push({ date: iso(pay), kind: 'payment', alarm: '-P1D',
-              title: `繳費期限｜${site.fee.amount} 元／人・宿`,
-              desc: `${rules.lottery.payment.text}。\n${rules.lottery.payment.example}。`
+              title: site.fee.amount ? `繳費期限｜${site.fee.amount} 元／人・宿` : '繳費期限',
+              desc: `${rules.lottery.payment.text}。`
+                    + (rules.lottery.payment.example ? `\n${rules.lottery.payment.example}。` : '')
+                    + (rules.lottery.payment.note ? `\n${rules.lottery.payment.note}。` : '')
                     + `\n\n${site.fee.text}。`
                     + `\n\n沒在期限內繳費，抽中的資格會被系統退掉。` + link, url: back });
           }
         }
-        const wl = addDays(D, -rules.lottery.waitlist_deadline.days_before);
-        ev.push({ date: iso(wl), kind: 'waitlist', alarm: '-P1D',
-          title: `遞補申請截止｜${siteKey}`,
-          desc: `${rules.lottery.waitlist_deadline.text}。\n${rules.lottery.after_draw.text}。` + link, url: back });
+        // after_draw 只有玉山有，其他系統沒有這條規則 —— 有才加，不能寫死
+        const wd = rules.lottery.waitlist_deadline;
+        if (wd && wd.days_before) {
+          const wl = addDays(D, -wd.days_before);
+          ev.push({ date: iso(wl), kind: 'waitlist', alarm: '-P1D',
+            title: `候補截止｜${siteKey}`,
+            desc: `${wd.text}。`
+                  + (rules.lottery.after_draw ? `\n${rules.lottery.after_draw.text}。` : '')
+                  + link, url: back });
+        }
       } else {
         const close = addDays(D, -rules.common.apply_window.close_days_before);
         ev.push({ date: iso(close), kind: 'apply-close', alarm: '-P1D',
           title: `申請截止｜${siteKey}`,
-          desc: `${rules.common.apply_window.text}。\n不受理5日以內之申請。` + link, url: back });
+          desc: `${rules.common.apply_window.text}。` + link, url: back });
+        // 候補與取消期限：各機關規定不同，有才產生，沒有就不生
+        if (rules.common.waitlist && rules.common.waitlist.days_before) {
+          const wl = addDays(D, -rules.common.waitlist.days_before);
+          ev.push({ date: iso(wl), kind: 'waitlist', alarm: '-P1D',
+            title: `候補截止｜${siteKey}`,
+            desc: `${rules.common.waitlist.text}。` + link, url: back });
+        }
+        if (rules.common.cancel && rules.common.cancel.days_before) {
+          const cc = addDays(D, -rules.common.cancel.days_before);
+          ev.push({ date: iso(cc), kind: 'cancel', alarm: '-P1D',
+            title: `如不能成行，取消期限`,
+            desc: `${rules.common.cancel.text}。\n\n沒取消而未到，可能影響日後申請資格。` + link, url: back });
+        }
       }
 
-      const dl = addDays(D, -rules.common.permit_download.days_before);
-      ev.push({ date: iso(dl), kind: 'permit', alarm: '-P1D',
-        title: '入園許可證可開始下載',
-        desc: `${rules.common.permit_download.text}。\n${rules.common.permit_download.url}` + link, url: back });
+      if (rules.common.permit_download) {
+        const dl = addDays(D, -rules.common.permit_download.days_before);
+        ev.push({ date: iso(dl), kind: 'permit', alarm: '-P1D',
+          title: '入園許可證可開始下載',
+          desc: `${rules.common.permit_download.text}。\n${rules.common.permit_download.url}` + link, url: back });
+      }
 
       ev.push({ date: iso(addDays(D, -7)), kind: 'weather', alarm: '-P1D',
         title: '查天氣｜出發前一週',
@@ -1498,11 +1611,15 @@
 
       ev.push({ date: iso(D), kind: 'depart', alarm: '-P1D',
         title: `出發｜${siteKey}`,
-        desc: `${rules.common.checkin.text}。` + link, url: back });
+        desc: (rules.common.checkin ? rules.common.checkin.text + '。'
+              : '出發日。攜帶入園許可證與身分證明文件正本備查。')
+              + (rules.common.typhoon ? `\n\n${rules.common.typhoon.text}。` : '') + link, url: back });
 
-      ev.push({ date: iso(addDays(D, 1)), kind: 'exit-report', alarm: '-P1D',
-        title: '出園回報',
-        desc: `${rules.common.exit_report.text}。` + link, url: back });
+      if (rules.common.exit_report) {
+        ev.push({ date: iso(addDays(D, 1)), kind: 'exit-report', alarm: '-P1D',
+          title: '出園回報',
+          desc: `${rules.common.exit_report.text}。` + link, url: back });
+      }
 
       return ev;
     }
@@ -1529,16 +1646,22 @@
       const rules = APPLY_RULES[routeKey];
       const system = route ? route.system : null;
 
-      // 抽籤相關內容目前只有玉山系統有官方資料
+      // 抽籤摘要只給抽籤制的系統（目前只有玉山）。
+      // 日期欄位則是所有有已查證規則的系統都要有 —— 它是行事曆匯出的入口，
+      // 先前寫死玉山，導致五條路線只有一條能匯出。
+      const isLot = !!(rules && rules.isLottery);
       const lotteryHtml = rules ? `
         <div class="apply-summary" id="apply-summary">
-          <div class="apply-summary-text">${nextDrawSummary()}</div>
+          <div class="apply-summary-text">${isLot ? nextDrawSummary()
+            : '🎫 ' + escapeHtml(rules.applyType)}</div>
         </div>
         <div class="apply-date-row">
-          <label for="apply-date" id="apply-date-label">預計住宿日／單日往返日</label>
+          <label for="apply-date" id="apply-date-label">${isLot ? '預計住宿日／單日往返日' : '預計出發日'}</label>
           <input type="date" id="apply-date">
         </div>
-        <div class="apply-result" id="apply-result">選擇日期後，顯示該日的官方公告抽籤時間。</div>
+        <div class="apply-result" id="apply-result">${isLot
+          ? '選擇日期後，顯示該日的官方公告抽籤時間。'
+          : '選擇日期後，可把申請流程的關鍵日期加入行事曆。'}</div>
         <div class="ics-row" id="ics-row" style="display:none;">
           <div class="ics-intro">
             <div class="ics-intro-title">📅 把申請流程加進行事曆</div>
@@ -1636,7 +1759,8 @@
 
       function syncApplyUi() {
         const site = currentSite();
-        const rules = applyRules && applyRules.yushan && applyRules.yushan.sites[site];
+        const sysRules = rulesForRoute(routeKey);
+        const rules = sysRules && sysRules.sites ? sysRules.sites[site] : null;
         if (dateLabel) {
           dateLabel.textContent = (rules && rules.apply_type === 'lottery')
             ? '預計住宿日／單日往返日' : '預計出發日';
@@ -1654,7 +1778,8 @@
           const site = currentSite();
           if (!site || !input.value) return;
           const n = downloadIcs(routeKey, site, input.value);
-          const rules = applyRules && applyRules.yushan && applyRules.yushan.sites[site];
+          const sysR = rulesForRoute(routeKey);
+          const rules = sysR && sysR.sites ? sysR.sites[site] : null;
           if (window.gtag) {
             gtag('event', 'add_to_calendar', {
               route: routeKey,
@@ -1668,6 +1793,7 @@
       input.addEventListener('change', () => {
         const v = input.value;
         if (!v) return;
+        if (!isLot) { syncApplyUi(); return; }   // 非抽籤制沒有抽籤時間可查
         const hits = lotteryForStayDate(v);
         if (hits.length === 0) {
           result.className = 'apply-result unknown';
