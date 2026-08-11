@@ -90,6 +90,12 @@
   .closure-box a { color: inherit; }
   /* 標點與前一字綁在一起，避免標點落在行首（中文行頭禁則） */
   .np { white-space: nowrap; }
+
+  /* 日曆上方的精簡提示。完整版在頁首，這裡只留結論避免同一頁跳針。 */
+  .closure-slim { border-radius: 8px; padding: 8px 12px; margin-bottom: 10px;
+    font-size: 12.5px; line-height: 1.7; background: #fff8ec; border: 1px solid #f3d9a4; color: #8a5f16; }
+  .closure-slim.danger { background: #fdecea; border-color: #f5c6c0; color: #a5342a; }
+  @media (max-width: 640px) { .closure-slim { font-size: 11.5px; padding: 7px 10px; } }
   /* 封園期間的名額數字：灰化加刪除線，沿用過期資料的視覺語言 ——
      兩者要傳達的是同一件事「這個數字現在不可信」。 */
   .day-cell.park-closed { background: #fbf3f2; border-color: #f0d3cf; }
@@ -1165,12 +1171,31 @@
       // 兩個容器：頁首（#closure-top）與日曆上方（#closure-notice）。
       // 只有一份判定邏輯與一份 HTML 產生器，兩處輸出同樣的內容 ——
       // 各寫一份遲早會有一邊漏改，而這是安全相關的警示。
-      const targets = ['closure-notice', 'closure-top']
-        .map(id => document.getElementById(id)).filter(Boolean);
-      if (targets.length === 0) return;
-      targets.forEach(t => { t.innerHTML = ''; });
-      const box = { appendChild: el => targets.forEach(t => t.appendChild(el.cloneNode(true))) };
-      closuresForHut(hutName).forEach(c => {
+      // 頁首放完整版（使用者一進頁面就該看到），日曆上方只放一行精簡提示。
+      // 兩處都放完整版的話，加上恢復公告後同一段長文會在一頁裡出現兩次，
+      // 讀起來像跳針，也把日曆推得更遠。
+      const top = document.getElementById('closure-top');
+      const near = document.getElementById('closure-notice');
+      if (!top && !near) return;
+      if (top) top.innerHTML = '';
+      if (near) near.innerHTML = '';
+      const box = { appendChild: el => { if (top) top.appendChild(el); } };
+      const list = closuresForHut(hutName);
+
+      // 日曆上方的精簡提示：只講結論與期間，細節往上看
+      if (near && list.length) {
+        const conf = list.filter(c => c.confirmed);
+        const md = d => `${Number(d.slice(5, 7))}/${Number(d.slice(8, 10))}`;
+        if (conf.length) {
+          near.innerHTML = conf.map(c =>
+            `<div class="closure-slim danger">⚠ <strong>${md(c.start)}–${md(c.end)} 全面禁止入園</strong>` +
+            `　該期間名額已標示為失效，詳情見頁面上方</div>`).join('');
+        } else {
+          near.innerHTML = `<div class="closure-slim">ℹ️ 本山屋近期有 ${list.length} 則天災相關公告，詳情見頁面上方</div>`;
+        }
+      }
+
+      list.forEach(c => {
         const confirmed = !!c.confirmed;
         const el = document.createElement('div');
         el.className = 'closure-box ' + (confirmed ? 'confirmed' : 'notice');
@@ -1267,6 +1292,8 @@
           {
             label: '中籤後 3 日內完成繳費',
             critical: true,
+            // 摘要用一句話，完整條文留在下方步驟，避免同一頁出現兩段一模一樣的長文
+            summary: '中籤後 3 日內未繳 480 元，系統自動退件',
             detail: '中籤隊伍請於中籤日後3日內完成繳納使用規費、遞補隊伍請於通知遞補日後3日內完成繳納使用規費。未依限繳費者系統將自動辦理退件作業。'
                     + '排雲山莊使用規費每人每宿新臺幣480元；觀高山屋平日每人每宿800元、假日1200元。'
                     + '收費方式：金融機構轉帳、郵政匯票、現金、臺灣PAY、超商繳費。',
@@ -1762,8 +1789,8 @@
         <div class="apply-critical">
           <span class="ac-tag">最容易踩的坑</span>
           ${rules.steps.filter(st => st.critical).map(st =>
-            `<div class="ac-body"><strong>${escapeHtml(st.label)}</strong>${escapeHtml(st.detail)}</div>`).join('')}
-          <div class="ac-src">出處：<a href="${APPLY_SOURCES.notice || 'https://hike.taiwan.gov.tw/notice_a1.aspx'}" target="_blank" rel="noopener">玉山國家公園登山須知</a>　最後查證 ${APPLY_VERIFIED_AT}</div>
+            `<div class="ac-body"><strong>${escapeHtml(st.summary || st.label)}</strong></div>`).join('')}
+          <div class="ac-src">完整條文與收費方式見下方「完整申請流程」　｜　出處：<a href="${APPLY_SOURCES.notice}" target="_blank" rel="noopener">玉山國家公園登山須知</a>　最後查證 ${APPLY_VERIFIED_AT}</div>
         </div>` : ''}
         <div class="apply-toggle-row">
           <button type="button" class="apply-toggle" id="apply-toggle"
@@ -2801,6 +2828,33 @@
       return Math.round(meters / 3 / 10) * 10;
     }
 
+    // 走法徽章：山屋、單日往返名額、登山口承載量三種來源都要反映
+    function variantBadge(variant, needsHuts) {
+      if (needsHuts) return `🏔 需申請：${variant.huts.join('、')}`;
+
+      // 單日往返：有官方逐日名額（bed_7）
+      if (variant.quotaRoute) {
+        const r = quotaRoutes(0).find(x => x.name === variant.quotaRoute)
+               || quotaRoutes(1).find(x => x.name === variant.quotaRoute);
+        const cap = r && r.capacity_weekday;
+        const lot = isLotteryRoute(variant.quotaRoute);
+        const bits = [];
+        if (cap) bits.push(`每日 ${cap} 人`);
+        bits.push(lot ? '需抽籤' : '需申請入園');
+        return `🎫 ${bits.join('・')}`;
+      }
+
+      // 登山口層級承載量（雪霸）
+      if (variant.trailQuota) {
+        const e = trailQuotaEntry(variant.trailQuota);
+        if (e && !e.unlimited && e.capacity_weekday) {
+          return `🎫 ${variant.trailQuota}每日 ${e.capacity_weekday} 人・需申請入園`;
+        }
+      }
+
+      return '✅ 不需申請山屋／營地，仍需申請入園';
+    }
+
     function renderRouteVariants(route, onExitToFullList) {
       const container = document.getElementById('route-variants');
       container.style.display = 'flex';
@@ -2821,9 +2875,11 @@
         if (hours) scaleBits.push(`單日最長步行約 ${hours} 小時`);
         const scaleNote = scaleBits.length
           ? `<div class="variant-scale">${scaleBits.join('　｜　')}</div>` : '';
-        const hutsBadge = needsHuts
-          ? `🏔 需申請：${variant.huts.join('、')}`
-          : '✅ 免申請山屋／營地';
+        // 徽章原本只看 huts.length，於是單攻一律顯示「免申請山屋／營地」——
+        // 但玉山線單日往返每日只有 60 人且列入抽籤，同一頁的流程區塊又寫著
+        // 「抽籤制｜適用：…玉山線單日往返」，兩處互相打架。
+        // 改為依實際資料判斷：不需山屋不等於不需申請。
+        const hutsBadge = variantBadge(variant, needsHuts);
         card.innerHTML = `
           <div class="variant-card-head">
             <div class="variant-icon">${icon}</div>
