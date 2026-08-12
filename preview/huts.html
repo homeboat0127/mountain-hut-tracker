@@ -1280,6 +1280,10 @@ font-family:-apple-system,'PingFang TC',sans-serif;">
           {
             label: '中籤後 3 日內完成繳費',
             critical: true,
+            // 使用規費是住宿費性質。單日往返不過夜就沒有這筆，
+            // 步驟原本綁在路線層級，兩個走法共用，導致單攻也顯示繳費提醒
+            // —— 而行事曆事件是依走法判斷的，兩邊因此對不起來。
+            needsFee: true,
             // 摘要用一句話，完整條文留在下方步驟，避免同一頁出現兩段一模一樣的長文
             summary: '中籤後 3 日內未繳 480 元，系統自動退件',
             detail: '中籤隊伍請於中籤日後3日內完成繳納使用規費、遞補隊伍請於通知遞補日後3日內完成繳納使用規費。未依限繳費者系統將自動辦理退件作業。'
@@ -1756,6 +1760,39 @@ font-family:-apple-system,'PingFang TC',sans-serif;">
           <div class="apply-summary-text">🎫 申請前先確認所需證件</div>
         </div>`;
 
+      // 步驟改為依走法過濾：需要住宿費的步驟，只在該走法真的有規費時顯示
+      const stepsFor = (site) => {
+        if (!rules) return [];
+        const sysR = applyRules && ROUTES[routeKey] ? applyRules[ROUTES[routeKey].system] : null;
+        const siteCfg = sysR && sysR.sites ? sysR.sites[site] : null;
+        const hasFee = !!(siteCfg && siteCfg.fee);
+        return rules.steps.filter(st => !st.needsFee || hasFee);
+      };
+
+      const renderSteps = (site) => {
+        const list = stepsFor(site);
+        const ol = document.getElementById('apply-steps');
+        if (ol) {
+          ol.innerHTML = list.map(st => `
+            <li class="${st.critical ? 'critical' : ''}">
+              <div class="step-label">${escapeHtml(st.label)}</div>
+              <div class="step-detail">${escapeHtml(st.detail)}</div>
+              <div class="step-src">出處：<a href="${st.source}" target="_blank" rel="noopener">${escapeHtml(st.sourceName)}</a>　最後查證 ${APPLY_VERIFIED_AT}</div>
+            </li>`).join('');
+          ol.style.display = list.length ? '' : 'none';
+        }
+        const cw = document.getElementById('apply-critical');
+        if (cw) {
+          const crit = list.filter(st => st.critical);
+          cw.style.display = crit.length ? 'block' : 'none';
+          cw.innerHTML = crit.length ? `<span class="ac-tag">最容易踩的坑</span>` +
+            crit.map(st => `<div class="ac-body"><strong>${escapeHtml(st.summary || st.label)}</strong></div>`).join('') +
+            `<div class="ac-src">完整條文與收費方式見下方「完整申請流程」　｜　出處：` +
+            `<a href="${APPLY_SOURCES.notice}" target="_blank" rel="noopener">玉山國家公園登山須知</a>　最後查證 ${APPLY_VERIFIED_AT}</div>` : '';
+        }
+      };
+      window.__renderApplySteps = renderSteps;
+
       const stepsHtml = rules ? rules.steps.map(st => `
         <li class="${st.critical ? 'critical' : ''}">
           <div class="step-label">${escapeHtml(st.label)}</div>
@@ -1773,20 +1810,14 @@ font-family:-apple-system,'PingFang TC',sans-serif;">
         <h3>申請流程與所需證件</h3>
         ${lotteryHtml}
         <div id="apply-permits"></div>
-        ${rules && rules.steps.some(st => st.critical) ? `
-        <div class="apply-critical">
-          <span class="ac-tag">最容易踩的坑</span>
-          ${rules.steps.filter(st => st.critical).map(st =>
-            `<div class="ac-body"><strong>${escapeHtml(st.summary || st.label)}</strong></div>`).join('')}
-          <div class="ac-src">完整條文與收費方式見下方「完整申請流程」　｜　出處：<a href="${APPLY_SOURCES.notice}" target="_blank" rel="noopener">玉山國家公園登山須知</a>　最後查證 ${APPLY_VERIFIED_AT}</div>
-        </div>` : ''}
+        <div class="apply-critical" id="apply-critical" style="display:none;"></div>
         <div class="apply-toggle-row">
           <button type="button" class="apply-toggle" id="apply-toggle"
                   aria-expanded="false" aria-controls="apply-detail">${rules ? '完整申請流程' : '申請說明'} <span class="chev">▾</span></button>
         </div>
         <div class="apply-detail" id="apply-detail">
           ${rules ? `<div class="apply-sub">${escapeHtml(rules.systemName)}．${escapeHtml(rules.applyType)}　｜　適用：${escapeHtml(rules.appliesTo)}</div>` : ''}
-          ${stepsHtml ? `<ol class="apply-steps">${stepsHtml}</ol>` : ''}
+          <ol class="apply-steps" id="apply-steps"></ol>
           ${closureCoverageNote(system)}
           <div class="apply-note">
             ${unverified.length ? `<strong>尚未查證，本站不提供</strong>：${unverified.map(escapeHtml).join('、')}。
@@ -1864,6 +1895,7 @@ font-family:-apple-system,'PingFang TC',sans-serif;">
         const show = !!(input.value && site && rules);
         if (icsRow) icsRow.style.display = show ? 'block' : 'none';
         if (show) renderIcsPreview(site);
+        renderSteps(site);   // 走法決定有無規費，步驟與「最容易踩的坑」要跟著變
       }
       window.__syncApplyUi = syncApplyUi;
 
