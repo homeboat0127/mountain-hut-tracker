@@ -2591,11 +2591,12 @@
       const info = staleSystemInfo(systemKey);
       if (!info) { el.style.display = 'none'; el.innerHTML = ''; return; }
       el.style.display = 'block';
+      // 頁首的過期橫幅已經完整說明「哪個機關停更、其他系統正常」，
+      // 這裡緊貼日曆，只補頁首沒有的那一項：以下名額究竟是什麼時候的。
+      // 兩邊講一樣的話會變成同一頁重複兩次（先前封園警示就發生過）。
       el.innerHTML =
-        `<strong>⚠ ${escapeHtml(SYSTEM_LABEL_ZH[systemKey] || '本系統')}系統資料暫停更新</strong>　` +
-        `官方查詢頁目前回傳空白資料，以下名額為 ${escapeHtml(info.since || '前一次成功抓取')} 的內容，` +
-        `可能已不符現況。請以` +
-        `<a href="https://hike.taiwan.gov.tw/" target="_blank" rel="noopener">臺灣登山申請一站式服務網</a>為準。`;
+        `<strong>⚠ 以下名額為 ${escapeHtml(info.since || '前一次成功抓取')} 的內容</strong>　` +
+        `${escapeHtml(SYSTEM_LABEL_ZH[systemKey] || '本系統')}資料暫停更新，詳情見頁面上方。`;
     }
 
     // 切換「單攻／2天1夜」等路線走法時，整組山屋日曆區塊的顯示或隱藏
@@ -3072,7 +3073,7 @@
         document.getElementById('updated').textContent =
           '資料更新時間：' + data.updated_at +
           (staleNames.length ? `（${staleNames.join('、')}除外，該機關資料暫停更新）` : '');
-        if (window.checkDataFreshness) window.checkDataFreshness(data.updated_at);
+        if (window.checkDataFreshness) window.checkDataFreshness(data.updated_at, data.stale_systems);
 
         const systemTabs = document.getElementById('system-tabs');
         const systems = [
@@ -3259,9 +3260,11 @@
   </script>
 
   <script>
-    // 資料過期防呆：比對 updated_at 與現在時間。
-    // 12 小時 → 黃色提醒；48 小時 → 紅色並讓名額數字灰化加刪除線，避免被誤讀為即時資料。
-    window.checkDataFreshness = function (updatedAt) {
+    // 資料過期防呆。兩種情況必須分開講，否則會讓人以為整個網站壞掉：
+    //   一、全站都沒更新（爬蟲整輪沒跑）→ 明講「全站」，名額灰化加刪除線
+    //   二、只有某機關的官方頁回傳空白 → 點名該機關，並講明其他系統正常更新中，
+    //       這種情況絕不能灰化全站名額 —— 其他三個機關的資料是新的
+    window.checkDataFreshness = function (updatedAt, staleSystems) {
       const el = document.getElementById('stale-banner');
       if (!el || !updatedAt) return;
 
@@ -3269,26 +3272,56 @@
       const t = Date.parse(String(updatedAt).replace(' ', 'T') + '+08:00');
       if (isNaN(t)) return;
 
+      const OFFICIAL = '<a href="https://hike.taiwan.gov.tw/" target="_blank" rel="noopener">臺灣登山申請一站式服務網</a>';
+      function agoText(ms) {
+        const h = ms / 36e5;
+        const d = Math.floor(h / 24);
+        return d >= 1 ? d + ' 天' : Math.floor(h) + ' 小時';
+      }
+
       // 爬蟲排程為每天 07:00／11:00／15:00／19:00（台灣時間），
       // 最長的正常間隔是 19:00 到隔天 07:00，整整 12 小時。
       // 門檻若設 12 小時，等於每天早上健康的資料都會被誤報一次；
       // 設 14 小時可容納單次執行延遲，而真的漏掉一輪（16 小時）仍然抓得到。
       const hours = (Date.now() - t) / 36e5;
-      if (hours < 14) return;
 
-      const day = Math.floor(hours / 24);
-      const ago = day >= 1 ? day + ' 天' : Math.floor(hours) + ' 小時';
-
-      if (hours >= 48) {
-        el.className = 'stale-banner danger';
-        el.innerHTML = '<strong>⚠ 資料已超過 ' + ago + ' 未更新</strong>　名額數字可能已失效，' +
-          '請務必以<a href="https://hike.taiwan.gov.tw/" target="_blank" rel="noopener">臺灣登山申請一站式服務網</a>為準。';
-        document.body.classList.add('data-stale-danger');
-      } else {
-        el.className = 'stale-banner warn';
-        el.innerHTML = '<strong>資料已 ' + ago + ' 未更新</strong>　可能未反映最新名額，建議與' +
-          '<a href="https://hike.taiwan.gov.tw/" target="_blank" rel="noopener">官方網站</a>再次確認。';
+      if (hours >= 14) {
+        const ago = agoText(Date.now() - t);
+        if (hours >= 48) {
+          el.className = 'stale-banner danger';
+          el.innerHTML = '<strong>⚠ 全站資料已超過 ' + ago + ' 未更新</strong>　名額數字可能已失效，' +
+            '請務必以' + OFFICIAL + '為準。';
+          document.body.classList.add('data-stale-danger');
+        } else {
+          el.className = 'stale-banner warn';
+          el.innerHTML = '<strong>全站資料已 ' + ago + ' 未更新</strong>　可能未反映最新名額，建議與' +
+            OFFICIAL + '再次確認。';
+        }
+        return;
       }
+
+      // 全站有在更新，只有部分機關停在舊資料。
+      // 這裡的年齡要用該機關自己的 since 算，不能用全站的 updated_at ——
+      // 全站時間是新的，用它算會顯示「0 小時未更新」，等於沒警告。
+      const labels = Object.keys(staleSystems || {});
+      if (labels.length) {
+        let oldest = 0;
+        labels.forEach(function (k) {
+          const since = (staleSystems[k] || {}).since;
+          const ts = since ? Date.parse(String(since).replace(' ', 'T') + '+08:00') : NaN;
+          if (!isNaN(ts)) oldest = Math.max(oldest, Date.now() - ts);
+        });
+        const ago = oldest ? agoText(oldest) : '';
+        el.className = (oldest / 36e5 >= 48) ? 'stale-banner danger' : 'stale-banner warn';
+        el.innerHTML =
+          '<strong>⚠ 僅「' + labels.join('、') + '」資料暫停更新' + (ago ? '，已 ' + ago : '') + '</strong>　' +
+          '該機關官方查詢頁目前回傳空白資料，本站保留前一次抓到的內容；<strong>其他系統均正常更新中</strong>。' +
+          '該機關名額請以' + OFFICIAL + '為準。';
+        return;
+      }
+
+      el.className = 'stale-banner';
+      el.innerHTML = '';
     };
   </script>
 </body>
