@@ -1368,6 +1368,12 @@ def write_derived(data):
         },
     }
     summary["counts"]["total"] = sum(summary["counts"].values())
+    # 哪個機關的資料停在舊的，首頁也要看得到。
+    # 只帶機關名與起始時間，不帶 reason（首頁只需點名，詳細說明在查詢頁）。
+    summary["stale_systems"] = {
+        label: {"since": info.get("since")}
+        for label, info in (data.get("stale_systems") or {}).items()
+    }
     with open("summary.json", "w", encoding="utf-8") as f:
         json.dump(summary, f, ensure_ascii=False, indent=2)
 
