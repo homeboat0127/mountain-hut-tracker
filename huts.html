@@ -236,6 +236,11 @@
   .stale-banner.warn { display: block; background: #fff8ec; border: 1px solid #f3d9a4; color: #8a5f16; }
   .stale-banner.danger { display: block; background: #fdecea; border: 1px solid #f5c6c0; color: #a5342a; }
   .stale-banner strong { font-weight: 700; }
+  /* 單一機關的資料暫停更新：名額看起來正常但其實是舊的，比沒資料更危險 */
+  .stale-system { border-radius: 10px; padding: 11px 14px; margin-bottom: 14px; font-size: 13px;
+    line-height: 1.75; background: #fdecea; border: 1px solid #f5c6c0; color: #a5342a; }
+  .stale-system a { color: #a5342a; }
+  @media (max-width: 640px) { .stale-system { font-size: 11.5px; padding: 10px 12px; } }
   /* 超過 48 小時：讓名額數字明顯不可信，避免被當成即時資料 */
   body.data-stale-danger .day-cell .status,
   body.data-stale-danger .day-cell .line { opacity: .45; text-decoration: line-through; }
@@ -481,6 +486,7 @@
   </div>
 
   <div class="stale-banner" id="stale-banner"></div>
+  <div class="stale-system" id="stale-system" style="display:none;"></div>
   <!-- 封園警示在頁首再顯示一次。內容由同一個 renderClosureNotice 產生，
        兩處共用同一份邏輯與同一份資料，不各寫一份。 -->
   <div id="closure-top"></div>
@@ -2566,6 +2572,28 @@
     }
 
     const SYSTEM_DATA_KEY = { yushan: 'huts', forest: 'forest_huts', taroko: 'taroko_huts', snow: 'snow_huts' };
+    // 對應 scrape.py 健檢使用的系統名稱，用來查 stale_systems
+    const SYSTEM_LABEL_ZH = { yushan: '玉山', forest: '林業保育署', taroko: '太魯閣', snow: '雪霸' };
+
+    // 某個機關的官方頁面回傳空資料時，本站會保留前一次成功抓取的內容。
+    // 這種情況必須明講 —— 名額看起來正常但其實是舊的，比沒有資料更危險。
+    function staleSystemInfo(systemKey) {
+      const all = (currentData && currentData.stale_systems) || {};
+      return all[SYSTEM_LABEL_ZH[systemKey]] || null;
+    }
+
+    function renderStaleSystemBanner(systemKey) {
+      const el = document.getElementById('stale-system');
+      if (!el) return;
+      const info = staleSystemInfo(systemKey);
+      if (!info) { el.style.display = 'none'; el.innerHTML = ''; return; }
+      el.style.display = 'block';
+      el.innerHTML =
+        `<strong>⚠ 本系統資料暫停更新</strong>　` +
+        `官方查詢頁目前回傳空白資料，以下名額為 ${escapeHtml(info.since || '前一次成功抓取')} 的內容，` +
+        `可能已不符現況。請以` +
+        `<a href="https://hike.taiwan.gov.tw/" target="_blank" rel="noopener">臺灣登山申請一站式服務網</a>為準。`;
+    }
 
     // 切換「單攻／2天1夜」等路線走法時，整組山屋日曆區塊的顯示或隱藏
     function setCalendarAreaVisible(visible) {
@@ -3000,6 +3028,7 @@
 
     function switchSystem(system) {
       currentSystem = system;
+      renderStaleSystemBanner(system);
       monthOffset = 0; // 切換系統時一律回到當月，避免其他系統誤用玉山的下個月資料
       document.querySelectorAll('.system-tab').forEach(el => {
         el.classList.toggle('active', el.dataset.system === system);

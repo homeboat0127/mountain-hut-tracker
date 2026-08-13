@@ -1197,9 +1197,17 @@ def check_health(report, previous_path="health.json"):
                   + (f"　新增：{'、'.join(sorted(added))}" if added else ""))
 
     if problems:
-        raise SystemExit("[中止] 健檢未過：\n  - " + "\n  - ".join(problems))
+        # 不再整批中止。實際發生過：林業署的政府頁面回傳空白月曆，
+        # 結果玉山、雪霸、太魯閣的資料也跟著停更 26 小時 ——
+        # 一個機關出問題不該讓另外三個機關的使用者也看到過期資料。
+        # 改為回報有問題的系統，由呼叫端保留該系統的舊資料、其餘照常更新。
+        print("[健檢未過] 以下系統本次資料異常，將保留既有資料：")
+        for x in problems:
+            print("  - " + x)
+        return sorted({x.split("：")[0] for x in problems})
 
     print("  健檢通過")
+    return []
 
 
 def verify_before_write(new_data, previous_path="data.json", min_ratio=0.5):
@@ -1475,7 +1483,7 @@ if __name__ == "__main__":
         assert_timestamps_match()
         report = health_report(data)
         write_health(report)
-        check_health(report)
+        check_health(report)   # 只回報，不中止
         print("已由現有 data.json 重建 summary.json、search-index.json 與 health.json")
         raise SystemExit(0)
 
@@ -1484,7 +1492,35 @@ if __name__ == "__main__":
     # 逐系統健檢：先跟上一次的報表比對，明確壞掉就中止，不覆寫既有資料。
     # 順序很重要 —— 要在寫檔之前跑，否則壞資料已經蓋上去了才發現沒有意義。
     report = health_report(data)
-    check_health(report)
+    broken = check_health(report)
+
+    # 異常系統改用既有 data.json 的資料，其餘系統照常更新。
+    # 同時記錄在 stale_systems，讓前端能對該系統標示「資料暫停更新」。
+    if broken:
+        try:
+            with open("data.json", encoding="utf-8") as f:
+                old_data = json.load(f)
+        except (OSError, json.JSONDecodeError):
+            old_data = {}
+        stale = dict(old_data.get("stale_systems") or {})
+        for label in broken:
+            keys = SYSTEM_KEYS.get(label)
+            if not keys:
+                continue
+            cur_key, next_key = keys
+            if old_data.get(cur_key):
+                data[cur_key] = old_data[cur_key]
+                data[next_key] = old_data.get(next_key, data.get(next_key))
+                print(f"  [保留] {label} 沿用既有資料（{len(old_data[cur_key])} 個節點）")
+            stale.setdefault(label, {
+                "since": old_data.get("updated_at") or now.strftime("%Y-%m-%d %H:%M"),
+                "reason": "官方頁面本次回傳空資料，本站保留前一次成功抓取的內容",
+            })
+        data["stale_systems"] = stale
+        # 重新計算報表，讓 health.json 反映實際寫入的內容
+        report = health_report(data)
+    else:
+        data["stale_systems"] = {}
 
     # 寫檔前先驗證，避免壞資料覆蓋好資料
     verify_before_write(data)
