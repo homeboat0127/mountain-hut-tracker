@@ -75,6 +75,8 @@
   .sys-body { min-width: 0; }
   .sys-name { font-size: 15.5px; font-weight: 700; margin-bottom: 3px; }
   .sys-count { font-size: 12.5px; color: var(--accent); font-weight: 700; }
+  /* 資料停更的機關：數字看起來正常但其實是舊的，用紅字點出來 */
+  .sys-count.is-stale { color: #a5342a; }
   .sys-note { font-size: 11.5px; color: #999; margin-top: 2px; line-height: 1.5; }
 
 
@@ -331,21 +333,42 @@ font-family:-apple-system,'PingFang TC',sans-serif;">
     // 首頁只需要各系統數量與更新時間，因此讀取輕量摘要檔（約 0.1 KB），
     // 不必為了 4 個數字載入完整資料（約 36 KB 壓縮後 / 1.1 MB 原始）。
     // 萬一摘要檔還沒產生，會自動回退讀完整資料，不會讓數字開天窗。
-    function applyCounts(counts, updatedAt) {
+    // scrape.py 的 stale_systems 以機關中文名為鍵，首頁卡片以英文代號為鍵，需要對照。
+    const SYSTEM_KEY_BY_LABEL = { '玉山': 'yushan', '林業保育署': 'forest', '太魯閣': 'taroko', '雪霸': 'snow' };
+
+    function applyCounts(counts, updatedAt, staleSystems) {
+      // 某機關的官方查詢頁回傳空白時，本站會沿用前一次的資料。
+      // 首頁必須點名是哪一個 —— 數字看起來正常但其實是舊的，比沒有數字更危險。
+      const staleLabels = Object.keys(staleSystems || {});
+      const staleKeys = {};
+      staleLabels.forEach(function (label) {
+        const k = SYSTEM_KEY_BY_LABEL[label];
+        if (k) staleKeys[k] = (staleSystems[label] || {}).since;
+      });
+
       Object.entries(counts).forEach(function ([key, n]) {
         const el = document.getElementById('count-' + key);
-        if (el) el.textContent = n + ' 處山屋／營地';
+        if (!el) return;
+        el.textContent = n + ' 處山屋／營地';
+        el.classList.remove('is-stale');
+        if (Object.prototype.hasOwnProperty.call(staleKeys, key)) {
+          el.classList.add('is-stale');
+          el.textContent = n + ' 處山屋／營地　⚠ 資料暫停更新';
+          el.title = '此機關官方查詢頁目前回傳空白資料，名額停留在 ' + (staleKeys[key] || '前一次成功抓取');
+        }
       });
       if (window.checkDataFreshness) window.checkDataFreshness(updatedAt);
       if (updatedAt) {
         document.getElementById('updated').textContent =
-          '資料更新時間：' + updatedAt + '　｜　共收錄 ' + (counts.total || 0) + ' 處山屋・營地';
+          '資料更新時間：' + updatedAt +
+          (staleLabels.length ? '（' + staleLabels.join('、') + '除外，該機關資料暫停更新）' : '') +
+          '　｜　共收錄 ' + (counts.total || 0) + ' 處山屋・營地';
       }
     }
 
     fetch('summary.json').then(function(r){return r.ok?r:fetch('../summary.json');})
       .then(function (r) { if (!r.ok) throw new Error('no summary'); return r.json(); })
-      .then(function (d) { applyCounts(d.counts, d.updated_at); })
+      .then(function (d) { applyCounts(d.counts, d.updated_at, d.stale_systems); })
       .catch(function () {
         return fetch('data.json').then(function(r){return r.ok?r:fetch('../data.json');})
           .then(function (r) { return r.json(); })
@@ -357,7 +380,7 @@ font-family:-apple-system,'PingFang TC',sans-serif;">
               forest: (d.forest_huts || []).length,
             };
             c.total = c.yushan + c.snow + c.taroko + c.forest;
-            applyCounts(c, d.updated_at);
+            applyCounts(c, d.updated_at, d.stale_systems);
           });
       })
       .catch(function () {

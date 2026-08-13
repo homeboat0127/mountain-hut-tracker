@@ -291,6 +291,9 @@
   .system-tab { flex-shrink: 0; }
   .system-tab { padding: 8px 16px; border-radius: 8px; border: 1px solid #ddd; background: #fff; font-size: 14px; cursor: pointer; color: #333; }
   .system-tab.active { background: #2f7d52; color: #fff; border-color: #2f7d52; }
+  /* 資料停更的機關：未選取時用紅字紅框點出來；選取時底色仍是綠的，改用紅框區隔 */
+  .system-tab.is-stale { color: #a5342a; border-color: #e0b4ae; background: #fdf4f3; }
+  .system-tab.is-stale.active { background: #2f7d52; color: #fff; border-color: #a5342a; }
 
   .route-banner { background: #e6f3ea; border-radius: 8px; padding: 14px 16px; margin-bottom: 16px; }
   /* 只剩導覽連結時不需要色塊 */
@@ -2577,7 +2580,7 @@ font-family:-apple-system,'PingFang TC',sans-serif;">
       if (!info) { el.style.display = 'none'; el.innerHTML = ''; return; }
       el.style.display = 'block';
       el.innerHTML =
-        `<strong>⚠ 本系統資料暫停更新</strong>　` +
+        `<strong>⚠ ${escapeHtml(SYSTEM_LABEL_ZH[systemKey] || '本系統')}系統資料暫停更新</strong>　` +
         `官方查詢頁目前回傳空白資料，以下名額為 ${escapeHtml(info.since || '前一次成功抓取')} 的內容，` +
         `可能已不符現況。請以` +
         `<a href="https://hike.taiwan.gov.tw/" target="_blank" rel="noopener">臺灣登山申請一站式服務網</a>為準。`;
@@ -3051,7 +3054,12 @@ font-family:-apple-system,'PingFang TC',sans-serif;">
       .then(res => res.json())
       .then(data => {
         currentData = data;
-        document.getElementById('updated').textContent = '資料更新時間：' + data.updated_at;
+        // 頁首只有一個更新時間，但各機關是分開抓的。
+        // 有機關停更時必須點名，否則單一時間戳會讓人以為四個系統都是新的。
+        const staleNames = Object.keys(data.stale_systems || {});
+        document.getElementById('updated').textContent =
+          '資料更新時間：' + data.updated_at +
+          (staleNames.length ? `（${staleNames.join('、')}除外，該機關資料暫停更新）` : '');
         if (window.checkDataFreshness) window.checkDataFreshness(data.updated_at);
 
         const systemTabs = document.getElementById('system-tabs');
@@ -3066,7 +3074,16 @@ font-family:-apple-system,'PingFang TC',sans-serif;">
           const btn = document.createElement('div');
           btn.className = 'system-tab';
           btn.dataset.system = s.key;
-          btn.textContent = s.label;
+          // 資料停更的機關要在分頁籤上就看得出來，
+          // 否則使用者得先點進去才知道自己看的是舊資料。
+          const staleInfo = staleSystemInfo(s.key);
+          if (staleInfo) {
+            btn.classList.add('is-stale');
+            btn.textContent = '⚠ ' + s.label;
+            btn.title = `此機關資料暫停更新，停留在 ${staleInfo.since || '前一次成功抓取'}`;
+          } else {
+            btn.textContent = s.label;
+          }
           btn.addEventListener('click', () => {
             if (window.gtag) gtag('event', 'select_system', { system: s.key });
             switchSystem(s.key);
