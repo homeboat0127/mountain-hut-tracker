@@ -236,6 +236,11 @@
   .stale-banner.warn { display: block; background: #fff8ec; border: 1px solid #f3d9a4; color: #8a5f16; }
   .stale-banner.danger { display: block; background: #fdecea; border: 1px solid #f5c6c0; color: #a5342a; }
   .stale-banner strong { font-weight: 700; }
+  /* 單一機關的資料暫停更新：名額看起來正常但其實是舊的，比沒資料更危險 */
+  .stale-system { border-radius: 10px; padding: 11px 14px; margin-bottom: 14px; font-size: 13px;
+    line-height: 1.75; background: #fdecea; border: 1px solid #f5c6c0; color: #a5342a; }
+  .stale-system a { color: #a5342a; }
+  @media (max-width: 640px) { .stale-system { font-size: 11.5px; padding: 10px 12px; } }
   /* 超過 48 小時：讓名額數字明顯不可信，避免被當成即時資料 */
   body.data-stale-danger .day-cell .status,
   body.data-stale-danger .day-cell .line { opacity: .45; text-decoration: line-through; }
@@ -286,6 +291,9 @@
   .system-tab { flex-shrink: 0; }
   .system-tab { padding: 8px 16px; border-radius: 8px; border: 1px solid #ddd; background: #fff; font-size: 14px; cursor: pointer; color: #333; }
   .system-tab.active { background: #2f7d52; color: #fff; border-color: #2f7d52; }
+  /* 資料停更的機關：未選取時用紅字紅框點出來；選取時底色仍是綠的，改用紅框區隔 */
+  .system-tab.is-stale { color: #a5342a; border-color: #e0b4ae; background: #fdf4f3; }
+  .system-tab.is-stale.active { background: #2f7d52; color: #fff; border-color: #a5342a; }
 
   .route-banner { background: #e6f3ea; border-radius: 8px; padding: 14px 16px; margin-bottom: 16px; }
   /* 只剩導覽連結時不需要色塊 */
@@ -481,6 +489,7 @@
   </div>
 
   <div class="stale-banner" id="stale-banner"></div>
+  <div class="stale-system" id="stale-system" style="display:none;"></div>
   <!-- 封園警示在頁首再顯示一次。內容由同一個 renderClosureNotice 產生，
        兩處共用同一份邏輯與同一份資料，不各寫一份。 -->
   <div id="closure-top"></div>
@@ -2566,6 +2575,29 @@
     }
 
     const SYSTEM_DATA_KEY = { yushan: 'huts', forest: 'forest_huts', taroko: 'taroko_huts', snow: 'snow_huts' };
+    // 對應 scrape.py 健檢使用的系統名稱，用來查 stale_systems
+    const SYSTEM_LABEL_ZH = { yushan: '玉山', forest: '林業保育署', taroko: '太魯閣', snow: '雪霸' };
+
+    // 某個機關的官方頁面回傳空資料時，本站會保留前一次成功抓取的內容。
+    // 這種情況必須明講 —— 名額看起來正常但其實是舊的，比沒有資料更危險。
+    function staleSystemInfo(systemKey) {
+      const all = (currentData && currentData.stale_systems) || {};
+      return all[SYSTEM_LABEL_ZH[systemKey]] || null;
+    }
+
+    function renderStaleSystemBanner(systemKey) {
+      const el = document.getElementById('stale-system');
+      if (!el) return;
+      const info = staleSystemInfo(systemKey);
+      if (!info) { el.style.display = 'none'; el.innerHTML = ''; return; }
+      el.style.display = 'block';
+      // 頁首的過期橫幅已經完整說明「哪個機關停更、其他系統正常」，
+      // 這裡緊貼日曆，只補頁首沒有的那一項：以下名額究竟是什麼時候的。
+      // 兩邊講一樣的話會變成同一頁重複兩次（先前封園警示就發生過）。
+      el.innerHTML =
+        `<strong>⚠ 以下名額為 ${escapeHtml(info.since || '前一次成功抓取')} 的內容</strong>　` +
+        `${escapeHtml(SYSTEM_LABEL_ZH[systemKey] || '本系統')}資料暫停更新，詳情見頁面上方。`;
+    }
 
     // 切換「單攻／2天1夜」等路線走法時，整組山屋日曆區塊的顯示或隱藏
     function setCalendarAreaVisible(visible) {
@@ -3000,6 +3032,7 @@
 
     function switchSystem(system) {
       currentSystem = system;
+      renderStaleSystemBanner(system);
       monthOffset = 0; // 切換系統時一律回到當月，避免其他系統誤用玉山的下個月資料
       document.querySelectorAll('.system-tab').forEach(el => {
         el.classList.toggle('active', el.dataset.system === system);
@@ -3034,8 +3067,13 @@
       .then(res => res.json())
       .then(data => {
         currentData = data;
-        document.getElementById('updated').textContent = '資料更新時間：' + data.updated_at;
-        if (window.checkDataFreshness) window.checkDataFreshness(data.updated_at);
+        // 頁首只有一個更新時間，但各機關是分開抓的。
+        // 有機關停更時必須點名，否則單一時間戳會讓人以為四個系統都是新的。
+        const staleNames = Object.keys(data.stale_systems || {});
+        document.getElementById('updated').textContent =
+          '資料更新時間：' + data.updated_at +
+          (staleNames.length ? `（${staleNames.join('、')}除外，該機關資料暫停更新）` : '');
+        if (window.checkDataFreshness) window.checkDataFreshness(data.updated_at, data.stale_systems);
 
         const systemTabs = document.getElementById('system-tabs');
         const systems = [
@@ -3049,7 +3087,16 @@
           const btn = document.createElement('div');
           btn.className = 'system-tab';
           btn.dataset.system = s.key;
-          btn.textContent = s.label;
+          // 資料停更的機關要在分頁籤上就看得出來，
+          // 否則使用者得先點進去才知道自己看的是舊資料。
+          const staleInfo = staleSystemInfo(s.key);
+          if (staleInfo) {
+            btn.classList.add('is-stale');
+            btn.textContent = '⚠ ' + s.label;
+            btn.title = `此機關資料暫停更新，停留在 ${staleInfo.since || '前一次成功抓取'}`;
+          } else {
+            btn.textContent = s.label;
+          }
           btn.addEventListener('click', () => {
             if (window.gtag) gtag('event', 'select_system', { system: s.key });
             switchSystem(s.key);
@@ -3213,9 +3260,11 @@
   </script>
 
   <script>
-    // 資料過期防呆：比對 updated_at 與現在時間。
-    // 12 小時 → 黃色提醒；48 小時 → 紅色並讓名額數字灰化加刪除線，避免被誤讀為即時資料。
-    window.checkDataFreshness = function (updatedAt) {
+    // 資料過期防呆。兩種情況必須分開講，否則會讓人以為整個網站壞掉：
+    //   一、全站都沒更新（爬蟲整輪沒跑）→ 明講「全站」，名額灰化加刪除線
+    //   二、只有某機關的官方頁回傳空白 → 點名該機關，並講明其他系統正常更新中，
+    //       這種情況絕不能灰化全站名額 —— 其他三個機關的資料是新的
+    window.checkDataFreshness = function (updatedAt, staleSystems) {
       const el = document.getElementById('stale-banner');
       if (!el || !updatedAt) return;
 
@@ -3223,26 +3272,56 @@
       const t = Date.parse(String(updatedAt).replace(' ', 'T') + '+08:00');
       if (isNaN(t)) return;
 
+      const OFFICIAL = '<a href="https://hike.taiwan.gov.tw/" target="_blank" rel="noopener">臺灣登山申請一站式服務網</a>';
+      function agoText(ms) {
+        const h = ms / 36e5;
+        const d = Math.floor(h / 24);
+        return d >= 1 ? d + ' 天' : Math.floor(h) + ' 小時';
+      }
+
       // 爬蟲排程為每天 07:00／11:00／15:00／19:00（台灣時間），
       // 最長的正常間隔是 19:00 到隔天 07:00，整整 12 小時。
       // 門檻若設 12 小時，等於每天早上健康的資料都會被誤報一次；
       // 設 14 小時可容納單次執行延遲，而真的漏掉一輪（16 小時）仍然抓得到。
       const hours = (Date.now() - t) / 36e5;
-      if (hours < 14) return;
 
-      const day = Math.floor(hours / 24);
-      const ago = day >= 1 ? day + ' 天' : Math.floor(hours) + ' 小時';
-
-      if (hours >= 48) {
-        el.className = 'stale-banner danger';
-        el.innerHTML = '<strong>⚠ 資料已超過 ' + ago + ' 未更新</strong>　名額數字可能已失效，' +
-          '請務必以<a href="https://hike.taiwan.gov.tw/" target="_blank" rel="noopener">臺灣登山申請一站式服務網</a>為準。';
-        document.body.classList.add('data-stale-danger');
-      } else {
-        el.className = 'stale-banner warn';
-        el.innerHTML = '<strong>資料已 ' + ago + ' 未更新</strong>　可能未反映最新名額，建議與' +
-          '<a href="https://hike.taiwan.gov.tw/" target="_blank" rel="noopener">官方網站</a>再次確認。';
+      if (hours >= 14) {
+        const ago = agoText(Date.now() - t);
+        if (hours >= 48) {
+          el.className = 'stale-banner danger';
+          el.innerHTML = '<strong>⚠ 全站資料已超過 ' + ago + ' 未更新</strong>　名額數字可能已失效，' +
+            '請務必以' + OFFICIAL + '為準。';
+          document.body.classList.add('data-stale-danger');
+        } else {
+          el.className = 'stale-banner warn';
+          el.innerHTML = '<strong>全站資料已 ' + ago + ' 未更新</strong>　可能未反映最新名額，建議與' +
+            OFFICIAL + '再次確認。';
+        }
+        return;
       }
+
+      // 全站有在更新，只有部分機關停在舊資料。
+      // 這裡的年齡要用該機關自己的 since 算，不能用全站的 updated_at ——
+      // 全站時間是新的，用它算會顯示「0 小時未更新」，等於沒警告。
+      const labels = Object.keys(staleSystems || {});
+      if (labels.length) {
+        let oldest = 0;
+        labels.forEach(function (k) {
+          const since = (staleSystems[k] || {}).since;
+          const ts = since ? Date.parse(String(since).replace(' ', 'T') + '+08:00') : NaN;
+          if (!isNaN(ts)) oldest = Math.max(oldest, Date.now() - ts);
+        });
+        const ago = oldest ? agoText(oldest) : '';
+        el.className = (oldest / 36e5 >= 48) ? 'stale-banner danger' : 'stale-banner warn';
+        el.innerHTML =
+          '<strong>⚠ 僅「' + labels.join('、') + '」資料暫停更新' + (ago ? '，已 ' + ago : '') + '</strong>　' +
+          '該機關官方查詢頁目前回傳空白資料，本站保留前一次抓到的內容；<strong>其他系統均正常更新中</strong>。' +
+          '該機關名額請以' + OFFICIAL + '為準。';
+        return;
+      }
+
+      el.className = 'stale-banner';
+      el.innerHTML = '';
     };
   </script>
 </body>

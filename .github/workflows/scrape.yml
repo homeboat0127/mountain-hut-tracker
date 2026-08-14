@@ -51,3 +51,21 @@ jobs:
           done
           echo "重試多次仍失敗"
           exit 1
+
+      - name: 檢查是否有系統資料異常
+        # 放在提交之後：資料照常更新，但若有機關的頁面回傳空資料，
+        # 仍要讓這次執行標記為失敗，才會收到通知去查。
+        # 順序不能顛倒 —— 先失敗就不會提交，等於又回到「一個機關拖垮全部」。
+        run: |
+          python3 - <<'PY'
+          import json, sys
+          with open("data.json", encoding="utf-8") as f:
+              d = json.load(f)
+          stale = d.get("stale_systems") or {}
+          if stale:
+              print("以下系統的官方頁面回傳空資料，本站已保留前一次成功抓取的內容：")
+              for k, v in stale.items():
+                  print(f"  - {k}：自 {v.get('since')} 起未更新（{v.get('reason')}）")
+              sys.exit(1)
+          print("所有系統資料正常")
+          PY
