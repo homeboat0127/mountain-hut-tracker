@@ -471,18 +471,8106 @@
     "庫哈諾辛山屋/營地",
     "玉山線單日往返"
   ],
-  "permits": {},
+  "permits": {
+    "2~5天(塔塔加 - 玉山線 - 塔塔加)": {
+      "agency": "玉管處",
+      "needs": [
+        "入園證",
+        "入山證"
+      ],
+      "difficulty": "第4級",
+      "can_apply": null,
+      "status": null
+    },
+    "玉山線單日往返": {
+      "agency": "玉管處",
+      "needs": [
+        "入園證",
+        "入山證"
+      ],
+      "difficulty": "第3級",
+      "can_apply": null,
+      "status": null
+    },
+    "(3級) 雪山主峰(多日行程)": {
+      "agency": "雪管處",
+      "needs": [
+        "入園證"
+      ],
+      "difficulty": "第3級",
+      "can_apply": null,
+      "status": null
+    },
+    "(4級) 雪山主峰(單日往返)": {
+      "agency": "雪管處",
+      "needs": [
+        "入園證"
+      ],
+      "difficulty": "第4級",
+      "can_apply": null,
+      "status": null
+    },
+    "奇萊主、北峰線": {
+      "agency": "太管處",
+      "needs": [
+        "入園證"
+      ],
+      "difficulty": "第5級",
+      "can_apply": null,
+      "status": null
+    },
+    "南湖大山線(因承載量異動，入園日期為114.7.1以後者適用)": {
+      "agency": "太管處",
+      "needs": [
+        "入園證",
+        "入山證"
+      ],
+      "difficulty": "第4級",
+      "can_apply": null,
+      "status": null
+    },
+    "嘉明湖山屋/營地": {
+      "agency": "國家步道(山屋/營地)",
+      "needs": [
+        "住宿",
+        "入山證"
+      ],
+      "difficulty": "第4級",
+      "can_apply": null,
+      "status": null
+    },
+    "向陽山屋": {
+      "agency": "國家步道(山屋/營地)",
+      "needs": [
+        "住宿",
+        "入山證"
+      ],
+      "difficulty": "第4級",
+      "can_apply": null,
+      "status": null
+    }
+  },
   "route_quota": {
     "year": 2026,
     "month": 8,
-    "routes": []
+    "routes": [
+      {
+        "capacity_weekday": 100,
+        "capacity_weekend": 100,
+        "note": "玉山前峰登山口距前峰雖僅0.8",
+        "name": "玉山前峰單日往返",
+        "value": "3",
+        "type": "route_quota",
+        "days": [
+          {
+            "date": "2026-08-31",
+            "status": "餘額",
+            "avail": 84,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 16
+          }
+        ]
+      },
+      {
+        "capacity_weekday": 60,
+        "capacity_weekend": 60,
+        "note": "一、單日往返入園時間原則為上午",
+        "name": "玉山線單日往返",
+        "value": "4",
+        "type": "route_quota",
+        "days": [
+          {
+            "date": "2026-08-31",
+            "status": "餘額",
+            "avail": 21,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 39
+          }
+        ]
+      },
+      {
+        "capacity_weekday": 100,
+        "capacity_weekend": 100,
+        "note": "[登山路線路況]",
+        "name": "庫哈諾辛山/關山單日往返",
+        "value": "81",
+        "type": "route_quota",
+        "days": [
+          {
+            "date": "2026-08-31",
+            "status": "餘額",
+            "avail": 86,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 14
+          }
+        ]
+      },
+      {
+        "capacity_weekday": 100,
+        "capacity_weekend": 100,
+        "note": "一、行經東埔至八通關步道2.2",
+        "name": "乙女瀑布單日往返",
+        "value": "1",
+        "type": "route_quota",
+        "days": [
+          {
+            "date": "2026-08-31",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          }
+        ]
+      },
+      {
+        "capacity_weekday": 100,
+        "capacity_weekend": 100,
+        "note": "一、山風登山口至東段步道7K里",
+        "name": "瓦拉米單日往返",
+        "value": "7",
+        "type": "route_quota",
+        "days": [
+          {
+            "date": "2026-08-31",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          }
+        ]
+      }
+    ]
   },
   "route_quota_next_month": {
     "year": 2026,
     "month": 9,
-    "routes": []
+    "routes": [
+      {
+        "capacity_weekday": 100,
+        "capacity_weekend": 100,
+        "note": "玉山前峰登山口距前峰雖僅0.8",
+        "name": "玉山前峰單日往返",
+        "value": "3",
+        "type": "route_quota",
+        "days": [
+          {
+            "date": "2026-09-01",
+            "status": "餘額",
+            "avail": 80,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 20
+          },
+          {
+            "date": "2026-09-02",
+            "status": "餘額",
+            "avail": 86,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 14
+          },
+          {
+            "date": "2026-09-03",
+            "status": "餘額",
+            "avail": 95,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 5
+          },
+          {
+            "date": "2026-09-04",
+            "status": "餘額",
+            "avail": 62,
+            "queue": 22,
+            "reviewing": 0,
+            "approved": 16
+          },
+          {
+            "date": "2026-09-05",
+            "status": "餘額",
+            "avail": 7,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 93
+          },
+          {
+            "date": "2026-09-06",
+            "status": "餘額",
+            "avail": 11,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 89
+          },
+          {
+            "date": "2026-09-07",
+            "status": "餘額",
+            "avail": 99,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 1
+          },
+          {
+            "date": "2026-09-08",
+            "status": "餘額",
+            "avail": 96,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 4
+          },
+          {
+            "date": "2026-09-09",
+            "status": "餘額",
+            "avail": 88,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 12
+          },
+          {
+            "date": "2026-09-10",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-11",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-12",
+            "status": "餘額",
+            "avail": 3,
+            "queue": 51,
+            "reviewing": 0,
+            "approved": 97
+          },
+          {
+            "date": "2026-09-13",
+            "status": "餘額",
+            "avail": 5,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 95
+          },
+          {
+            "date": "2026-09-14",
+            "status": "餘額",
+            "avail": 94,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 6
+          },
+          {
+            "date": "2026-09-15",
+            "status": "餘額",
+            "avail": 97,
+            "queue": 3,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-16",
+            "status": "餘額",
+            "avail": 89,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 11
+          },
+          {
+            "date": "2026-09-17",
+            "status": "餘額",
+            "avail": 90,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 10
+          },
+          {
+            "date": "2026-09-18",
+            "status": "餘額",
+            "avail": 88,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 12
+          },
+          {
+            "date": "2026-09-19",
+            "status": "餘額",
+            "avail": 31,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 69
+          },
+          {
+            "date": "2026-09-20",
+            "status": "餘額",
+            "avail": 70,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 30
+          },
+          {
+            "date": "2026-09-21",
+            "status": "餘額",
+            "avail": 96,
+            "queue": 2,
+            "reviewing": 0,
+            "approved": 2
+          },
+          {
+            "date": "2026-09-22",
+            "status": "餘額",
+            "avail": 97,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 3
+          },
+          {
+            "date": "2026-09-23",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-24",
+            "status": "餘額",
+            "avail": 98,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 2
+          },
+          {
+            "date": "2026-09-25",
+            "status": "餘額",
+            "avail": 88,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 12
+          },
+          {
+            "date": "2026-09-26",
+            "status": "餘額",
+            "avail": 71,
+            "queue": 0,
+            "reviewing": 4,
+            "approved": 25
+          },
+          {
+            "date": "2026-09-27",
+            "status": "餘額",
+            "avail": 50,
+            "queue": 5,
+            "reviewing": 0,
+            "approved": 45
+          },
+          {
+            "date": "2026-09-28",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-29",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          }
+        ]
+      },
+      {
+        "capacity_weekday": 60,
+        "capacity_weekend": 60,
+        "note": "一、單日往返入園時間原則為上午",
+        "name": "玉山線單日往返",
+        "value": "4",
+        "type": "route_quota",
+        "days": [
+          {
+            "date": "2026-09-01",
+            "status": "餘額",
+            "avail": 46,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 14
+          },
+          {
+            "date": "2026-09-02",
+            "status": "餘額",
+            "avail": 42,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 18
+          },
+          {
+            "date": "2026-09-03",
+            "status": "餘額",
+            "avail": 9,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 51
+          },
+          {
+            "date": "2026-09-04",
+            "status": "餘額",
+            "avail": 1,
+            "queue": 7,
+            "reviewing": 0,
+            "approved": 59
+          },
+          {
+            "date": "2026-09-05",
+            "status": "餘額",
+            "avail": 3,
+            "queue": 22,
+            "reviewing": 0,
+            "approved": 57
+          },
+          {
+            "date": "2026-09-06",
+            "status": "餘額",
+            "avail": 2,
+            "queue": 60,
+            "reviewing": 0,
+            "approved": 58
+          },
+          {
+            "date": "2026-09-07",
+            "status": "餘額",
+            "avail": 1,
+            "queue": 0,
+            "reviewing": 2,
+            "approved": 57
+          },
+          {
+            "date": "2026-09-08",
+            "status": "餘額",
+            "avail": 26,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 34
+          },
+          {
+            "date": "2026-09-09",
+            "status": "餘額",
+            "avail": 49,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 11
+          },
+          {
+            "date": "2026-09-10",
+            "status": "餘額",
+            "avail": 52,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 8
+          },
+          {
+            "date": "2026-09-11",
+            "status": "額滿",
+            "avail": 0,
+            "queue": 13,
+            "reviewing": 0,
+            "approved": 56
+          },
+          {
+            "date": "2026-09-12",
+            "status": "額滿",
+            "avail": 0,
+            "queue": 52,
+            "reviewing": 4,
+            "approved": 56
+          },
+          {
+            "date": "2026-09-13",
+            "status": "餘額",
+            "avail": 4,
+            "queue": 60,
+            "reviewing": 9,
+            "approved": 47
+          },
+          {
+            "date": "2026-09-14",
+            "status": "餘額",
+            "avail": 28,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 32
+          },
+          {
+            "date": "2026-09-15",
+            "status": "餘額",
+            "avail": 39,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 21
+          },
+          {
+            "date": "2026-09-16",
+            "status": "餘額",
+            "avail": 53,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 7
+          },
+          {
+            "date": "2026-09-17",
+            "status": "餘額",
+            "avail": 50,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 10
+          },
+          {
+            "date": "2026-09-18",
+            "status": "餘額",
+            "avail": 19,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 41
+          },
+          {
+            "date": "2026-09-19",
+            "status": "額滿",
+            "avail": 0,
+            "queue": 27,
+            "reviewing": 5,
+            "approved": 51
+          },
+          {
+            "date": "2026-09-20",
+            "status": "餘額",
+            "avail": 2,
+            "queue": 54,
+            "reviewing": 0,
+            "approved": 58
+          },
+          {
+            "date": "2026-09-21",
+            "status": "餘額",
+            "avail": 25,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 35
+          },
+          {
+            "date": "2026-09-22",
+            "status": "餘額",
+            "avail": 33,
+            "queue": 2,
+            "reviewing": 9,
+            "approved": 16
+          },
+          {
+            "date": "2026-09-23",
+            "status": "餘額",
+            "avail": 45,
+            "queue": 2,
+            "reviewing": 0,
+            "approved": 13
+          },
+          {
+            "date": "2026-09-24",
+            "status": "餘額",
+            "avail": 51,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 9
+          },
+          {
+            "date": "2026-09-25",
+            "status": "餘額",
+            "avail": 21,
+            "queue": 0,
+            "reviewing": 3,
+            "approved": 36
+          },
+          {
+            "date": "2026-09-26",
+            "status": "餘額",
+            "avail": 60,
+            "queue": 156,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-27",
+            "status": "餘額",
+            "avail": 60,
+            "queue": 134,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-28",
+            "status": "餘額",
+            "avail": 60,
+            "queue": 32,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-29",
+            "status": "餘額",
+            "avail": 60,
+            "queue": 17,
+            "reviewing": 0,
+            "approved": 0
+          }
+        ]
+      },
+      {
+        "capacity_weekday": 100,
+        "capacity_weekend": 100,
+        "note": "[登山路線路況]",
+        "name": "庫哈諾辛山/關山單日往返",
+        "value": "81",
+        "type": "route_quota",
+        "days": [
+          {
+            "date": "2026-09-01",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-02",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-03",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-04",
+            "status": "餘額",
+            "avail": 95,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 5
+          },
+          {
+            "date": "2026-09-05",
+            "status": "餘額",
+            "avail": 23,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 77
+          },
+          {
+            "date": "2026-09-06",
+            "status": "餘額",
+            "avail": 16,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 84
+          },
+          {
+            "date": "2026-09-07",
+            "status": "餘額",
+            "avail": 92,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 8
+          },
+          {
+            "date": "2026-09-08",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-09",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-10",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-11",
+            "status": "餘額",
+            "avail": 90,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 10
+          },
+          {
+            "date": "2026-09-12",
+            "status": "餘額",
+            "avail": 36,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 64
+          },
+          {
+            "date": "2026-09-13",
+            "status": "餘額",
+            "avail": 35,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 65
+          },
+          {
+            "date": "2026-09-14",
+            "status": "餘額",
+            "avail": 92,
+            "queue": 5,
+            "reviewing": 0,
+            "approved": 3
+          },
+          {
+            "date": "2026-09-15",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-16",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-17",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-18",
+            "status": "餘額",
+            "avail": 89,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 11
+          },
+          {
+            "date": "2026-09-19",
+            "status": "餘額",
+            "avail": 80,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 20
+          },
+          {
+            "date": "2026-09-20",
+            "status": "餘額",
+            "avail": 80,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 20
+          },
+          {
+            "date": "2026-09-21",
+            "status": "餘額",
+            "avail": 97,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 3
+          },
+          {
+            "date": "2026-09-22",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-23",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-24",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-25",
+            "status": "餘額",
+            "avail": 65,
+            "queue": 9,
+            "reviewing": 0,
+            "approved": 26
+          },
+          {
+            "date": "2026-09-26",
+            "status": "餘額",
+            "avail": 50,
+            "queue": 4,
+            "reviewing": 0,
+            "approved": 46
+          },
+          {
+            "date": "2026-09-27",
+            "status": "餘額",
+            "avail": 68,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 32
+          },
+          {
+            "date": "2026-09-28",
+            "status": "餘額",
+            "avail": 87,
+            "queue": 2,
+            "reviewing": 0,
+            "approved": 11
+          },
+          {
+            "date": "2026-09-29",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-30",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          }
+        ]
+      },
+      {
+        "capacity_weekday": 100,
+        "capacity_weekend": 100,
+        "note": "一、行經東埔至八通關步道2.2",
+        "name": "乙女瀑布單日往返",
+        "value": "1",
+        "type": "route_quota",
+        "days": [
+          {
+            "date": "2026-09-01",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-02",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-03",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-04",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-05",
+            "status": "餘額",
+            "avail": 98,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 2
+          },
+          {
+            "date": "2026-09-06",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-07",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-08",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-09",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-10",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-11",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-12",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-13",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-14",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-15",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-16",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-17",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-18",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-19",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-20",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-21",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-22",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-23",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-24",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-25",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-26",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-27",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-28",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-29",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-30",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          }
+        ]
+      },
+      {
+        "capacity_weekday": 100,
+        "capacity_weekend": 100,
+        "note": "一、山風登山口至東段步道7K里",
+        "name": "瓦拉米單日往返",
+        "value": "7",
+        "type": "route_quota",
+        "days": [
+          {
+            "date": "2026-09-01",
+            "status": "餘額",
+            "avail": 98,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 2
+          },
+          {
+            "date": "2026-09-02",
+            "status": "餘額",
+            "avail": 99,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 1
+          },
+          {
+            "date": "2026-09-03",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-04",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-05",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-06",
+            "status": "餘額",
+            "avail": 78,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 22
+          },
+          {
+            "date": "2026-09-07",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-08",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-09",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-10",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-11",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-12",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-13",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-14",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-15",
+            "status": "餘額",
+            "avail": 97,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 3
+          },
+          {
+            "date": "2026-09-16",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-17",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-18",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-19",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-20",
+            "status": "餘額",
+            "avail": 99,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 1
+          },
+          {
+            "date": "2026-09-21",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-22",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-23",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-24",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-25",
+            "status": "餘額",
+            "avail": 99,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 1
+          },
+          {
+            "date": "2026-09-26",
+            "status": "餘額",
+            "avail": 96,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 4
+          },
+          {
+            "date": "2026-09-27",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-28",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-29",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-09-30",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          }
+        ]
+      }
+    ]
   },
-  "trail_quota": [],
+  "trail_quota": [
+    {
+      "name": "奇萊主、北峰線",
+      "system": "taroko",
+      "systemLabel": "太魯閣國家公園",
+      "scope": "路線",
+      "value": "665",
+      "capacity_weekday": 40,
+      "capacity_weekend": 40,
+      "unlimited": false,
+      "note": "奇萊主北線與奇萊連峰線為(共同承載量)(114年7月1日起不分平假日，統一開放40人)。自109年2月21日零時起免辦入山許可證。",
+      "days": [
+        {
+          "date": "2026-08-31",
+          "fields": {
+            "餘額": 1,
+            "候補中": 11,
+            "待審查": 0,
+            "已通過": 39
+          },
+          "closed": false,
+          "note": null
+        }
+      ],
+      "days_next_month": [
+        {
+          "date": "2026-09-01",
+          "fields": {
+            "餘額": 4,
+            "候補中": 0,
+            "待審查": 4,
+            "已通過": 32
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-02",
+          "fields": {
+            "餘額": 1,
+            "候補中": 0,
+            "待審查": 2,
+            "已通過": 37
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-03",
+          "fields": {
+            "餘額": 2,
+            "候補中": 17,
+            "待審查": 4,
+            "已通過": 34
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-04",
+          "fields": {
+            "候補中": 12,
+            "待審查": 0,
+            "已通過": 40
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-05",
+          "fields": {
+            "候補中": 19,
+            "待審查": 2,
+            "已通過": 38
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-06",
+          "fields": {
+            "候補中": 23,
+            "待審查": 0,
+            "已通過": 40
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-07",
+          "fields": {
+            "候補中": 5,
+            "待審查": 6,
+            "已通過": 34
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-08",
+          "fields": {
+            "候補中": 9,
+            "待審查": 0,
+            "已通過": 40
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-09",
+          "fields": {
+            "候補中": 18,
+            "待審查": 0,
+            "已通過": 40
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-10",
+          "fields": {
+            "候補中": 8,
+            "待審查": 1,
+            "已通過": 39
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-11",
+          "fields": {
+            "餘額": 1,
+            "候補中": 26,
+            "待審查": 0,
+            "已通過": 39
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-12",
+          "fields": {
+            "候補中": 25,
+            "待審查": 0,
+            "已通過": 40
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-13",
+          "fields": {
+            "候補中": 15,
+            "待審查": 2,
+            "已通過": 38
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-14",
+          "fields": {
+            "餘額": 1,
+            "候補中": 0,
+            "待審查": 7,
+            "已通過": 32
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-15",
+          "fields": {
+            "候補中": 3,
+            "待審查": 0,
+            "已通過": 40
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-16",
+          "fields": {
+            "候補中": 10,
+            "待審查": 1,
+            "已通過": 39
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-17",
+          "fields": {
+            "餘額": 1,
+            "候補中": 4,
+            "待審查": 4,
+            "已通過": 35
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-18",
+          "fields": {
+            "候補中": 25,
+            "待審查": 1,
+            "已通過": 39
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-19",
+          "fields": {
+            "餘額": 1,
+            "候補中": 23,
+            "待審查": 0,
+            "已通過": 39
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-20",
+          "fields": {
+            "候補中": 27,
+            "待審查": 0,
+            "已通過": 40
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-21",
+          "fields": {
+            "候補中": 5,
+            "待審查": 6,
+            "已通過": 34
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-22",
+          "fields": {
+            "候補中": 0,
+            "待審查": 11,
+            "已通過": 29
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-23",
+          "fields": {
+            "候補中": 5,
+            "待審查": 40,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-24",
+          "fields": {
+            "候補中": 25,
+            "待審查": 40,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-25",
+          "fields": {
+            "候補中": 48,
+            "待審查": 40,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-26",
+          "fields": {
+            "候補中": 28,
+            "待審查": 40,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-27",
+          "fields": {
+            "候補中": 22,
+            "待審查": 40,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-28",
+          "fields": {
+            "候補中": 17,
+            "待審查": 40,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-29",
+          "fields": {
+            "候補中": 4,
+            "待審查": 40,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-30",
+          "fields": {
+            "餘額": 1,
+            "候補中": 5,
+            "待審查": 39,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        }
+      ]
+    },
+    {
+      "name": "奇萊連峰",
+      "system": "taroko",
+      "systemLabel": "太魯閣國家公園",
+      "scope": "路線",
+      "value": "666",
+      "capacity_weekday": 40,
+      "capacity_weekend": 40,
+      "unlimited": false,
+      "note": "奇萊主北線與奇萊連峰線為(共同承載量)(114年7月1日起不分平假日，統一開放40人)。自109年2月21日零時起免辦入山許可證。",
+      "days": [
+        {
+          "date": "2026-08-31",
+          "fields": {
+            "餘額": 1,
+            "候補中": 11,
+            "待審查": 0,
+            "已通過": 39
+          },
+          "closed": false,
+          "note": null
+        }
+      ],
+      "days_next_month": [
+        {
+          "date": "2026-09-01",
+          "fields": {
+            "餘額": 4,
+            "候補中": 0,
+            "待審查": 4,
+            "已通過": 32
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-02",
+          "fields": {
+            "餘額": 1,
+            "候補中": 0,
+            "待審查": 2,
+            "已通過": 37
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-03",
+          "fields": {
+            "餘額": 2,
+            "候補中": 17,
+            "待審查": 4,
+            "已通過": 34
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-04",
+          "fields": {
+            "候補中": 12,
+            "待審查": 0,
+            "已通過": 40
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-05",
+          "fields": {
+            "候補中": 19,
+            "待審查": 2,
+            "已通過": 38
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-06",
+          "fields": {
+            "候補中": 23,
+            "待審查": 0,
+            "已通過": 40
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-07",
+          "fields": {
+            "候補中": 5,
+            "待審查": 6,
+            "已通過": 34
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-08",
+          "fields": {
+            "候補中": 9,
+            "待審查": 0,
+            "已通過": 40
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-09",
+          "fields": {
+            "候補中": 18,
+            "待審查": 0,
+            "已通過": 40
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-10",
+          "fields": {
+            "候補中": 8,
+            "待審查": 1,
+            "已通過": 39
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-11",
+          "fields": {
+            "餘額": 1,
+            "候補中": 26,
+            "待審查": 0,
+            "已通過": 39
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-12",
+          "fields": {
+            "候補中": 25,
+            "待審查": 0,
+            "已通過": 40
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-13",
+          "fields": {
+            "候補中": 15,
+            "待審查": 2,
+            "已通過": 38
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-14",
+          "fields": {
+            "餘額": 1,
+            "候補中": 0,
+            "待審查": 7,
+            "已通過": 32
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-15",
+          "fields": {
+            "候補中": 3,
+            "待審查": 0,
+            "已通過": 40
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-16",
+          "fields": {
+            "候補中": 10,
+            "待審查": 1,
+            "已通過": 39
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-17",
+          "fields": {
+            "餘額": 1,
+            "候補中": 4,
+            "待審查": 4,
+            "已通過": 35
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-18",
+          "fields": {
+            "候補中": 25,
+            "待審查": 1,
+            "已通過": 39
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-19",
+          "fields": {
+            "餘額": 1,
+            "候補中": 23,
+            "待審查": 0,
+            "已通過": 39
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-20",
+          "fields": {
+            "候補中": 27,
+            "待審查": 0,
+            "已通過": 40
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-21",
+          "fields": {
+            "候補中": 5,
+            "待審查": 6,
+            "已通過": 34
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-22",
+          "fields": {
+            "候補中": 0,
+            "待審查": 11,
+            "已通過": 29
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-23",
+          "fields": {
+            "候補中": 5,
+            "待審查": 40,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-24",
+          "fields": {
+            "候補中": 25,
+            "待審查": 40,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-25",
+          "fields": {
+            "候補中": 48,
+            "待審查": 40,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-26",
+          "fields": {
+            "候補中": 28,
+            "待審查": 40,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-27",
+          "fields": {
+            "候補中": 22,
+            "待審查": 40,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-28",
+          "fields": {
+            "候補中": 17,
+            "待審查": 40,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-29",
+          "fields": {
+            "候補中": 4,
+            "待審查": 40,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-30",
+          "fields": {
+            "餘額": 1,
+            "候補中": 5,
+            "待審查": 39,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        }
+      ]
+    },
+    {
+      "name": "奇萊東稜",
+      "system": "taroko",
+      "systemLabel": "太魯閣國家公園",
+      "scope": "路線",
+      "value": "24",
+      "capacity_weekday": 36,
+      "capacity_weekend": 36,
+      "unlimited": false,
+      "note": "自109年2月21日零時起免辦入山許可證。 *研海林道9K工寮已近損毀、不建議入住，為安全考量，敬請山友自備宿營裝備因應。",
+      "days": [
+        {
+          "date": "2026-08-31",
+          "fields": {
+            "餘額": 34,
+            "候補中": 0,
+            "待審查": 2,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        }
+      ],
+      "days_next_month": [
+        {
+          "date": "2026-09-01",
+          "fields": {
+            "餘額": 28,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 8
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-02",
+          "fields": {
+            "餘額": 30,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 6
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-03",
+          "fields": {
+            "餘額": 31,
+            "候補中": 0,
+            "待審查": 2,
+            "已通過": 3
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-04",
+          "fields": {
+            "餘額": 36,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-05",
+          "fields": {
+            "餘額": 13,
+            "候補中": 0,
+            "待審查": 12,
+            "已通過": 11
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-06",
+          "fields": {
+            "餘額": 28,
+            "候補中": 0,
+            "待審查": 4,
+            "已通過": 4
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-07",
+          "fields": {
+            "餘額": 23,
+            "候補中": 0,
+            "待審查": 8,
+            "已通過": 5
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-08",
+          "fields": {
+            "餘額": 36,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-09",
+          "fields": {
+            "餘額": 31,
+            "候補中": 0,
+            "待審查": 1,
+            "已通過": 4
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-10",
+          "fields": {
+            "餘額": 26,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 10
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-11",
+          "fields": {
+            "餘額": 11,
+            "候補中": 0,
+            "待審查": 7,
+            "已通過": 18
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-12",
+          "fields": {
+            "餘額": 11,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 25
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-13",
+          "fields": {
+            "餘額": 26,
+            "候補中": 0,
+            "待審查": 8,
+            "已通過": 2
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-14",
+          "fields": {
+            "餘額": 35,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 1
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-15",
+          "fields": {
+            "餘額": 24,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 12
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-16",
+          "fields": {
+            "餘額": 26,
+            "候補中": 0,
+            "待審查": 2,
+            "已通過": 8
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-17",
+          "fields": {
+            "餘額": 26,
+            "候補中": 0,
+            "待審查": 1,
+            "已通過": 9
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-18",
+          "fields": {
+            "餘額": 31,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 5
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-19",
+          "fields": {
+            "餘額": 24,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 12
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-20",
+          "fields": {
+            "餘額": 36,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-21",
+          "fields": {
+            "餘額": 29,
+            "候補中": 0,
+            "待審查": 2,
+            "已通過": 5
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-22",
+          "fields": {
+            "餘額": 2,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 34
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-23",
+          "fields": {
+            "餘額": 2,
+            "候補中": 0,
+            "待審查": 34,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-24",
+          "fields": {
+            "候補中": 6,
+            "待審查": 36,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-25",
+          "fields": {
+            "候補中": 4,
+            "待審查": 36,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-26",
+          "fields": {
+            "餘額": 26,
+            "候補中": 0,
+            "待審查": 10,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-27",
+          "fields": {
+            "餘額": 29,
+            "候補中": 0,
+            "待審查": 7,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-28",
+          "fields": {
+            "餘額": 35,
+            "候補中": 0,
+            "待審查": 1,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-29",
+          "fields": {
+            "餘額": 36,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-30",
+          "fields": {
+            "餘額": 36,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        }
+      ]
+    },
+    {
+      "name": "奇萊南峰",
+      "system": "taroko",
+      "systemLabel": "太魯閣國家公園",
+      "scope": "路線",
+      "value": "25",
+      "capacity_weekday": 88,
+      "capacity_weekend": 226,
+      "unlimited": false,
+      "note": "若要進入南華山及天池山莊周邊等路線，由於該區域不在太魯閣範圍，無需申請入園證。",
+      "days": [
+        {
+          "date": "2026-08-31",
+          "fields": {
+            "餘額": 59,
+            "候補中": 0,
+            "待審查": 4,
+            "已通過": 25
+          },
+          "closed": false,
+          "note": null
+        }
+      ],
+      "days_next_month": [
+        {
+          "date": "2026-09-01",
+          "fields": {
+            "餘額": 87,
+            "候補中": 0,
+            "待審查": 1,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-02",
+          "fields": {
+            "餘額": 80,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 8
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-03",
+          "fields": {
+            "餘額": 72,
+            "候補中": 0,
+            "待審查": 2,
+            "已通過": 14
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-04",
+          "fields": {
+            "餘額": 47,
+            "候補中": 0,
+            "待審查": 15,
+            "已通過": 26
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-05",
+          "fields": {
+            "餘額": 170,
+            "候補中": 0,
+            "待審查": 17,
+            "已通過": 39
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-06",
+          "fields": {
+            "餘額": 103,
+            "候補中": 0,
+            "待審查": 11,
+            "已通過": 112
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-07",
+          "fields": {
+            "餘額": 64,
+            "候補中": 0,
+            "待審查": 3,
+            "已通過": 21
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-08",
+          "fields": {
+            "餘額": 84,
+            "候補中": 0,
+            "待審查": 2,
+            "已通過": 2
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-09",
+          "fields": {
+            "餘額": 78,
+            "候補中": 0,
+            "待審查": 6,
+            "已通過": 4
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-10",
+          "fields": {
+            "餘額": 74,
+            "候補中": 0,
+            "待審查": 2,
+            "已通過": 12
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-11",
+          "fields": {
+            "餘額": 50,
+            "候補中": 0,
+            "待審查": 10,
+            "已通過": 28
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-12",
+          "fields": {
+            "餘額": 191,
+            "候補中": 0,
+            "待審查": 18,
+            "已通過": 17
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-13",
+          "fields": {
+            "餘額": 156,
+            "候補中": 0,
+            "待審查": 12,
+            "已通過": 58
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-14",
+          "fields": {
+            "餘額": 41,
+            "候補中": 0,
+            "待審查": 15,
+            "已通過": 32
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-15",
+          "fields": {
+            "餘額": 55,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 33
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-16",
+          "fields": {
+            "餘額": 78,
+            "候補中": 0,
+            "待審查": 6,
+            "已通過": 4
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-17",
+          "fields": {
+            "餘額": 75,
+            "候補中": 0,
+            "待審查": 5,
+            "已通過": 8
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-18",
+          "fields": {
+            "餘額": 84,
+            "候補中": 0,
+            "待審查": 2,
+            "已通過": 2
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-19",
+          "fields": {
+            "餘額": 209,
+            "候補中": 0,
+            "待審查": 8,
+            "已通過": 9
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-20",
+          "fields": {
+            "餘額": 168,
+            "候補中": 0,
+            "待審查": 36,
+            "已通過": 22
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-21",
+          "fields": {
+            "餘額": 44,
+            "候補中": 0,
+            "待審查": 29,
+            "已通過": 15
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-22",
+          "fields": {
+            "餘額": 81,
+            "候補中": 0,
+            "待審查": 7,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-23",
+          "fields": {
+            "餘額": 88,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-24",
+          "fields": {
+            "餘額": 88,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-25",
+          "fields": {
+            "餘額": 223,
+            "候補中": 0,
+            "待審查": 3,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-26",
+          "fields": {
+            "餘額": 204,
+            "候補中": 0,
+            "待審查": 22,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-27",
+          "fields": {
+            "餘額": 178,
+            "候補中": 0,
+            "待審查": 48,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-28",
+          "fields": {
+            "餘額": 209,
+            "候補中": 0,
+            "待審查": 17,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-29",
+          "fields": {
+            "餘額": 88,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-30",
+          "fields": {
+            "餘額": 80,
+            "候補中": 0,
+            "待審查": 8,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        }
+      ]
+    },
+    {
+      "name": "錐麓古道",
+      "system": "taroko",
+      "systemLabel": "太魯閣國家公園",
+      "scope": "路線",
+      "value": "21",
+      "capacity_weekday": 96,
+      "capacity_weekend": 156,
+      "unlimited": false,
+      "note": "*錐麓古道每日開放時間為上午7點進入至下午5點前出登山口，東進東出3.1k原路往返，請於每日上午10點前於錐麓古道售票口查核報到，逾時將不開放進入。 *錐麓古道行經斷崖該路段請快速通過勿逗留。 *錐麓古道不須申請入山證。",
+      "days": [
+        {
+          "date": "2026-08-27",
+          "fields": {
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-08-28",
+          "fields": {
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-08-29",
+          "fields": {
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-08-30",
+          "fields": {
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-08-31",
+          "fields": {
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        }
+      ],
+      "days_next_month": [
+        {
+          "date": "2026-09-01",
+          "fields": {
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-02",
+          "fields": {
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-03",
+          "fields": {
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-04",
+          "fields": {
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-05",
+          "fields": {
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-06",
+          "fields": {
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-07",
+          "fields": {
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-08",
+          "fields": {
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-09",
+          "fields": {
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-10",
+          "fields": {
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-11",
+          "fields": {
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-12",
+          "fields": {
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-13",
+          "fields": {
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-14",
+          "fields": {
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-15",
+          "fields": {
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-16",
+          "fields": {
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-17",
+          "fields": {
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-18",
+          "fields": {
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-19",
+          "fields": {
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-20",
+          "fields": {
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-21",
+          "fields": {
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-22",
+          "fields": {
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-23",
+          "fields": {
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-24",
+          "fields": {
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-25",
+          "fields": {
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-26",
+          "fields": {
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-27",
+          "fields": {
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-28",
+          "fields": {
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-29",
+          "fields": {
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-30",
+          "fields": {
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        }
+      ]
+    },
+    {
+      "name": "南湖大山線(因承載量異動，入園日期為114.7.1以後者適用)",
+      "system": "taroko",
+      "systemLabel": "太魯閣國家公園",
+      "scope": "路線",
+      "value": "667",
+      "capacity_weekday": 60,
+      "capacity_weekend": 60,
+      "unlimited": false,
+      "note": "凡申請南湖大山路線需辦理【警政署入山證】。 警政署入山申辦系統。 https://nv2.npa.gov.tw/NM107-604Client/nV01A01Q_01_Action.do?mode=query&method=doList 本路線114年7月1日起不分平假日，統一開放60人。",
+      "days": [
+        {
+          "date": "2026-08-31",
+          "fields": {
+            "餘額": 41,
+            "候補中": 0,
+            "待審查": 2,
+            "已通過": 17
+          },
+          "closed": false,
+          "note": null
+        }
+      ],
+      "days_next_month": [
+        {
+          "date": "2026-09-01",
+          "fields": {
+            "餘額": 38,
+            "候補中": 0,
+            "待審查": 1,
+            "已通過": 21
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-02",
+          "fields": {
+            "餘額": 22,
+            "候補中": 0,
+            "待審查": 4,
+            "已通過": 34
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-03",
+          "fields": {
+            "餘額": 1,
+            "候補中": 0,
+            "待審查": 3,
+            "已通過": 56
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-04",
+          "fields": {
+            "餘額": 41,
+            "候補中": 0,
+            "待審查": 4,
+            "已通過": 15
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-05",
+          "fields": {
+            "餘額": 34,
+            "候補中": 0,
+            "待審查": 1,
+            "已通過": 25
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-06",
+          "fields": {
+            "餘額": 40,
+            "候補中": 0,
+            "待審查": 3,
+            "已通過": 17
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-07",
+          "fields": {
+            "餘額": 37,
+            "候補中": 0,
+            "待審查": 1,
+            "已通過": 22
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-08",
+          "fields": {
+            "餘額": 58,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 2
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-09",
+          "fields": {
+            "餘額": 46,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 14
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-10",
+          "fields": {
+            "餘額": 5,
+            "候補中": 0,
+            "待審查": 3,
+            "已通過": 52
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-11",
+          "fields": {
+            "餘額": 24,
+            "候補中": 0,
+            "待審查": 5,
+            "已通過": 31
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-12",
+          "fields": {
+            "餘額": 21,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 39
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-13",
+          "fields": {
+            "餘額": 50,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 10
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-14",
+          "fields": {
+            "餘額": 44,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 16
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-15",
+          "fields": {
+            "餘額": 52,
+            "候補中": 0,
+            "待審查": 3,
+            "已通過": 5
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-16",
+          "fields": {
+            "餘額": 36,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 24
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-17",
+          "fields": {
+            "餘額": 5,
+            "候補中": 0,
+            "待審查": 4,
+            "已通過": 51
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-18",
+          "fields": {
+            "餘額": 25,
+            "候補中": 0,
+            "待審查": 25,
+            "已通過": 10
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-19",
+          "fields": {
+            "餘額": 41,
+            "候補中": 0,
+            "待審查": 9,
+            "已通過": 10
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-20",
+          "fields": {
+            "餘額": 32,
+            "候補中": 0,
+            "待審查": 6,
+            "已通過": 22
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-21",
+          "fields": {
+            "餘額": 49,
+            "候補中": 0,
+            "待審查": 9,
+            "已通過": 2
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-22",
+          "fields": {
+            "餘額": 29,
+            "候補中": 0,
+            "待審查": 29,
+            "已通過": 2
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-23",
+          "fields": {
+            "候補中": 29,
+            "待審查": 21,
+            "已通過": 39
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-24",
+          "fields": {
+            "候補中": 18,
+            "待審查": 60,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-25",
+          "fields": {
+            "候補中": 34,
+            "待審查": 60,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-26",
+          "fields": {
+            "候補中": 5,
+            "待審查": 60,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-27",
+          "fields": {
+            "餘額": 41,
+            "候補中": 0,
+            "待審查": 19,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-28",
+          "fields": {
+            "餘額": 55,
+            "候補中": 0,
+            "待審查": 5,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-29",
+          "fields": {
+            "餘額": 26,
+            "候補中": 0,
+            "待審查": 34,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-30",
+          "fields": {
+            "餘額": 21,
+            "候補中": 0,
+            "待審查": 39,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        }
+      ]
+    },
+    {
+      "name": "南湖中央尖 (北一段線)",
+      "system": "taroko",
+      "systemLabel": "太魯閣國家公園",
+      "scope": "路線",
+      "value": "27",
+      "capacity_weekday": 20,
+      "capacity_weekend": 20,
+      "unlimited": false,
+      "note": "凡申請南湖中央尖 (北一段線)經過(審馬陣山、南湖北山)等路線需辦理【警政署入山證】。 警政署入山申辦系統。 https://nv2.npa.gov.tw/NM107-604Client/nV01A01Q_01_Action.do?mode=query&method=doList",
+      "days": [
+        {
+          "date": "2026-08-31",
+          "fields": {
+            "餘額": 20,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        }
+      ],
+      "days_next_month": [
+        {
+          "date": "2026-09-01",
+          "fields": {
+            "餘額": 20,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-02",
+          "fields": {
+            "餘額": 20,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-03",
+          "fields": {
+            "候補中": 0,
+            "待審查": 1,
+            "已通過": 19
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-04",
+          "fields": {
+            "餘額": 18,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 2
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-05",
+          "fields": {
+            "餘額": 18,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 2
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-06",
+          "fields": {
+            "餘額": 20,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-07",
+          "fields": {
+            "餘額": 15,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 5
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-08",
+          "fields": {
+            "餘額": 11,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 9
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-09",
+          "fields": {
+            "餘額": 14,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 6
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-10",
+          "fields": {
+            "餘額": 6,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 14
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-11",
+          "fields": {
+            "餘額": 17,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 3
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-12",
+          "fields": {
+            "餘額": 16,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 4
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-13",
+          "fields": {
+            "餘額": 18,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 2
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-14",
+          "fields": {
+            "餘額": 16,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 4
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-15",
+          "fields": {
+            "餘額": 12,
+            "候補中": 0,
+            "待審查": 3,
+            "已通過": 5
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-16",
+          "fields": {
+            "餘額": 14,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 6
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-17",
+          "fields": {
+            "餘額": 13,
+            "候補中": 0,
+            "待審查": 3,
+            "已通過": 4
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-18",
+          "fields": {
+            "餘額": 18,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 2
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-19",
+          "fields": {
+            "餘額": 19,
+            "候補中": 0,
+            "待審查": 1,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-20",
+          "fields": {
+            "餘額": 17,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 3
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-21",
+          "fields": {
+            "餘額": 18,
+            "候補中": 0,
+            "待審查": 2,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-22",
+          "fields": {
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 20
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-23",
+          "fields": {
+            "候補中": 0,
+            "待審查": 5,
+            "已通過": 15
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-24",
+          "fields": {
+            "候補中": 4,
+            "待審查": 20,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-25",
+          "fields": {
+            "候補中": 29,
+            "待審查": 20,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-26",
+          "fields": {
+            "餘額": 2,
+            "候補中": 0,
+            "待審查": 18,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-27",
+          "fields": {
+            "餘額": 7,
+            "候補中": 0,
+            "待審查": 13,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-28",
+          "fields": {
+            "候補中": 0,
+            "待審查": 20,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-29",
+          "fields": {
+            "餘額": 19,
+            "候補中": 0,
+            "待審查": 1,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-30",
+          "fields": {
+            "餘額": 20,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        }
+      ]
+    },
+    {
+      "name": "北二段（鬼門關斷崖）",
+      "system": "taroko",
+      "systemLabel": "太魯閣國家公園",
+      "scope": "路線",
+      "value": "29",
+      "capacity_weekday": 24,
+      "capacity_weekend": 24,
+      "unlimited": false,
+      "note": "*請詳閱「北二段路標規劃及施作紀錄表」、「攀登北二段無明西峰至無明山路段注意事項」，並隨時注意天候及路段落石危崖風險。 https://hike.taiwan.gov.tw/news_6.aspx?search=yes&org=105e956f-d8da-49f7-a9b7-3aefdda88a12",
+      "days": [
+        {
+          "date": "2026-08-31",
+          "fields": {
+            "餘額": 24,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        }
+      ],
+      "days_next_month": [
+        {
+          "date": "2026-09-01",
+          "fields": {
+            "餘額": 24,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-02",
+          "fields": {
+            "餘額": 24,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-03",
+          "fields": {
+            "餘額": 22,
+            "候補中": 0,
+            "待審查": 2,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-04",
+          "fields": {
+            "餘額": 1,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 23
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-05",
+          "fields": {
+            "餘額": 20,
+            "候補中": 0,
+            "待審查": 1,
+            "已通過": 3
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-06",
+          "fields": {
+            "餘額": 16,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 8
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-07",
+          "fields": {
+            "餘額": 12,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 12
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-08",
+          "fields": {
+            "餘額": 24,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-09",
+          "fields": {
+            "餘額": 24,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-10",
+          "fields": {
+            "餘額": 21,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 3
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-11",
+          "fields": {
+            "候補中": 4,
+            "待審查": 0,
+            "已通過": 24
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-12",
+          "fields": {
+            "餘額": 15,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 9
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-13",
+          "fields": {
+            "餘額": 23,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 1
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-14",
+          "fields": {
+            "餘額": 24,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-15",
+          "fields": {
+            "餘額": 24,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-16",
+          "fields": {
+            "餘額": 24,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-17",
+          "fields": {
+            "餘額": 24,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-18",
+          "fields": {
+            "餘額": 10,
+            "候補中": 0,
+            "待審查": 14,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-19",
+          "fields": {
+            "餘額": 19,
+            "候補中": 0,
+            "待審查": 2,
+            "已通過": 3
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-20",
+          "fields": {
+            "餘額": 24,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-21",
+          "fields": {
+            "餘額": 19,
+            "候補中": 0,
+            "待審查": 4,
+            "已通過": 1
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-22",
+          "fields": {
+            "餘額": 24,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-23",
+          "fields": {
+            "餘額": 22,
+            "候補中": 0,
+            "待審查": 2,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-24",
+          "fields": {
+            "餘額": 5,
+            "候補中": 0,
+            "待審查": 19,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-25",
+          "fields": {
+            "候補中": 19,
+            "待審查": 24,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-26",
+          "fields": {
+            "候補中": 1,
+            "待審查": 24,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-27",
+          "fields": {
+            "餘額": 24,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-28",
+          "fields": {
+            "餘額": 24,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-29",
+          "fields": {
+            "餘額": 24,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-30",
+          "fields": {
+            "餘額": 24,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        }
+      ]
+    },
+    {
+      "name": "北一段縱走北二段",
+      "system": "taroko",
+      "systemLabel": "太魯閣國家公園",
+      "scope": "路線",
+      "value": "28",
+      "capacity_weekday": 24,
+      "capacity_weekend": 24,
+      "unlimited": false,
+      "note": "*請詳閱「北二段路標規劃及施作紀錄表」、「攀登北二段無明西峰至無明山路段注意事項」，並隨時注意天候及路段落石危崖風險。 https://hike.taiwan.gov.tw/news_6.aspx?search=yes&org=105e956f-d8da-49f7-a9b7-3aefdda88a12",
+      "days": [
+        {
+          "date": "2026-08-31",
+          "fields": {
+            "餘額": 24,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        }
+      ],
+      "days_next_month": [
+        {
+          "date": "2026-09-01",
+          "fields": {
+            "餘額": 24,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-02",
+          "fields": {
+            "餘額": 24,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-03",
+          "fields": {
+            "餘額": 24,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-04",
+          "fields": {
+            "餘額": 24,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-05",
+          "fields": {
+            "餘額": 24,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-06",
+          "fields": {
+            "餘額": 24,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-07",
+          "fields": {
+            "餘額": 24,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-08",
+          "fields": {
+            "餘額": 24,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-09",
+          "fields": {
+            "餘額": 24,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-10",
+          "fields": {
+            "餘額": 24,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-11",
+          "fields": {
+            "餘額": 19,
+            "候補中": 0,
+            "待審查": 5,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-12",
+          "fields": {
+            "餘額": 24,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-13",
+          "fields": {
+            "餘額": 24,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-14",
+          "fields": {
+            "餘額": 24,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-15",
+          "fields": {
+            "餘額": 24,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-16",
+          "fields": {
+            "餘額": 24,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-17",
+          "fields": {
+            "餘額": 24,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-18",
+          "fields": {
+            "餘額": 24,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-19",
+          "fields": {
+            "餘額": 24,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-20",
+          "fields": {
+            "餘額": 24,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-21",
+          "fields": {
+            "餘額": 24,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-22",
+          "fields": {
+            "餘額": 16,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 8
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-23",
+          "fields": {
+            "餘額": 1,
+            "候補中": 0,
+            "待審查": 23,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-24",
+          "fields": {
+            "餘額": 6,
+            "候補中": 0,
+            "待審查": 18,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-25",
+          "fields": {
+            "餘額": 2,
+            "候補中": 0,
+            "待審查": 22,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-26",
+          "fields": {
+            "餘額": 24,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-27",
+          "fields": {
+            "餘額": 24,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-28",
+          "fields": {
+            "餘額": 24,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-29",
+          "fields": {
+            "餘額": 9,
+            "候補中": 0,
+            "待審查": 15,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-30",
+          "fields": {
+            "餘額": 24,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        }
+      ]
+    },
+    {
+      "name": "北一段縱走北二段(南往北)",
+      "system": "taroko",
+      "systemLabel": "太魯閣國家公園",
+      "scope": "路線",
+      "value": "109",
+      "capacity_weekday": 24,
+      "capacity_weekend": 24,
+      "unlimited": false,
+      "note": "*請詳閱「北二段路標規劃及施作紀錄表」、「攀登北二段無明西峰至無明山路段注意事項」，並隨時注意天候及路段落石危崖風險。 https://hike.taiwan.gov.tw/news_6.aspx?search=yes&org=105e956f-d8da-49f7-a9b7-3aefdda88a12",
+      "days": [
+        {
+          "date": "2026-08-31",
+          "fields": {
+            "餘額": 24,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        }
+      ],
+      "days_next_month": [
+        {
+          "date": "2026-09-01",
+          "fields": {
+            "餘額": 24,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-02",
+          "fields": {
+            "餘額": 24,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-03",
+          "fields": {
+            "餘額": 24,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-04",
+          "fields": {
+            "餘額": 24,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-05",
+          "fields": {
+            "餘額": 24,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-06",
+          "fields": {
+            "餘額": 24,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-07",
+          "fields": {
+            "餘額": 24,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-08",
+          "fields": {
+            "餘額": 24,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-09",
+          "fields": {
+            "餘額": 24,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-10",
+          "fields": {
+            "餘額": 24,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-11",
+          "fields": {
+            "餘額": 19,
+            "候補中": 0,
+            "待審查": 5,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-12",
+          "fields": {
+            "餘額": 24,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-13",
+          "fields": {
+            "餘額": 24,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-14",
+          "fields": {
+            "餘額": 24,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-15",
+          "fields": {
+            "餘額": 24,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-16",
+          "fields": {
+            "餘額": 24,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-17",
+          "fields": {
+            "餘額": 24,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-18",
+          "fields": {
+            "餘額": 24,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-19",
+          "fields": {
+            "餘額": 24,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-20",
+          "fields": {
+            "餘額": 24,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-21",
+          "fields": {
+            "餘額": 24,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-22",
+          "fields": {
+            "餘額": 16,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 8
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-23",
+          "fields": {
+            "餘額": 1,
+            "候補中": 0,
+            "待審查": 23,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-24",
+          "fields": {
+            "餘額": 6,
+            "候補中": 0,
+            "待審查": 18,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-25",
+          "fields": {
+            "餘額": 2,
+            "候補中": 0,
+            "待審查": 22,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-26",
+          "fields": {
+            "餘額": 24,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-27",
+          "fields": {
+            "餘額": 24,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-28",
+          "fields": {
+            "餘額": 24,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-29",
+          "fields": {
+            "餘額": 9,
+            "候補中": 0,
+            "待審查": 15,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-30",
+          "fields": {
+            "餘額": 24,
+            "候補中": 0,
+            "待審查": 0,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        }
+      ]
+    },
+    {
+      "name": "清水山",
+      "system": "taroko",
+      "systemLabel": "太魯閣國家公園",
+      "scope": "路線",
+      "value": "35",
+      "capacity_weekday": null,
+      "capacity_weekend": null,
+      "unlimited": true,
+      "note": "*清水山不須申請入山證。",
+      "days": [],
+      "days_next_month": []
+    },
+    {
+      "name": "閂山鈴鳴山",
+      "system": "taroko",
+      "systemLabel": "太魯閣國家公園",
+      "scope": "路線",
+      "value": "30",
+      "capacity_weekday": null,
+      "capacity_weekend": null,
+      "unlimited": true,
+      "note": "*閂山鈴鳴山不須申請入山證。",
+      "days": [],
+      "days_next_month": []
+    },
+    {
+      "name": "閂山單攻",
+      "system": "taroko",
+      "systemLabel": "太魯閣國家公園",
+      "scope": "路線",
+      "value": "31",
+      "capacity_weekday": null,
+      "capacity_weekend": null,
+      "unlimited": true,
+      "note": "*閂山不須申請入山證。",
+      "days": [],
+      "days_next_month": []
+    },
+    {
+      "name": "畢祿山",
+      "system": "taroko",
+      "systemLabel": "太魯閣國家公園",
+      "scope": "路線",
+      "value": "33",
+      "capacity_weekday": null,
+      "capacity_weekend": null,
+      "unlimited": true,
+      "note": "*自109年2月21日零時起免辦入山許可證。",
+      "days": [],
+      "days_next_month": []
+    },
+    {
+      "name": "羊頭山單攻",
+      "system": "taroko",
+      "systemLabel": "太魯閣國家公園",
+      "scope": "路線",
+      "value": "34",
+      "capacity_weekday": null,
+      "capacity_weekend": null,
+      "unlimited": true,
+      "note": "*羊頭山單攻不須申請入山證。",
+      "days": [],
+      "days_next_month": []
+    },
+    {
+      "name": "畢祿縱走羊頭",
+      "system": "taroko",
+      "systemLabel": "太魯閣國家公園",
+      "scope": "路線",
+      "value": "32",
+      "capacity_weekday": null,
+      "capacity_weekend": null,
+      "unlimited": true,
+      "note": "*自109年2月21日零時起免辦入山許可證。 *鋸齒連峰路段因路面崎嶇落差大，且多被植物覆蓋遮蔽視線，山友行經該路段請慢行，確認路徑狀況再行走，避免踏空造成自身傷害。",
+      "days": [],
+      "days_next_month": []
+    },
+    {
+      "name": "其他（非傳統路線但進入區域屬生態保護區）",
+      "system": "taroko",
+      "systemLabel": "太魯閣國家公園",
+      "scope": "路線",
+      "value": "55",
+      "capacity_weekday": null,
+      "capacity_weekend": null,
+      "unlimited": true,
+      "note": "1.若要申請「奇萊南峰」請選擇「奇萊_奇萊南峰」。若要進入南華山及天池周邊，由於該區域不在太魯閣範圍，不用申請入園。 2.若要申請「黃金峽谷」，行程請填寫「三棧社區-三棧南溪-黃金峽谷-三棧南溪-三棧社區」，三棧南溪僅支流黃金峽谷屬本處生態保護區範圍，主流沿線均無需申請本處生態保護區入園許可證。",
+      "days": [],
+      "days_next_month": []
+    },
+    {
+      "name": "其他路線_南湖大山線",
+      "system": "taroko",
+      "systemLabel": "太魯閣國家公園",
+      "scope": "路線",
+      "value": "661",
+      "capacity_weekday": null,
+      "capacity_weekend": null,
+      "unlimited": true,
+      "note": "凡行程經南湖大山線與南湖中央尖線且經過(審馬陣山、南湖北山)等路線需辦理【警政署入山證】。 警政署入山申辦系統。 https://nv2.npa.gov.tw/NM107-604Client/nV01A01Q_01_Action.do?mode=query&method=doList",
+      "days": [],
+      "days_next_month": []
+    },
+    {
+      "name": "其他路線_奇萊群峰",
+      "system": "taroko",
+      "systemLabel": "太魯閣國家公園",
+      "scope": "路線",
+      "value": "662",
+      "capacity_weekday": null,
+      "capacity_weekend": null,
+      "unlimited": true,
+      "note": "1.若要申請「奇萊南峰」請選擇「奇萊_奇萊南峰」。若要進入南華山及天池山莊周邊等路線，由於該區域不在太魯閣範圍，無需申請入園證。",
+      "days": [],
+      "days_next_month": []
+    },
+    {
+      "name": "羊頭縱走畢祿",
+      "system": "taroko",
+      "systemLabel": "太魯閣國家公園",
+      "scope": "路線",
+      "value": "149",
+      "capacity_weekday": null,
+      "capacity_weekend": null,
+      "unlimited": true,
+      "note": "申請【羊頭縱走畢祿】登山行程>請至系統申請時選擇>主路線>畢祿縱走羊頭>次路線>畢祿縱走羊頭>方式申請>請點選>起點羊頭縱走畢祿等登山行程。",
+      "days": [],
+      "days_next_month": []
+    },
+    {
+      "name": "奇萊北屏風山線",
+      "system": "taroko",
+      "systemLabel": "太魯閣國家公園",
+      "scope": "路線",
+      "value": "675",
+      "capacity_weekday": 40,
+      "capacity_weekend": 40,
+      "unlimited": false,
+      "note": null,
+      "days": [
+        {
+          "date": "2026-08-31",
+          "fields": {
+            "餘額": 1,
+            "候補中": 11,
+            "待審查": 0,
+            "已通過": 39
+          },
+          "closed": false,
+          "note": null
+        }
+      ],
+      "days_next_month": [
+        {
+          "date": "2026-09-01",
+          "fields": {
+            "餘額": 4,
+            "候補中": 0,
+            "待審查": 4,
+            "已通過": 32
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-02",
+          "fields": {
+            "餘額": 1,
+            "候補中": 0,
+            "待審查": 2,
+            "已通過": 37
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-03",
+          "fields": {
+            "餘額": 2,
+            "候補中": 17,
+            "待審查": 4,
+            "已通過": 34
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-04",
+          "fields": {
+            "候補中": 12,
+            "待審查": 0,
+            "已通過": 40
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-05",
+          "fields": {
+            "候補中": 19,
+            "待審查": 2,
+            "已通過": 38
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-06",
+          "fields": {
+            "候補中": 23,
+            "待審查": 0,
+            "已通過": 40
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-07",
+          "fields": {
+            "候補中": 5,
+            "待審查": 6,
+            "已通過": 34
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-08",
+          "fields": {
+            "候補中": 9,
+            "待審查": 0,
+            "已通過": 40
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-09",
+          "fields": {
+            "候補中": 18,
+            "待審查": 0,
+            "已通過": 40
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-10",
+          "fields": {
+            "候補中": 8,
+            "待審查": 1,
+            "已通過": 39
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-11",
+          "fields": {
+            "餘額": 1,
+            "候補中": 26,
+            "待審查": 0,
+            "已通過": 39
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-12",
+          "fields": {
+            "候補中": 25,
+            "待審查": 0,
+            "已通過": 40
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-13",
+          "fields": {
+            "候補中": 15,
+            "待審查": 2,
+            "已通過": 38
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-14",
+          "fields": {
+            "餘額": 1,
+            "候補中": 0,
+            "待審查": 7,
+            "已通過": 32
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-15",
+          "fields": {
+            "候補中": 3,
+            "待審查": 0,
+            "已通過": 40
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-16",
+          "fields": {
+            "候補中": 10,
+            "待審查": 1,
+            "已通過": 39
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-17",
+          "fields": {
+            "餘額": 1,
+            "候補中": 4,
+            "待審查": 4,
+            "已通過": 35
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-18",
+          "fields": {
+            "候補中": 25,
+            "待審查": 1,
+            "已通過": 39
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-19",
+          "fields": {
+            "餘額": 1,
+            "候補中": 23,
+            "待審查": 0,
+            "已通過": 39
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-20",
+          "fields": {
+            "候補中": 27,
+            "待審查": 0,
+            "已通過": 40
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-21",
+          "fields": {
+            "候補中": 5,
+            "待審查": 6,
+            "已通過": 34
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-22",
+          "fields": {
+            "候補中": 0,
+            "待審查": 11,
+            "已通過": 29
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-23",
+          "fields": {
+            "候補中": 5,
+            "待審查": 40,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-24",
+          "fields": {
+            "候補中": 25,
+            "待審查": 40,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-25",
+          "fields": {
+            "候補中": 48,
+            "待審查": 40,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-26",
+          "fields": {
+            "候補中": 28,
+            "待審查": 40,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-27",
+          "fields": {
+            "候補中": 22,
+            "待審查": 40,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-28",
+          "fields": {
+            "候補中": 17,
+            "待審查": 40,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-29",
+          "fields": {
+            "候補中": 4,
+            "待審查": 40,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-30",
+          "fields": {
+            "餘額": 1,
+            "候補中": 5,
+            "待審查": 39,
+            "已通過": 0
+          },
+          "closed": false,
+          "note": null
+        }
+      ]
+    },
+    {
+      "name": "雪山登山口",
+      "system": "snow",
+      "systemLabel": "雪霸國家公園",
+      "scope": "登山口",
+      "value": "9",
+      "capacity_weekday": 160,
+      "capacity_weekend": 160,
+      "unlimited": false,
+      "note": null,
+      "days": [
+        {
+          "date": "2026-08-31",
+          "fields": {
+            "餘額": 147,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 13,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        }
+      ],
+      "days_next_month": [
+        {
+          "date": "2026-09-01",
+          "fields": {
+            "餘額": 157,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 3,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-02",
+          "fields": {
+            "餘額": 160,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-03",
+          "fields": {
+            "餘額": 154,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 6,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-04",
+          "fields": {
+            "餘額": 148,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 12,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-05",
+          "fields": {
+            "餘額": 124,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 36,
+            "待系統排定": 2
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-06",
+          "fields": {
+            "餘額": 139,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 21,
+            "待系統排定": 2
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-07",
+          "fields": {
+            "餘額": 138,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 22,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-08",
+          "fields": {
+            "餘額": 160,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-09",
+          "fields": {
+            "餘額": 159,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 1,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-10",
+          "fields": {
+            "餘額": 142,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 18,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-11",
+          "fields": {
+            "餘額": 152,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 8,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-12",
+          "fields": {
+            "餘額": 125,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 35,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-13",
+          "fields": {
+            "餘額": 136,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 24,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-14",
+          "fields": {
+            "餘額": 148,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 12,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-15",
+          "fields": {
+            "餘額": 154,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 6,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-16",
+          "fields": {
+            "餘額": 154,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 6,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-17",
+          "fields": {
+            "餘額": 158,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 2,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-18",
+          "fields": {
+            "餘額": 154,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 6,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-19",
+          "fields": {
+            "餘額": 151,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 9,
+            "待系統排定": 2
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-20",
+          "fields": {
+            "餘額": 117,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 43,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-21",
+          "fields": {
+            "餘額": 160,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-22",
+          "fields": {
+            "餘額": 157,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 3,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-23",
+          "fields": {
+            "餘額": 160,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-24",
+          "fields": {
+            "餘額": 158,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 2,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-25",
+          "fields": {
+            "餘額": 157,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 3,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-26",
+          "fields": {
+            "餘額": 97,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 63,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-27",
+          "fields": {
+            "餘額": 143,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 17,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-28",
+          "fields": {
+            "餘額": 160,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-29",
+          "fields": {
+            "餘額": 159,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 1,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-30",
+          "fields": {
+            "餘額": 158,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 2,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        }
+      ]
+    },
+    {
+      "name": "武陵四秀登山口",
+      "system": "snow",
+      "systemLabel": "雪霸國家公園",
+      "scope": "登山口",
+      "value": "408",
+      "capacity_weekday": 200,
+      "capacity_weekend": 200,
+      "unlimited": false,
+      "note": null,
+      "days": [
+        {
+          "date": "2026-08-31",
+          "fields": {
+            "餘額": 194,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 6,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        }
+      ],
+      "days_next_month": [
+        {
+          "date": "2026-09-01",
+          "fields": {
+            "餘額": 200,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-02",
+          "fields": {
+            "餘額": 196,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 4,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-03",
+          "fields": {
+            "餘額": 200,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-04",
+          "fields": {
+            "餘額": 181,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 19,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-05",
+          "fields": {
+            "餘額": 154,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 46,
+            "待系統排定": 1
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-06",
+          "fields": {
+            "餘額": 161,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 39,
+            "待系統排定": 1
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-07",
+          "fields": {
+            "餘額": 184,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 16,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-08",
+          "fields": {
+            "餘額": 196,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 4,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-09",
+          "fields": {
+            "餘額": 191,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 9,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-10",
+          "fields": {
+            "餘額": 200,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-11",
+          "fields": {
+            "餘額": 198,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 2,
+            "待系統排定": 1
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-12",
+          "fields": {
+            "餘額": 188,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 12,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-13",
+          "fields": {
+            "餘額": 156,
+            "待處理": 0,
+            "補件": 4,
+            "已通過": 40,
+            "待系統排定": 1
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-14",
+          "fields": {
+            "餘額": 200,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-15",
+          "fields": {
+            "餘額": 197,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 3,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-16",
+          "fields": {
+            "餘額": 200,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-17",
+          "fields": {
+            "餘額": 200,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-18",
+          "fields": {
+            "餘額": 200,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-19",
+          "fields": {
+            "餘額": 166,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 34,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-20",
+          "fields": {
+            "餘額": 185,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 15,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-21",
+          "fields": {
+            "餘額": 200,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-22",
+          "fields": {
+            "餘額": 198,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 2,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-23",
+          "fields": {
+            "餘額": 198,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 2,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-24",
+          "fields": {
+            "餘額": 200,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-25",
+          "fields": {
+            "餘額": 200,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-26",
+          "fields": {
+            "餘額": 156,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 44,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-27",
+          "fields": {
+            "餘額": 185,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 15,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-28",
+          "fields": {
+            "餘額": 199,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 1,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-29",
+          "fields": {
+            "餘額": 200,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-30",
+          "fields": {
+            "餘額": 200,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        }
+      ]
+    },
+    {
+      "name": "大霸登山口",
+      "system": "snow",
+      "systemLabel": "雪霸國家公園",
+      "scope": "登山口",
+      "value": "346",
+      "capacity_weekday": 100,
+      "capacity_weekend": 100,
+      "unlimited": false,
+      "note": null,
+      "days": [
+        {
+          "date": "2026-08-31",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        }
+      ],
+      "days_next_month": [
+        {
+          "date": "2026-09-01",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-02",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-03",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-04",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-05",
+          "fields": {
+            "餘額": 97,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 3,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-06",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-07",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-08",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-09",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-10",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-11",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-12",
+          "fields": {
+            "餘額": 99,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 1,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-13",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-14",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-15",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-16",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-17",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-18",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-19",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-20",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-21",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-22",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-23",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-24",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-25",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-26",
+          "fields": {
+            "餘額": 88,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 12,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-27",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-28",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-29",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-30",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        }
+      ]
+    },
+    {
+      "name": "志佳陽登山口",
+      "system": "snow",
+      "systemLabel": "雪霸國家公園",
+      "scope": "登山口",
+      "value": "19",
+      "capacity_weekday": 100,
+      "capacity_weekend": 100,
+      "unlimited": false,
+      "note": null,
+      "days": [
+        {
+          "date": "2026-08-31",
+          "fields": {
+            "餘額": 96,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 4,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        }
+      ],
+      "days_next_month": [
+        {
+          "date": "2026-09-01",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-02",
+          "fields": {
+            "餘額": 97,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 3,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-03",
+          "fields": {
+            "餘額": 88,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 12,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-04",
+          "fields": {
+            "餘額": 99,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 1,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-05",
+          "fields": {
+            "餘額": 95,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 5,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-06",
+          "fields": {
+            "餘額": 87,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 13,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-07",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-08",
+          "fields": {
+            "餘額": 96,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 4,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-09",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-10",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-11",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-12",
+          "fields": {
+            "餘額": 91,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 9,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-13",
+          "fields": {
+            "餘額": 69,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 31,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-14",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-15",
+          "fields": {
+            "餘額": 94,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 6,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-16",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-17",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-18",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-19",
+          "fields": {
+            "餘額": 84,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 16,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-20",
+          "fields": {
+            "餘額": 43,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 57,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-21",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-22",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-23",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-24",
+          "fields": {
+            "餘額": 99,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 1,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-25",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-26",
+          "fields": {
+            "餘額": 98,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 2,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-27",
+          "fields": {
+            "餘額": 98,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 2,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-28",
+          "fields": {
+            "餘額": 98,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 2,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-29",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-30",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        }
+      ]
+    },
+    {
+      "name": "雪劍線登山口(仁壽橋)",
+      "system": "snow",
+      "systemLabel": "雪霸國家公園",
+      "scope": "登山口",
+      "value": "347",
+      "capacity_weekday": 100,
+      "capacity_weekend": 100,
+      "unlimited": false,
+      "note": null,
+      "days": [
+        {
+          "date": "2026-08-31",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        }
+      ],
+      "days_next_month": [
+        {
+          "date": "2026-09-01",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-02",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-03",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-04",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-05",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-06",
+          "fields": {
+            "餘額": 93,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 7,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-07",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-08",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-09",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-10",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-11",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-12",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-13",
+          "fields": {
+            "餘額": 93,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 7,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-14",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-15",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-16",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-17",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-18",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-19",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-20",
+          "fields": {
+            "餘額": 98,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 2,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-21",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-22",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-23",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-24",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-25",
+          "fields": {
+            "餘額": 92,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 8,
+            "待系統排定": 24
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-26",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 1
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-27",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-28",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-29",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-30",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        }
+      ]
+    },
+    {
+      "name": "西勢山林道入口",
+      "system": "snow",
+      "systemLabel": "雪霸國家公園",
+      "scope": "登山口",
+      "value": "36",
+      "capacity_weekday": 100,
+      "capacity_weekend": 100,
+      "unlimited": false,
+      "note": null,
+      "days": [
+        {
+          "date": "2026-08-31",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        }
+      ],
+      "days_next_month": [
+        {
+          "date": "2026-09-01",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-02",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-03",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-04",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-05",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-06",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-07",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-08",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-09",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-10",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-11",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-12",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-13",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-14",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-15",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-16",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-17",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-18",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-19",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-20",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-21",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-22",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-23",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-24",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-25",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-26",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-27",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-28",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-29",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-30",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        }
+      ]
+    },
+    {
+      "name": "鎮西堡登山口",
+      "system": "snow",
+      "systemLabel": "雪霸國家公園",
+      "scope": "登山口",
+      "value": "74",
+      "capacity_weekday": 100,
+      "capacity_weekend": 100,
+      "unlimited": false,
+      "note": null,
+      "days": [
+        {
+          "date": "2026-08-31",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        }
+      ],
+      "days_next_month": [
+        {
+          "date": "2026-09-01",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-02",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-03",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-04",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-05",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-06",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-07",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-08",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-09",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-10",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-11",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-12",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-13",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-14",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-15",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-16",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-17",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-18",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-19",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-20",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-21",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-22",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-23",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-24",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-25",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-26",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-27",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-28",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-29",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        },
+        {
+          "date": "2026-09-30",
+          "fields": {
+            "餘額": 100,
+            "待處理": 0,
+            "補件": 0,
+            "已通過": 0,
+            "待系統排定": 0
+          },
+          "closed": false,
+          "note": null
+        }
+      ]
+    }
+  ],
   "year": 2026,
   "month": 8,
   "huts": [

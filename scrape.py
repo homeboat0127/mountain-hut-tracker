@@ -1128,6 +1128,15 @@ def health_report(data):
             "有內容比例": round(with_content / len(all_days), 3) if all_days else 0.0,
             "字彙": _vocabulary(all_days),
         }
+    # 輔助資料也記進報表。這幾塊不參與擋關判斷（check_health 只看 systems），
+    # 但要留在版控裡，否則像 8/20～8/26 那種間歇性清空只能靠人工翻 git 才看得到。
+    report["輔助資料"] = {
+        "路線證件": _size(data.get("permits")),
+        "單日往返路線": _size(data.get("route_quota")),
+        "步道人數限制": _size(data.get("trail_quota")),
+        "封園公告": _size(data.get("closures")),
+        "抽籤場次": _size(data.get("lottery")),
+    }
     return report
 
 
@@ -1208,6 +1217,55 @@ def check_health(report, previous_path="health.json"):
 
     print("  健檢通過")
     return []
+
+
+# 輔助資料（證件、單日往返名額、步道人數限制、封園、抽籤）的保護。
+#
+# 這幾塊跟山屋名額不同：它們不在逐系統健檢的涵蓋範圍內，抓取失敗時
+# safe_scrape 回傳空值，直接寫回去就把好資料清成 0，而健檢完全不會察覺。
+# 實際發生過：8/20～8/26 之間有 5 次排程把 permits(8)、trail_quota(28)、
+# route_quota(5 條) 全部清空，站上的「單日往返路線」分頁因此整頁空白、
+# 「所需證件」退回「尚未查證」。因為是間歇性的，下一輪又抓回來，
+# 所以一直沒被發現 —— 直到剛好停在清空的那一輪。
+#
+# 輔助資料抓不到只是少一塊，把既有的好資料蓋掉卻是把站上的內容弄壞。
+AUX_KEYS = ["closures", "lottery", "lottery_scope", "permits", "trail_quota"]
+
+
+def _is_empty(value):
+    if value is None:
+        return True
+    if isinstance(value, dict) and "routes" in value:
+        return not value.get("routes")
+    return hasattr(value, "__len__") and len(value) == 0
+
+
+def _size(value):
+    if isinstance(value, dict) and "routes" in value:
+        return len(value.get("routes") or [])
+    return len(value) if hasattr(value, "__len__") else 0
+
+
+def preserve_aux_blocks(data, previous_path="data.json"):
+    """本次抓取為空、但上次有資料的輔助區塊，一律沿用上次的內容。"""
+    try:
+        with open(previous_path, encoding="utf-8") as f:
+            old = json.load(f)
+    except (OSError, json.JSONDecodeError):
+        return data
+
+    for key in AUX_KEYS + ["route_quota", "route_quota_next_month"]:
+        if key not in data:
+            continue
+        if _is_empty(data[key]) and not _is_empty(old.get(key)):
+            # route_quota 帶有 year/month，沿用時只取 routes，
+            # 月份仍要用本次的，否則跨月後會顯示上個月的月份標題。
+            if isinstance(data[key], dict) and "routes" in data[key]:
+                data[key] = dict(data[key], routes=old[key].get("routes") or [])
+            else:
+                data[key] = old[key]
+            print(f"  [保留] {key} 本次抓取為空，沿用既有 {_size(data[key])} 筆")
+    return data
 
 
 def verify_before_write(new_data, previous_path="data.json", min_ratio=0.5):
@@ -1453,9 +1511,9 @@ if __name__ == "__main__":
             直接寫回去就把原本 8 筆已查證的證件資料清成 0 —— 
             輔助資料抓不到只是少一塊，把好資料蓋掉卻是把站上的內容弄壞。
             """
-            empty = value is None or (hasattr(value, "__len__") and len(value) == 0)
-            if empty and data.get(key):
-                print(f"  [保留] {key} 本次抓取為空，維持既有 {len(data[key])} 筆")
+            empty = _is_empty(value)
+            if empty and not _is_empty(data.get(key)):
+                print(f"  [保留] {key} 本次抓取為空，維持既有 {_size(data[key])} 筆")
                 return
             data[key] = value
         with sync_playwright() as p:
@@ -1470,8 +1528,10 @@ if __name__ == "__main__":
             ny, nm = (y + 1, 1) if mo == 12 else (y, mo + 1)
             rc, rn = safe_scrape("單日往返路線",
                                  lambda: scrape_route_quota(page, y, mo, ny, nm), ([], []))
-            data["route_quota"] = {"year": y, "month": mo, "routes": rc}
-            data["route_quota_next_month"] = {"year": ny, "month": nm, "routes": rn}
+            # route_quota 原本是直接覆寫，沒有經過 keep_on_fail，
+            # 抓取失敗時同樣會把既有路線清空 —— 與主路徑是同一個漏洞。
+            keep_on_fail("route_quota", {"year": y, "month": mo, "routes": rc})
+            keep_on_fail("route_quota_next_month", {"year": ny, "month": nm, "routes": rn})
             keep_on_fail("trail_quota", safe_scrape(
                 "路線人數限制", lambda: scrape_trail_quota(page, y, mo, ny, nm), []))
             browser.close()
@@ -1494,6 +1554,10 @@ if __name__ == "__main__":
         raise SystemExit(0)
 
     data = scrape()
+
+    # 輔助資料若本次抓取為空，沿用既有內容。必須在健檢之前做 ——
+    # 健檢只看四個山屋系統，這幾塊清空它不會察覺，寫下去就是站上少一塊功能。
+    preserve_aux_blocks(data)
 
     # 逐系統健檢：先跟上一次的報表比對，明確壞掉就中止，不覆寫既有資料。
     # 順序很重要 —— 要在寫檔之前跑，否則壞資料已經蓋上去了才發現沒有意義。
