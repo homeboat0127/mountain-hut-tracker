@@ -136,6 +136,142 @@
       "prohibits_entry": false,
       "recovery_date": null,
       "confirmed": false
+    },
+    {
+      "start": "2026-07-22",
+      "end": "2026-07-30",
+      "sites": [
+        "排雲山莊"
+      ],
+      "reason_type": "颱風期間",
+      "reason": "紅霞颱風",
+      "message": "115-7-24、7-25 中央氣象署發布紅霞海上颱風警報。",
+      "prohibits_entry": false,
+      "recovery_date": null,
+      "confirmed": false
+    },
+    {
+      "start": "2026-07-22",
+      "end": "2026-08-01",
+      "sites": [
+        "觀高山屋"
+      ],
+      "reason_type": "颱風期間",
+      "reason": "紅霞颱風",
+      "message": "交通部中央氣象署發布紅霞海上颱風警報，本處自115年7月24日00時00分起，禁止八通關線、南二段線、秀姑巒線、馬博拉斯橫斷線、新康山線、八通關越嶺線及其他路線之入園活動。 公告自115年7月27日起恢復玉山國家公園生態保護區八通關線、南二段線、秀姑巒線、馬博拉斯橫斷線、新康山線及其他路線之入園活動。",
+      "prohibits_entry": false,
+      "recovery_date": "2026-07-27",
+      "confirmed": false
+    },
+    {
+      "start": "2026-07-21",
+      "end": "2026-07-21",
+      "sites": [
+        "排雲山莊",
+        "觀高山屋"
+      ],
+      "reason_type": "其他天然災害侵襲期間",
+      "reason": "豪雨特報",
+      "message": "115-7-21 中央氣象署發布南投縣、嘉義縣、高雄市山區豪雨特報。",
+      "prohibits_entry": false,
+      "recovery_date": null,
+      "confirmed": false
+    },
+    {
+      "start": "2026-07-07",
+      "end": "2026-07-21",
+      "sites": [
+        "觀高山屋"
+      ],
+      "reason_type": "颱風期間",
+      "reason": "巴威颱風",
+      "message": "中央氣象署發布巴威海上颱風警報，本處自115年7月9日14時30分起，全面禁止入園活動。 公告自115年7月16日起恢復玉山國家公園八通關線、南二段線、秀姑巒線、馬博拉斯橫斷線之入園活動。",
+      "prohibits_entry": true,
+      "recovery_date": "2026-07-16",
+      "confirmed": false
+    },
+    {
+      "start": "2026-07-07",
+      "end": "2026-07-19",
+      "sites": [
+        "排雲山莊"
+      ],
+      "reason_type": "颱風期間",
+      "reason": "巴威颱風",
+      "message": "中央氣象署發布巴威海上颱風警報，本處自115年7月9日14時30分起，全面禁止入園活動。 公告自115年7月14日起恢復玉山國家公園玉山主、群峰線生態保護區登山路線之入園活動。",
+      "prohibits_entry": true,
+      "recovery_date": "2026-07-14",
+      "confirmed": false
+    },
+    {
+      "start": "2026-07-03",
+      "end": "2026-07-05",
+      "sites": [
+        "排雲山莊",
+        "觀高山屋"
+      ],
+      "reason_type": "其他天然災害侵襲期間",
+      "reason": "豪雨特報",
+      "message": "115-7-3 中央氣象署發布南投縣、嘉義縣山區豪雨特報。 115-7-4 中央氣象署發布南投縣山區豪雨特報。 115-7-5 中央氣象署發布南投縣山區豪雨特報。",
+      "prohibits_entry": false,
+      "recovery_date": null,
+      "confirmed": false
+    },
+    {
+      "start": "2026-06-29",
+      "end": "2026-06-29",
+      "sites": [
+        "排雲山莊",
+        "觀高山屋"
+      ],
+      "reason_type": "其他天然災害侵襲期間",
+      "reason": "豪雨特報",
+      "message": "115-6-29 中央氣象署發布南投縣山區豪雨特報。",
+      "prohibits_entry": false,
+      "recovery_date": null,
+      "confirmed": false
+    },
+    {
+      "start": "2026-06-25",
+      "end": "2026-06-27",
+      "sites": [
+        "排雲山莊",
+        "觀高山屋"
+      ],
+      "reason_type": "其他天然災害侵襲期間",
+      "reason": "豪雨特報",
+      "message": "115-6-25 中央氣象署發布南投縣、嘉義縣、高雄市豪雨特報。 115-6-26 中央氣象署發布嘉義縣、高雄市豪雨特報。 115-6-27 中央氣象署發布南投縣、嘉義縣、高雄市豪雨特報。",
+      "prohibits_entry": false,
+      "recovery_date": null,
+      "confirmed": false
+    },
+    {
+      "start": "2026-06-17",
+      "end": "2026-06-18",
+      "sites": [
+        "排雲山莊",
+        "觀高山屋"
+      ],
+      "reason_type": "其他天然災害侵襲期間",
+      "reason": "豪雨特報",
+      "message": "115-6-17、6-18 中央氣象署發布南投縣豪雨特報。",
+      "prohibits_entry": false,
+      "recovery_date": null,
+      "confirmed": false
+    },
+    {
+      "start": "2026-06-12",
+      "end": "2026-06-12",
+      "sites": [
+        "排雲山莊",
+        "觀高山屋"
+      ],
+      "reason_type": "其他天然災害侵襲期間",
+      "reason": "豪雨特報",
+      "message": "115-6-12 中央氣象署發布南投縣、嘉義縣、高雄市豪雨特報。",
+      "prohibits_entry": false,
+      "recovery_date": null,
+      "confirmed": false
     }
   ],
   "lottery": [
