@@ -388,6 +388,35 @@ def next_month_year(year, month):
 
 
 
+def open_page(page, url, ready_selector=None, attempts=3):
+    """開啟政府網站頁面，失敗就重試。
+
+    原本用 wait_until="networkidle"，四個主要系統頁還沒設 timeout（預設 30 秒）。
+    networkidle 的定義是「500 毫秒內沒有任何網路活動」，這幾個 ASP.NET 頁面
+    常有零星請求拖著，尖峰時段根本等不到 —— 9/16～9/21 之間 70 次排程失敗 10 次，
+    錯誤全都是 Page.goto: Timeout 30000ms exceeded，卡在 bed_6.aspx。
+
+    這幾頁是伺服器端算好才送出的 HTML，domcontentloaded 當下內容就已經齊了，
+    等 networkidle 只是多等圖片與追蹤程式，對抓資料沒有幫助。
+
+    另外加上重試：政府網站偶發的慢是常態，一次逾時就讓整輪排程作廢
+    （四個系統全部沒更新）代價太大。
+    """
+    last = None
+    for i in range(1, attempts + 1):
+        try:
+            page.goto(url, wait_until="domcontentloaded", timeout=60000)
+            if ready_selector:
+                page.wait_for_selector(ready_selector, timeout=30000)
+            return
+        except Exception as e:
+            last = e
+            print(f"  [重試] {url} 第 {i} 次開啟失敗：{type(e).__name__}")
+            if i < attempts:
+                page.wait_for_timeout(3000 * i)
+    raise last
+
+
 def safe_scrape(label, fn, fallback):
     """單一山屋抓取失敗時只記錄警告並回傳空資料，避免整批排程中斷。"""
     try:
@@ -466,7 +495,7 @@ def scrape_closures(page):
     因此只有「明確禁止入園」且「沒有公告恢復日」才標記為 confirmed，
     由前端灰化該期間名額；其餘一律只顯示原文提示，不動名額數字。
     """
-    page.goto(CLOSURE_URL, wait_until="networkidle", timeout=60000)
+    open_page(page, CLOSURE_URL)
     page.wait_for_timeout(1200)
 
     closures = []
@@ -529,7 +558,7 @@ def scrape_permits(page):
     對政府網站的負擔也小。原生 select 被自訂下拉蓋住，因此用 JS 設值後
     再觸發查詢按鈕。
     """
-    page.goto(PERMIT_URL, wait_until="networkidle", timeout=60000)
+    open_page(page, PERMIT_URL, "#con_line")
     # 前一次抓取可能讓頁面停在別的狀態，等下拉真的出現再繼續，
     # 否則會拿到 null 而整批失敗（實際發生過）。
     page.wait_for_selector("#con_line", timeout=20000)
@@ -647,7 +676,7 @@ def _read_quota_calendar(page, year, month):
 
 def scrape_route_quota(page, year, month, next_year, next_month):
     """抓五條單日往返路線的承載量與逐日名額（本月與次月）。"""
-    page.goto(ROUTE_QUOTA_URL, wait_until="networkidle", timeout=60000)
+    open_page(page, ROUTE_QUOTA_URL)
     page.wait_for_timeout(1200)
 
     # 承載量表：路線 / 平日 / 假日 / 備註
@@ -775,7 +804,7 @@ def scrape_trail_quota(page, year, month, next_year, next_month):
     """抓太魯閣／雪霸的路線與登山口人數限制，有數字上限者一併抓逐日名額。"""
     out = []
     for src in TRAIL_QUOTA_SOURCES:
-        page.goto(src["url"], wait_until="networkidle", timeout=60000)
+        open_page(page, src["url"])
         page.wait_for_timeout(1200)
 
         table = page.evaluate("""() => {
@@ -848,7 +877,7 @@ def scrape_lottery(page):
     09:00／12:00／15:00 多個時段，光靠日期規律也推不出時段。
     推算錯一天，使用者就錯過整個抽籤週期。查無資料時前端顯示「尚未公告」。
     """
-    page.goto(LOTTERY_URL, wait_until="networkidle", timeout=60000)
+    open_page(page, LOTTERY_URL)
     page.wait_for_timeout(1200)
 
     lottery = []
@@ -903,7 +932,7 @@ def scrape():
         page = browser.new_page()
         detail_page = browser.new_page()
 
-        page.goto(URL, wait_until="networkidle")
+        open_page(page, URL, "#con_rooms")
         page.wait_for_timeout(500)
         for hut in HUTS:
             result = safe_scrape(hut["name"], lambda h=hut: scrape_hut(page, detail_page, h["value"], h["name"]),
@@ -925,7 +954,7 @@ def scrape():
                                   "capacity_weekday_tent": None, "capacity_weekend_tent": None, "days": []})
             huts_next_result.append(result)
 
-        page.goto(FOREST_URL, wait_until="networkidle")
+        open_page(page, FOREST_URL, "#con_rooms")
         page.wait_for_timeout(500)
         for hut in FOREST_HUTS:
             result = safe_scrape(hut["name"] + "",
@@ -943,7 +972,7 @@ def scrape():
                                  {"name": hut["name"], "days": []})
             forest_next_result.append(result)
 
-        page.goto(TAROKO_URL, wait_until="networkidle")
+        open_page(page, TAROKO_URL, "#con_rooms")
         page.wait_for_timeout(500)
         for hut in TAROKO_HUTS:
             result = safe_scrape(hut["name"] + "",
@@ -961,7 +990,7 @@ def scrape():
                                  {"name": hut["name"], "days": []})
             taroko_next_result.append(result)
 
-        page.goto(SNOW_URL, wait_until="networkidle")
+        open_page(page, SNOW_URL, "#con_rooms")
         page.wait_for_timeout(500)
         for hut in SNOW_HUTS:
             result = safe_scrape(hut["name"] + "",
