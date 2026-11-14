@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-14 17:39",
+  "updated_at": "2026-11-15 00:48",
   "closures": [
     {
       "start": "2026-10-19",
@@ -443,14 +443,6 @@
         "type": "route_quota",
         "days": [
           {
-            "date": "2026-11-19",
-            "status": "餘額",
-            "avail": 88,
-            "queue": 0,
-            "reviewing": 0,
-            "approved": 12
-          },
-          {
             "date": "2026-11-20",
             "status": "餘額",
             "avail": 81,
@@ -469,16 +461,16 @@
           {
             "date": "2026-11-22",
             "status": "餘額",
-            "avail": 6,
+            "avail": 4,
             "queue": 13,
             "reviewing": 0,
-            "approved": 81
+            "approved": 83
           },
           {
             "date": "2026-11-23",
             "status": "餘額",
-            "avail": 93,
-            "queue": 0,
+            "avail": 91,
+            "queue": 2,
             "reviewing": 0,
             "approved": 7
           },
@@ -509,10 +501,10 @@
           {
             "date": "2026-11-27",
             "status": "餘額",
-            "avail": 46,
+            "avail": 45,
             "queue": 2,
             "reviewing": 0,
-            "approved": 52
+            "approved": 53
           },
           {
             "date": "2026-11-28",
@@ -526,17 +518,17 @@
             "date": "2026-11-29",
             "status": "餘額",
             "avail": 2,
-            "queue": 0,
+            "queue": 4,
             "reviewing": 0,
             "approved": 98
           },
           {
             "date": "2026-11-30",
             "status": "餘額",
-            "avail": 82,
+            "avail": 81,
             "queue": 0,
             "reviewing": 0,
-            "approved": 18
+            "approved": 19
           }
         ]
       },
@@ -549,20 +541,12 @@
         "type": "route_quota",
         "days": [
           {
-            "date": "2026-11-19",
-            "status": "餘額",
-            "avail": 1,
-            "queue": 11,
-            "reviewing": 0,
-            "approved": 59
-          },
-          {
             "date": "2026-11-20",
-            "status": "餘額",
-            "avail": 1,
-            "queue": 22,
+            "status": "額滿",
+            "avail": 0,
+            "queue": 20,
             "reviewing": 0,
-            "approved": 59
+            "approved": 60
           },
           {
             "date": "2026-11-21",
@@ -583,7 +567,7 @@
           {
             "date": "2026-11-23",
             "status": "餘額",
-            "avail": 3,
+            "avail": 1,
             "queue": 23,
             "reviewing": 2,
             "approved": 55
@@ -606,11 +590,11 @@
           },
           {
             "date": "2026-11-26",
-            "status": "額滿",
-            "avail": 0,
+            "status": "餘額",
+            "avail": 3,
             "queue": 4,
             "reviewing": 0,
-            "approved": 57
+            "approved": 54
           },
           {
             "date": "2026-11-27",
@@ -624,7 +608,7 @@
             "date": "2026-11-28",
             "status": "額滿",
             "avail": 0,
-            "queue": 59,
+            "queue": 56,
             "reviewing": 0,
             "approved": 60
           },
@@ -632,7 +616,7 @@
             "date": "2026-11-29",
             "status": "餘額",
             "avail": 1,
-            "queue": 100,
+            "queue": 108,
             "reviewing": 0,
             "approved": 57
           },
@@ -655,120 +639,6 @@
         "type": "route_quota",
         "days": [
           {
-            "date": "2026-11-19",
-            "status": "餘額",
-            "avail": 1,
-            "queue": 11,
-            "reviewing": 0,
-            "approved": 59
-          },
-          {
-            "date": "2026-11-20",
-            "status": "餘額",
-            "avail": 1,
-            "queue": 22,
-            "reviewing": 0,
-            "approved": 59
-          },
-          {
-            "date": "2026-11-21",
-            "status": "餘額",
-            "avail": 1,
-            "queue": 78,
-            "reviewing": 0,
-            "approved": 59
-          },
-          {
-            "date": "2026-11-22",
-            "status": "餘額",
-            "avail": 1,
-            "queue": 75,
-            "reviewing": 0,
-            "approved": 59
-          },
-          {
-            "date": "2026-11-23",
-            "status": "餘額",
-            "avail": 3,
-            "queue": 23,
-            "reviewing": 2,
-            "approved": 55
-          },
-          {
-            "date": "2026-11-24",
-            "status": "額滿",
-            "avail": 0,
-            "queue": 5,
-            "reviewing": 0,
-            "approved": 55
-          },
-          {
-            "date": "2026-11-25",
-            "status": "餘額",
-            "avail": 21,
-            "queue": 4,
-            "reviewing": 0,
-            "approved": 35
-          },
-          {
-            "date": "2026-11-26",
-            "status": "額滿",
-            "avail": 0,
-            "queue": 4,
-            "reviewing": 0,
-            "approved": 57
-          },
-          {
-            "date": "2026-11-27",
-            "status": "餘額",
-            "avail": 1,
-            "queue": 12,
-            "reviewing": 3,
-            "approved": 56
-          },
-          {
-            "date": "2026-11-28",
-            "status": "額滿",
-            "avail": 0,
-            "queue": 59,
-            "reviewing": 0,
-            "approved": 60
-          },
-          {
-            "date": "2026-11-29",
-            "status": "餘額",
-            "avail": 1,
-            "queue": 100,
-            "reviewing": 0,
-            "approved": 57
-          },
-          {
-            "date": "2026-11-30",
-            "status": "餘額",
-            "avail": 1,
-            "queue": 13,
-            "reviewing": 0,
-            "approved": 58
-          }
-        ]
-      },
-      {
-        "capacity_weekday": 100,
-        "capacity_weekend": 100,
-        "note": "一、行經東埔至八通關步道2.2",
-        "name": "乙女瀑布單日往返",
-        "value": "1",
-        "type": "route_quota",
-        "days": [
-          {
-            "date": "2026-11-19",
-            "status": "餘額",
-            "avail": 100,
-            "queue": 0,
-            "reviewing": 0,
-            "approved": 0
-          },
-          {
             "date": "2026-11-20",
             "status": "餘額",
             "avail": 63,
@@ -780,7 +650,7 @@
             "date": "2026-11-21",
             "status": "額滿",
             "avail": 0,
-            "queue": 10,
+            "queue": 11,
             "reviewing": 0,
             "approved": 98
           },
@@ -795,8 +665,8 @@
           {
             "date": "2026-11-23",
             "status": "餘額",
-            "avail": 71,
-            "queue": 2,
+            "avail": 66,
+            "queue": 7,
             "reviewing": 0,
             "approved": 27
           },
@@ -827,18 +697,18 @@
           {
             "date": "2026-11-27",
             "status": "餘額",
-            "avail": 93,
-            "queue": 0,
+            "avail": 91,
+            "queue": 2,
             "reviewing": 0,
             "approved": 7
           },
           {
             "date": "2026-11-28",
             "status": "餘額",
-            "avail": 48,
+            "avail": 49,
             "queue": 1,
             "reviewing": 0,
-            "approved": 51
+            "approved": 50
           },
           {
             "date": "2026-11-29",
@@ -861,13 +731,13 @@
       {
         "capacity_weekday": 100,
         "capacity_weekend": 100,
-        "note": "一、山風登山口至東段步道7K里",
-        "name": "瓦拉米單日往返",
-        "value": "7",
+        "note": "一、行經東埔至八通關步道2.2",
+        "name": "乙女瀑布單日往返",
+        "value": "1",
         "type": "route_quota",
         "days": [
           {
-            "date": "2026-11-19",
+            "date": "2026-11-20",
             "status": "餘額",
             "avail": 100,
             "queue": 0,
@@ -875,12 +745,102 @@
             "approved": 0
           },
           {
-            "date": "2026-11-20",
+            "date": "2026-11-21",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-11-22",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-11-23",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-11-24",
             "status": "餘額",
             "avail": 99,
             "queue": 0,
             "reviewing": 0,
             "approved": 1
+          },
+          {
+            "date": "2026-11-25",
+            "status": "餘額",
+            "avail": 99,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 1
+          },
+          {
+            "date": "2026-11-26",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-11-27",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-11-28",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-11-29",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          },
+          {
+            "date": "2026-11-30",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
+          }
+        ]
+      },
+      {
+        "capacity_weekday": 100,
+        "capacity_weekend": 100,
+        "note": "一、山風登山口至東段步道7K里",
+        "name": "瓦拉米單日往返",
+        "value": "7",
+        "type": "route_quota",
+        "days": [
+          {
+            "date": "2026-11-20",
+            "status": "餘額",
+            "avail": 100,
+            "queue": 0,
+            "reviewing": 0,
+            "approved": 0
           },
           {
             "date": "2026-11-21",
@@ -1069,10 +1029,10 @@
           {
             "date": "2026-12-12",
             "status": "餘額",
-            "avail": 43,
+            "avail": 42,
             "queue": 0,
             "reviewing": 0,
-            "approved": 57
+            "approved": 58
           },
           {
             "date": "2026-12-13",
@@ -1263,10 +1223,10 @@
           {
             "date": "2026-12-04",
             "status": "餘額",
-            "avail": 15,
+            "avail": 10,
             "queue": 0,
             "reviewing": 0,
-            "approved": 45
+            "approved": 50
           },
           {
             "date": "2026-12-05",
@@ -1295,10 +1255,10 @@
           {
             "date": "2026-12-08",
             "status": "餘額",
-            "avail": 51,
+            "avail": 43,
             "queue": 0,
             "reviewing": 0,
-            "approved": 9
+            "approved": 17
           },
           {
             "date": "2026-12-09",
@@ -1328,7 +1288,7 @@
             "date": "2026-12-12",
             "status": "額滿",
             "avail": 0,
-            "queue": 36,
+            "queue": 33,
             "reviewing": 13,
             "approved": 45
           },
@@ -1344,7 +1304,7 @@
             "date": "2026-12-14",
             "status": "餘額",
             "avail": 60,
-            "queue": 27,
+            "queue": 30,
             "reviewing": 0,
             "approved": 0
           },
@@ -1384,7 +1344,7 @@
             "date": "2026-12-19",
             "status": "餘額",
             "avail": 60,
-            "queue": 69,
+            "queue": 71,
             "reviewing": 0,
             "approved": 0
           },
@@ -1392,7 +1352,7 @@
             "date": "2026-12-20",
             "status": "餘額",
             "avail": 60,
-            "queue": 80,
+            "queue": 82,
             "reviewing": 0,
             "approved": 0
           },
@@ -2287,9 +2247,10 @@
         {
           "date": "2026-11-21",
           "fields": {
+            "餘額": 2,
             "候補中": 27,
             "待審查": 0,
-            "已通過": 40
+            "已通過": 38
           },
           "closed": false,
           "note": null
@@ -2327,10 +2288,10 @@
         {
           "date": "2026-11-25",
           "fields": {
-            "餘額": 2,
+            "餘額": 6,
             "候補中": 0,
             "待審查": 2,
-            "已通過": 36
+            "已通過": 32
           },
           "closed": false,
           "note": null
@@ -2413,9 +2374,10 @@
         {
           "date": "2026-12-03",
           "fields": {
+            "餘額": 2,
             "候補中": 4,
             "待審查": 3,
-            "已通過": 37
+            "已通過": 35
           },
           "closed": false,
           "note": null
@@ -2424,7 +2386,7 @@
           "date": "2026-12-04",
           "fields": {
             "餘額": 1,
-            "候補中": 23,
+            "候補中": 25,
             "待審查": 0,
             "已通過": 39
           },
@@ -2464,7 +2426,7 @@
         {
           "date": "2026-12-08",
           "fields": {
-            "候補中": 0,
+            "候補中": 3,
             "待審查": 25,
             "已通過": 15
           },
@@ -2547,9 +2509,9 @@
         {
           "date": "2026-12-16",
           "fields": {
-            "餘額": 2,
+            "餘額": 1,
             "候補中": 0,
-            "待審查": 38,
+            "待審查": 39,
             "已通過": 0
           },
           "closed": false,
@@ -2736,9 +2698,10 @@
         {
           "date": "2026-11-21",
           "fields": {
+            "餘額": 2,
             "候補中": 27,
             "待審查": 0,
-            "已通過": 40
+            "已通過": 38
           },
           "closed": false,
           "note": null
@@ -2776,10 +2739,10 @@
         {
           "date": "2026-11-25",
           "fields": {
-            "餘額": 2,
+            "餘額": 6,
             "候補中": 0,
             "待審查": 2,
-            "已通過": 36
+            "已通過": 32
           },
           "closed": false,
           "note": null
@@ -2862,9 +2825,10 @@
         {
           "date": "2026-12-03",
           "fields": {
+            "餘額": 2,
             "候補中": 4,
             "待審查": 3,
-            "已通過": 37
+            "已通過": 35
           },
           "closed": false,
           "note": null
@@ -2873,7 +2837,7 @@
           "date": "2026-12-04",
           "fields": {
             "餘額": 1,
-            "候補中": 23,
+            "候補中": 25,
             "待審查": 0,
             "已通過": 39
           },
@@ -2913,7 +2877,7 @@
         {
           "date": "2026-12-08",
           "fields": {
-            "候補中": 0,
+            "候補中": 3,
             "待審查": 25,
             "已通過": 15
           },
@@ -2996,9 +2960,9 @@
         {
           "date": "2026-12-16",
           "fields": {
-            "餘額": 2,
+            "餘額": 1,
             "候補中": 0,
-            "待審查": 38,
+            "待審查": 39,
             "已通過": 0
           },
           "closed": false,
@@ -3740,9 +3704,9 @@
         {
           "date": "2026-11-28",
           "fields": {
-            "餘額": 189,
+            "餘額": 186,
             "候補中": 0,
-            "待審查": 0,
+            "待審查": 3,
             "已通過": 37
           },
           "closed": false,
@@ -3907,9 +3871,9 @@
         {
           "date": "2026-12-13",
           "fields": {
-            "餘額": 202,
+            "餘額": 201,
             "候補中": 0,
-            "待審查": 24,
+            "待審查": 25,
             "已通過": 0
           },
           "closed": false,
@@ -4671,10 +4635,10 @@
         {
           "date": "2026-11-27",
           "fields": {
-            "餘額": 37,
+            "餘額": 38,
             "候補中": 0,
             "待審查": 0,
-            "已通過": 23
+            "已通過": 22
           },
           "closed": false,
           "note": null
@@ -4682,10 +4646,10 @@
         {
           "date": "2026-11-28",
           "fields": {
-            "餘額": 39,
+            "餘額": 40,
             "候補中": 0,
             "待審查": 0,
-            "已通過": 21
+            "已通過": 20
           },
           "closed": false,
           "note": null
@@ -4981,7 +4945,7 @@
           "date": "2026-12-25",
           "fields": {
             "餘額": 1,
-            "候補中": 6,
+            "候補中": 7,
             "待審查": 59,
             "已通過": 0
           },
@@ -7183,9 +7147,10 @@
         {
           "date": "2026-12-03",
           "fields": {
+            "餘額": 2,
             "候補中": 4,
             "待審查": 3,
-            "已通過": 37
+            "已通過": 35
           },
           "closed": false,
           "note": null
@@ -7194,7 +7159,7 @@
           "date": "2026-12-04",
           "fields": {
             "餘額": 1,
-            "候補中": 23,
+            "候補中": 25,
             "待審查": 0,
             "已通過": 39
           },
@@ -7234,7 +7199,7 @@
         {
           "date": "2026-12-08",
           "fields": {
-            "候補中": 0,
+            "候補中": 3,
             "待審查": 25,
             "已通過": 15
           },
@@ -7317,9 +7282,9 @@
         {
           "date": "2026-12-16",
           "fields": {
-            "餘額": 2,
+            "餘額": 1,
             "候補中": 0,
-            "待審查": 38,
+            "待審查": 39,
             "已通過": 0
           },
           "closed": false,
@@ -7494,18 +7459,6 @@
       "note": null,
       "days": [
         {
-          "date": "2026-11-19",
-          "fields": {
-            "餘額": 153,
-            "待處理": 0,
-            "補件": 0,
-            "已通過": 7,
-            "待系統排定": 2
-          },
-          "closed": false,
-          "note": null
-        },
-        {
           "date": "2026-11-20",
           "fields": {
             "餘額": 153,
@@ -7520,8 +7473,8 @@
         {
           "date": "2026-11-21",
           "fields": {
-            "餘額": 62,
-            "待處理": 0,
+            "餘額": 61,
+            "待處理": 1,
             "補件": 0,
             "已通過": 98,
             "待系統排定": 0
@@ -7532,8 +7485,8 @@
         {
           "date": "2026-11-22",
           "fields": {
-            "餘額": 16,
-            "待處理": 2,
+            "餘額": 15,
+            "待處理": 3,
             "補件": 0,
             "已通過": 142,
             "待系統排定": 0
@@ -7616,11 +7569,11 @@
         {
           "date": "2026-11-29",
           "fields": {
-            "餘額": 86,
-            "待處理": 5,
+            "餘額": 83,
+            "待處理": 8,
             "補件": 0,
             "已通過": 69,
-            "待系統排定": 1
+            "待系統排定": 0
           },
           "closed": false,
           "note": null
@@ -7774,11 +7727,11 @@
         {
           "date": "2026-12-12",
           "fields": {
-            "餘額": 148,
-            "待處理": 0,
+            "餘額": 146,
+            "待處理": 2,
             "補件": 0,
             "已通過": 12,
-            "待系統排定": 2
+            "待系統排定": 0
           },
           "closed": false,
           "note": null
@@ -7954,8 +7907,8 @@
         {
           "date": "2026-12-27",
           "fields": {
-            "餘額": 157,
-            "待處理": 0,
+            "餘額": 155,
+            "待處理": 2,
             "補件": 0,
             "已通過": 3,
             "待系統排定": 0
@@ -8025,18 +7978,6 @@
       "note": null,
       "days": [
         {
-          "date": "2026-11-19",
-          "fields": {
-            "餘額": 194,
-            "待處理": 0,
-            "補件": 0,
-            "已通過": 6,
-            "待系統排定": 0
-          },
-          "closed": false,
-          "note": null
-        },
-        {
           "date": "2026-11-20",
           "fields": {
             "餘額": 188,
@@ -8051,11 +7992,11 @@
         {
           "date": "2026-11-21",
           "fields": {
-            "餘額": 171,
-            "待處理": 1,
+            "餘額": 170,
+            "待處理": 2,
             "補件": 0,
             "已通過": 28,
-            "待系統排定": 1
+            "待系統排定": 0
           },
           "closed": false,
           "note": null
@@ -8087,11 +8028,11 @@
         {
           "date": "2026-11-24",
           "fields": {
-            "餘額": 199,
-            "待處理": 0,
+            "餘額": 198,
+            "待處理": 1,
             "補件": 0,
             "已通過": 1,
-            "待系統排定": 1
+            "待系統排定": 0
           },
           "closed": false,
           "note": null
@@ -8147,8 +8088,8 @@
         {
           "date": "2026-11-29",
           "fields": {
-            "餘額": 156,
-            "待處理": 0,
+            "餘額": 155,
+            "待處理": 1,
             "補件": 0,
             "已通過": 44,
             "待系統排定": 0
@@ -8389,8 +8330,8 @@
         {
           "date": "2026-12-19",
           "fields": {
-            "餘額": 196,
-            "待處理": 0,
+            "餘額": 194,
+            "待處理": 2,
             "補件": 0,
             "已通過": 4,
             "待系統排定": 0
@@ -8401,8 +8342,8 @@
         {
           "date": "2026-12-20",
           "fields": {
-            "餘額": 188,
-            "待處理": 0,
+            "餘額": 186,
+            "待處理": 2,
             "補件": 0,
             "已通過": 12,
             "待系統排定": 0
@@ -8485,8 +8426,8 @@
         {
           "date": "2026-12-27",
           "fields": {
-            "餘額": 198,
-            "待處理": 2,
+            "餘額": 196,
+            "待處理": 4,
             "補件": 0,
             "已通過": 0,
             "待系統排定": 0
@@ -8555,18 +8496,6 @@
       "unlimited": false,
       "note": null,
       "days": [
-        {
-          "date": "2026-11-19",
-          "fields": {
-            "餘額": 98,
-            "待處理": 0,
-            "補件": 0,
-            "已通過": 2,
-            "待系統排定": 0
-          },
-          "closed": false,
-          "note": null
-        },
         {
           "date": "2026-11-20",
           "fields": {
@@ -9087,18 +9016,6 @@
       "note": null,
       "days": [
         {
-          "date": "2026-11-19",
-          "fields": {
-            "餘額": 100,
-            "待處理": 0,
-            "補件": 0,
-            "已通過": 0,
-            "待系統排定": 1
-          },
-          "closed": false,
-          "note": null
-        },
-        {
           "date": "2026-11-20",
           "fields": {
             "餘額": 100,
@@ -9125,8 +9042,8 @@
         {
           "date": "2026-11-22",
           "fields": {
-            "餘額": 53,
-            "待處理": 16,
+            "餘額": 52,
+            "待處理": 17,
             "補件": 0,
             "已通過": 31,
             "待系統排定": 0
@@ -9209,11 +9126,11 @@
         {
           "date": "2026-11-29",
           "fields": {
-            "餘額": 91,
-            "待處理": 0,
+            "餘額": 89,
+            "待處理": 2,
             "補件": 2,
             "已通過": 7,
-            "待系統排定": 2
+            "待系統排定": 0
           },
           "closed": false,
           "note": null
@@ -9617,18 +9534,6 @@
       "unlimited": false,
       "note": null,
       "days": [
-        {
-          "date": "2026-11-19",
-          "fields": {
-            "餘額": 100,
-            "待處理": 0,
-            "補件": 0,
-            "已通過": 0,
-            "待系統排定": 0
-          },
-          "closed": false,
-          "note": null
-        },
         {
           "date": "2026-11-20",
           "fields": {
@@ -10149,18 +10054,6 @@
       "note": null,
       "days": [
         {
-          "date": "2026-11-19",
-          "fields": {
-            "餘額": 100,
-            "待處理": 0,
-            "補件": 0,
-            "已通過": 0,
-            "待系統排定": 0
-          },
-          "closed": false,
-          "note": null
-        },
-        {
           "date": "2026-11-20",
           "fields": {
             "餘額": 100,
@@ -10679,18 +10572,6 @@
       "unlimited": false,
       "note": null,
       "days": [
-        {
-          "date": "2026-11-19",
-          "fields": {
-            "餘額": 100,
-            "待處理": 0,
-            "補件": 0,
-            "已通過": 0,
-            "待系統排定": 0
-          },
-          "closed": false,
-          "note": null
-        },
         {
           "date": "2026-11-20",
           "fields": {
@@ -11213,38 +11094,26 @@
       "capacity_weekend_tent": 0,
       "days": [
         {
-          "date": "2026-11-19",
-          "status": "關閉",
-          "bed_avail": 0,
-          "tent_avail": 0,
-          "queue": null,
-          "reviewing": null,
-          "approved": null,
-          "total_bed_used": null,
-          "total_tent_used": null,
-          "note": "本處為協助弱勢團體及基於企業社會責任辦理公益、淨山活動，保留115年4月22日、5月20日、6月29日、9月15日、10月20日、11月4日及11月19日排雲山莊床位，供活動暨工作人員使用。"
-        },
-        {
           "date": "2026-11-20",
           "status": "餘額",
           "bed_avail": 3,
           "tent_avail": 0,
-          "queue": 62,
-          "reviewing": 4,
-          "approved": 126,
+          "queue": 57,
+          "reviewing": 9,
+          "approved": 124,
           "total_bed_used": 133,
           "total_tent_used": 0,
           "note": null
         },
         {
           "date": "2026-11-21",
-          "status": "額滿",
-          "bed_avail": 0,
+          "status": "餘額",
+          "bed_avail": 2,
           "tent_avail": 0,
           "queue": 287,
           "reviewing": 1,
-          "approved": 133,
-          "total_bed_used": 136,
+          "approved": 131,
+          "total_bed_used": 134,
           "total_tent_used": 0,
           "note": null
         },
@@ -11310,13 +11179,13 @@
         },
         {
           "date": "2026-11-27",
-          "status": "餘額",
-          "bed_avail": 1,
+          "status": "額滿",
+          "bed_avail": 0,
           "tent_avail": 0,
           "queue": 16,
           "reviewing": 7,
           "approved": 124,
-          "total_bed_used": 135,
+          "total_bed_used": 136,
           "total_tent_used": 0,
           "note": null
         },
@@ -11368,39 +11237,27 @@
       "capacity_weekend_tent": 9,
       "days": [
         {
-          "date": "2026-11-19",
-          "status": "餘額",
-          "bed_avail": 0,
-          "tent_avail": 1,
-          "queue": 2,
-          "reviewing": 4,
-          "approved": 18,
-          "total_bed_used": 15,
-          "total_tent_used": 8,
-          "note": null
-        },
-        {
           "date": "2026-11-20",
           "status": "餘額",
-          "bed_avail": 2,
-          "tent_avail": 1,
-          "queue": 6,
-          "reviewing": 0,
+          "bed_avail": 0,
+          "tent_avail": 2,
+          "queue": 4,
+          "reviewing": 2,
           "approved": 16,
-          "total_bed_used": 13,
-          "total_tent_used": 8,
+          "total_bed_used": 15,
+          "total_tent_used": 7,
           "note": null
         },
         {
           "date": "2026-11-21",
-          "status": "餘額",
+          "status": "額滿",
           "bed_avail": 0,
-          "tent_avail": 1,
-          "queue": 5,
-          "reviewing": 0,
+          "tent_avail": 0,
+          "queue": 4,
+          "reviewing": 1,
           "approved": 23,
           "total_bed_used": 15,
-          "total_tent_used": 8,
+          "total_tent_used": 9,
           "note": null
         },
         {
@@ -11522,18 +11379,6 @@
       "capacity_weekday_tent": 24,
       "capacity_weekend_tent": 24,
       "days": [
-        {
-          "date": "2026-11-19",
-          "status": "餘額",
-          "bed_avail": 0,
-          "tent_avail": 24,
-          "queue": 0,
-          "reviewing": 0,
-          "approved": 0,
-          "total_bed_used": 0,
-          "total_tent_used": 0,
-          "note": null
-        },
         {
           "date": "2026-11-20",
           "status": "餘額",
@@ -11678,18 +11523,6 @@
       "capacity_weekend_tent": 0,
       "days": [
         {
-          "date": "2026-11-19",
-          "status": "餘額",
-          "bed_avail": 9,
-          "tent_avail": 0,
-          "queue": 0,
-          "reviewing": 0,
-          "approved": 3,
-          "total_bed_used": 3,
-          "total_tent_used": 0,
-          "note": null
-        },
-        {
           "date": "2026-11-20",
           "status": "餘額",
           "bed_avail": 11,
@@ -11730,7 +11563,7 @@
           "status": "餘額",
           "bed_avail": 10,
           "tent_avail": 0,
-          "queue": 0,
+          "queue": 1,
           "reviewing": 0,
           "approved": 2,
           "total_bed_used": 2,
@@ -11742,7 +11575,7 @@
           "status": "餘額",
           "bed_avail": 12,
           "tent_avail": 0,
-          "queue": 0,
+          "queue": 1,
           "reviewing": 0,
           "approved": 0,
           "total_bed_used": 0,
@@ -11832,18 +11665,6 @@
       "capacity_weekday_tent": 0,
       "capacity_weekend_tent": 0,
       "days": [
-        {
-          "date": "2026-11-19",
-          "status": "餘額",
-          "bed_avail": 21,
-          "tent_avail": 0,
-          "queue": 0,
-          "reviewing": 0,
-          "approved": 21,
-          "total_bed_used": 21,
-          "total_tent_used": 0,
-          "note": null
-        },
         {
           "date": "2026-11-20",
           "status": "餘額",
@@ -11988,18 +11809,6 @@
       "capacity_weekend_tent": 12,
       "days": [
         {
-          "date": "2026-11-19",
-          "status": "餘額",
-          "bed_avail": 0,
-          "tent_avail": 12,
-          "queue": 0,
-          "reviewing": 0,
-          "approved": 0,
-          "total_bed_used": 0,
-          "total_tent_used": 0,
-          "note": null
-        },
-        {
           "date": "2026-11-20",
           "status": "餘額",
           "bed_avail": 0,
@@ -12143,7 +11952,7 @@
       "capacity_weekend_tent": 0,
       "days": [
         {
-          "date": "2026-11-19",
+          "date": "2026-11-20",
           "status": "餘額",
           "bed_avail": 8,
           "tent_avail": 0,
@@ -12155,23 +11964,11 @@
           "note": null
         },
         {
-          "date": "2026-11-20",
-          "status": "餘額",
-          "bed_avail": 8,
-          "tent_avail": 0,
-          "queue": 0,
-          "reviewing": 0,
-          "approved": 12,
-          "total_bed_used": 12,
-          "total_tent_used": 0,
-          "note": null
-        },
-        {
           "date": "2026-11-21",
           "status": "餘額",
           "bed_avail": 2,
           "tent_avail": 0,
-          "queue": 0,
+          "queue": 1,
           "reviewing": 0,
           "approved": 18,
           "total_bed_used": 18,
@@ -12297,18 +12094,6 @@
       "capacity_weekday_tent": 8,
       "capacity_weekend_tent": 8,
       "days": [
-        {
-          "date": "2026-11-19",
-          "status": "餘額",
-          "bed_avail": 0,
-          "tent_avail": 6,
-          "queue": 0,
-          "reviewing": 0,
-          "approved": 14,
-          "total_bed_used": 12,
-          "total_tent_used": 2,
-          "note": null
-        },
         {
           "date": "2026-11-20",
           "status": "餘額",
@@ -12453,18 +12238,6 @@
       "capacity_weekend_tent": 0,
       "days": [
         {
-          "date": "2026-11-19",
-          "status": "關閉",
-          "bed_avail": 0,
-          "tent_avail": 0,
-          "queue": null,
-          "reviewing": null,
-          "approved": null,
-          "total_bed_used": null,
-          "total_tent_used": null,
-          "note": null
-        },
-        {
           "date": "2026-11-20",
           "status": "關閉",
           "bed_avail": 0,
@@ -12607,18 +12380,6 @@
       "capacity_weekday_tent": 0,
       "capacity_weekend_tent": 0,
       "days": [
-        {
-          "date": "2026-11-19",
-          "status": "關閉",
-          "bed_avail": 0,
-          "tent_avail": 0,
-          "queue": null,
-          "reviewing": null,
-          "approved": null,
-          "total_bed_used": null,
-          "total_tent_used": null,
-          "note": null
-        },
         {
           "date": "2026-11-20",
           "status": "關閉",
@@ -12763,18 +12524,6 @@
       "capacity_weekend_tent": 0,
       "days": [
         {
-          "date": "2026-11-19",
-          "status": "餘額",
-          "bed_avail": 5,
-          "tent_avail": 0,
-          "queue": 11,
-          "reviewing": 0,
-          "approved": 5,
-          "total_bed_used": 15,
-          "total_tent_used": 0,
-          "note": null
-        },
-        {
           "date": "2026-11-20",
           "status": "餘額",
           "bed_avail": 6,
@@ -12917,18 +12666,6 @@
       "capacity_weekday_tent": 0,
       "capacity_weekend_tent": 0,
       "days": [
-        {
-          "date": "2026-11-19",
-          "status": "餘額",
-          "bed_avail": 14,
-          "tent_avail": 0,
-          "queue": 0,
-          "reviewing": 0,
-          "approved": 6,
-          "total_bed_used": 6,
-          "total_tent_used": 0,
-          "note": null
-        },
         {
           "date": "2026-11-20",
           "status": "餘額",
@@ -13073,18 +12810,6 @@
       "capacity_weekend_tent": 0,
       "days": [
         {
-          "date": "2026-11-19",
-          "status": "餘額",
-          "bed_avail": 16,
-          "tent_avail": 0,
-          "queue": 0,
-          "reviewing": 0,
-          "approved": 4,
-          "total_bed_used": 4,
-          "total_tent_used": 0,
-          "note": null
-        },
-        {
           "date": "2026-11-20",
           "status": "餘額",
           "bed_avail": 3,
@@ -13227,18 +12952,6 @@
       "capacity_weekday_tent": 20,
       "capacity_weekend_tent": 20,
       "days": [
-        {
-          "date": "2026-11-19",
-          "status": "餘額",
-          "bed_avail": 0,
-          "tent_avail": 20,
-          "queue": 0,
-          "reviewing": 0,
-          "approved": 0,
-          "total_bed_used": 0,
-          "total_tent_used": 0,
-          "note": null
-        },
         {
           "date": "2026-11-20",
           "status": "餘額",
@@ -13383,18 +13096,6 @@
       "capacity_weekend_tent": 0,
       "days": [
         {
-          "date": "2026-11-19",
-          "status": "餘額",
-          "bed_avail": 5,
-          "tent_avail": 0,
-          "queue": 0,
-          "reviewing": 0,
-          "approved": 15,
-          "total_bed_used": 15,
-          "total_tent_used": 0,
-          "note": null
-        },
-        {
           "date": "2026-11-20",
           "status": "餘額",
           "bed_avail": 7,
@@ -13537,18 +13238,6 @@
       "capacity_weekday_tent": 0,
       "capacity_weekend_tent": 0,
       "days": [
-        {
-          "date": "2026-11-19",
-          "status": "餘額",
-          "bed_avail": 17,
-          "tent_avail": 0,
-          "queue": 0,
-          "reviewing": 0,
-          "approved": 3,
-          "total_bed_used": 3,
-          "total_tent_used": 0,
-          "note": null
-        },
         {
           "date": "2026-11-20",
           "status": "餘額",
@@ -13693,18 +13382,6 @@
       "capacity_weekend_tent": 0,
       "days": [
         {
-          "date": "2026-11-19",
-          "status": "餘額",
-          "bed_avail": 20,
-          "tent_avail": 0,
-          "queue": 0,
-          "reviewing": 0,
-          "approved": 0,
-          "total_bed_used": 0,
-          "total_tent_used": 0,
-          "note": null
-        },
-        {
           "date": "2026-11-20",
           "status": "餘額",
           "bed_avail": 20,
@@ -13847,18 +13524,6 @@
       "capacity_weekday_tent": 0,
       "capacity_weekend_tent": 0,
       "days": [
-        {
-          "date": "2026-11-19",
-          "status": "餘額",
-          "bed_avail": 19,
-          "tent_avail": 0,
-          "queue": 0,
-          "reviewing": 0,
-          "approved": 1,
-          "total_bed_used": 1,
-          "total_tent_used": 0,
-          "note": null
-        },
         {
           "date": "2026-11-20",
           "status": "餘額",
@@ -14003,18 +13668,6 @@
       "capacity_weekend_tent": 24,
       "days": [
         {
-          "date": "2026-11-19",
-          "status": "餘額",
-          "bed_avail": 0,
-          "tent_avail": 24,
-          "queue": 0,
-          "reviewing": 0,
-          "approved": 0,
-          "total_bed_used": 0,
-          "total_tent_used": 0,
-          "note": null
-        },
-        {
           "date": "2026-11-20",
           "status": "餘額",
           "bed_avail": 0,
@@ -14157,18 +13810,6 @@
       "capacity_weekday_tent": 24,
       "capacity_weekend_tent": 24,
       "days": [
-        {
-          "date": "2026-11-19",
-          "status": "餘額",
-          "bed_avail": 23,
-          "tent_avail": 24,
-          "queue": 0,
-          "reviewing": 0,
-          "approved": 1,
-          "total_bed_used": 1,
-          "total_tent_used": 0,
-          "note": null
-        },
         {
           "date": "2026-11-20",
           "status": "餘額",
@@ -14313,18 +13954,6 @@
       "capacity_weekend_tent": 4,
       "days": [
         {
-          "date": "2026-11-19",
-          "status": "餘額",
-          "bed_avail": 4,
-          "tent_avail": 4,
-          "queue": 0,
-          "reviewing": 0,
-          "approved": 12,
-          "total_bed_used": 12,
-          "total_tent_used": 0,
-          "note": null
-        },
-        {
           "date": "2026-11-20",
           "status": "餘額",
           "bed_avail": 15,
@@ -14467,18 +14096,6 @@
       "capacity_weekday_tent": 12,
       "capacity_weekend_tent": 12,
       "days": [
-        {
-          "date": "2026-11-19",
-          "status": "餘額",
-          "bed_avail": 0,
-          "tent_avail": 12,
-          "queue": 0,
-          "reviewing": 0,
-          "approved": 0,
-          "total_bed_used": 0,
-          "total_tent_used": 0,
-          "note": null
-        },
         {
           "date": "2026-11-20",
           "status": "餘額",
@@ -14623,18 +14240,6 @@
       "capacity_weekend_tent": 0,
       "days": [
         {
-          "date": "2026-11-19",
-          "status": "餘額",
-          "bed_avail": 20,
-          "tent_avail": 0,
-          "queue": 0,
-          "reviewing": 0,
-          "approved": 0,
-          "total_bed_used": 0,
-          "total_tent_used": 0,
-          "note": null
-        },
-        {
           "date": "2026-11-20",
           "status": "餘額",
           "bed_avail": 20,
@@ -14777,18 +14382,6 @@
       "capacity_weekday_tent": 20,
       "capacity_weekend_tent": 20,
       "days": [
-        {
-          "date": "2026-11-19",
-          "status": "餘額",
-          "bed_avail": 0,
-          "tent_avail": 20,
-          "queue": 0,
-          "reviewing": 0,
-          "approved": 0,
-          "total_bed_used": 0,
-          "total_tent_used": 0,
-          "note": null
-        },
         {
           "date": "2026-11-20",
           "status": "餘額",
@@ -14933,18 +14526,6 @@
       "capacity_weekend_tent": 12,
       "days": [
         {
-          "date": "2026-11-19",
-          "status": "餘額",
-          "bed_avail": 24,
-          "tent_avail": 12,
-          "queue": 0,
-          "reviewing": 0,
-          "approved": 0,
-          "total_bed_used": 0,
-          "total_tent_used": 0,
-          "note": null
-        },
-        {
           "date": "2026-11-20",
           "status": "餘額",
           "bed_avail": 0,
@@ -15088,18 +14669,6 @@
       "capacity_weekend_tent": 24,
       "days": [
         {
-          "date": "2026-11-19",
-          "status": "餘額",
-          "bed_avail": 0,
-          "tent_avail": 24,
-          "queue": 0,
-          "reviewing": 0,
-          "approved": 0,
-          "total_bed_used": 0,
-          "total_tent_used": 0,
-          "note": null
-        },
-        {
           "date": "2026-11-20",
           "status": "餘額",
           "bed_avail": 0,
@@ -15242,18 +14811,6 @@
       "capacity_weekday_tent": 24,
       "capacity_weekend_tent": 24,
       "days": [
-        {
-          "date": "2026-11-19",
-          "status": "餘額",
-          "bed_avail": 0,
-          "tent_avail": 24,
-          "queue": 0,
-          "reviewing": 0,
-          "approved": 0,
-          "total_bed_used": 0,
-          "total_tent_used": 0,
-          "note": null
-        },
         {
           "date": "2026-11-20",
           "status": "餘額",
@@ -15416,13 +14973,13 @@
           },
           {
             "date": "2026-12-02",
-            "status": "餘額",
-            "bed_avail": 2,
+            "status": "額滿",
+            "bed_avail": 0,
             "tent_avail": 0,
-            "queue": 29,
+            "queue": 30,
             "reviewing": 23,
             "approved": 111,
-            "total_bed_used": 134,
+            "total_bed_used": 136,
             "total_tent_used": 0,
             "note": null
           },
@@ -15503,7 +15060,7 @@
             "status": "餘額",
             "bed_avail": 12,
             "tent_avail": 0,
-            "queue": 4,
+            "queue": 5,
             "reviewing": 27,
             "approved": 97,
             "total_bed_used": 124,
@@ -15515,7 +15072,7 @@
             "status": "餘額",
             "bed_avail": 2,
             "tent_avail": 0,
-            "queue": 0,
+            "queue": 1,
             "reviewing": 39,
             "approved": 95,
             "total_bed_used": 134,
@@ -15536,25 +15093,25 @@
           },
           {
             "date": "2026-12-12",
-            "status": "餘額",
-            "bed_avail": 6,
+            "status": "額滿",
+            "bed_avail": 0,
             "tent_avail": 0,
-            "queue": 122,
+            "queue": 123,
             "reviewing": 69,
             "approved": 60,
-            "total_bed_used": 130,
+            "total_bed_used": 136,
             "total_tent_used": 0,
             "note": null
           },
           {
             "date": "2026-12-13",
             "status": "餘額",
-            "bed_avail": 2,
+            "bed_avail": 10,
             "tent_avail": 0,
             "queue": 72,
-            "reviewing": 121,
+            "reviewing": 113,
             "approved": 7,
-            "total_bed_used": 134,
+            "total_bed_used": 126,
             "total_tent_used": 0,
             "note": null
           },
@@ -15563,7 +15120,7 @@
             "status": "餘額",
             "bed_avail": 136,
             "tent_avail": 0,
-            "queue": 124,
+            "queue": 125,
             "reviewing": 0,
             "approved": 0,
             "total_bed_used": 0,
@@ -15575,7 +15132,7 @@
             "status": "餘額",
             "bed_avail": 136,
             "tent_avail": 0,
-            "queue": 121,
+            "queue": 124,
             "reviewing": 0,
             "approved": 0,
             "total_bed_used": 0,
@@ -15623,7 +15180,7 @@
             "status": "餘額",
             "bed_avail": 136,
             "tent_avail": 0,
-            "queue": 562,
+            "queue": 570,
             "reviewing": 0,
             "approved": 0,
             "total_bed_used": 0,
@@ -15659,7 +15216,7 @@
             "status": "餘額",
             "bed_avail": 136,
             "tent_avail": 0,
-            "queue": 21,
+            "queue": 23,
             "reviewing": 0,
             "approved": 0,
             "total_bed_used": 0,
@@ -15671,7 +15228,7 @@
             "status": "餘額",
             "bed_avail": 136,
             "tent_avail": 0,
-            "queue": 20,
+            "queue": 22,
             "reviewing": 0,
             "approved": 0,
             "total_bed_used": 0,
@@ -15683,7 +15240,7 @@
             "status": "餘額",
             "bed_avail": 136,
             "tent_avail": 0,
-            "queue": 82,
+            "queue": 84,
             "reviewing": 0,
             "approved": 0,
             "total_bed_used": 0,
@@ -15695,7 +15252,7 @@
             "status": "餘額",
             "bed_avail": 136,
             "tent_avail": 0,
-            "queue": 371,
+            "queue": 374,
             "reviewing": 0,
             "approved": 0,
             "total_bed_used": 0,
@@ -15707,7 +15264,7 @@
             "status": "餘額",
             "bed_avail": 136,
             "tent_avail": 0,
-            "queue": 289,
+            "queue": 293,
             "reviewing": 0,
             "approved": 0,
             "total_bed_used": 0,
@@ -15994,7 +15551,7 @@
             "status": "餘額",
             "bed_avail": 15,
             "tent_avail": 9,
-            "queue": 36,
+            "queue": 39,
             "reviewing": 0,
             "approved": 0,
             "total_bed_used": 0,
@@ -16006,7 +15563,7 @@
             "status": "餘額",
             "bed_avail": 15,
             "tent_avail": 9,
-            "queue": 45,
+            "queue": 48,
             "reviewing": 0,
             "approved": 0,
             "total_bed_used": 0,
@@ -16078,7 +15635,7 @@
             "status": "餘額",
             "bed_avail": 15,
             "tent_avail": 9,
-            "queue": 91,
+            "queue": 94,
             "reviewing": 0,
             "approved": 0,
             "total_bed_used": 0,
@@ -16090,7 +15647,7 @@
             "status": "餘額",
             "bed_avail": 15,
             "tent_avail": 9,
-            "queue": 67,
+            "queue": 70,
             "reviewing": 0,
             "approved": 0,
             "total_bed_used": 0,
@@ -16102,7 +15659,7 @@
             "status": "餘額",
             "bed_avail": 15,
             "tent_avail": 9,
-            "queue": 6,
+            "queue": 7,
             "reviewing": 0,
             "approved": 0,
             "total_bed_used": 0,
@@ -17213,12 +16770,12 @@
           {
             "date": "2026-12-24",
             "status": "餘額",
-            "bed_avail": 35,
+            "bed_avail": 36,
             "tent_avail": 0,
-            "queue": 9,
+            "queue": 8,
             "reviewing": 0,
             "approved": 0,
-            "total_bed_used": 7,
+            "total_bed_used": 6,
             "total_tent_used": 0,
             "note": null
           },
@@ -17895,12 +17452,12 @@
           {
             "date": "2026-12-17",
             "status": "餘額",
-            "bed_avail": 18,
+            "bed_avail": 19,
             "tent_avail": 0,
             "queue": 0,
             "reviewing": 1,
-            "approved": 1,
-            "total_bed_used": 2,
+            "approved": 0,
+            "total_bed_used": 1,
             "total_tent_used": 0,
             "note": null
           },
@@ -17909,7 +17466,7 @@
             "status": "餘額",
             "bed_avail": 18,
             "tent_avail": 0,
-            "queue": 0,
+            "queue": 1,
             "reviewing": 0,
             "approved": 2,
             "total_bed_used": 2,
@@ -17993,7 +17550,7 @@
             "status": "餘額",
             "bed_avail": 4,
             "tent_avail": 0,
-            "queue": 21,
+            "queue": 22,
             "reviewing": 0,
             "approved": 9,
             "total_bed_used": 16,
@@ -18005,7 +17562,7 @@
             "status": "餘額",
             "bed_avail": 2,
             "tent_avail": 0,
-            "queue": 16,
+            "queue": 17,
             "reviewing": 0,
             "approved": 14,
             "total_bed_used": 18,
@@ -19415,12 +18972,12 @@
           {
             "date": "2026-12-16",
             "status": "餘額",
-            "bed_avail": 19,
+            "bed_avail": 20,
             "tent_avail": 0,
             "queue": 10,
             "reviewing": 0,
-            "approved": 1,
-            "total_bed_used": 1,
+            "approved": 0,
+            "total_bed_used": 0,
             "total_tent_used": 0,
             "note": null
           },
@@ -19429,7 +18986,7 @@
             "status": "餘額",
             "bed_avail": 20,
             "tent_avail": 0,
-            "queue": 10,
+            "queue": 11,
             "reviewing": 0,
             "approved": 0,
             "total_bed_used": 0,
@@ -20169,12 +19726,12 @@
           {
             "date": "2026-12-15",
             "status": "餘額",
-            "bed_avail": 19,
+            "bed_avail": 20,
             "tent_avail": 0,
             "queue": 0,
             "reviewing": 0,
-            "approved": 1,
-            "total_bed_used": 1,
+            "approved": 0,
+            "total_bed_used": 0,
             "total_tent_used": 0,
             "note": null
           },
@@ -20183,7 +19740,7 @@
             "status": "餘額",
             "bed_avail": 17,
             "tent_avail": 0,
-            "queue": 0,
+            "queue": 1,
             "reviewing": 0,
             "approved": 3,
             "total_bed_used": 3,
@@ -20923,12 +20480,12 @@
           {
             "date": "2026-12-14",
             "status": "餘額",
-            "bed_avail": 19,
+            "bed_avail": 20,
             "tent_avail": 0,
             "queue": 0,
             "reviewing": 0,
-            "approved": 1,
-            "total_bed_used": 1,
+            "approved": 0,
+            "total_bed_used": 0,
             "total_tent_used": 0,
             "note": null
           },
@@ -20937,7 +20494,7 @@
             "status": "餘額",
             "bed_avail": 13,
             "tent_avail": 0,
-            "queue": 0,
+            "queue": 1,
             "reviewing": 0,
             "approved": 7,
             "total_bed_used": 7,
@@ -22468,12 +22025,12 @@
             "date": "2026-12-15",
             "status": "餘額",
             "bed_avail": 0,
-            "tent_avail": 16,
+            "tent_avail": 18,
             "queue": 1,
             "reviewing": 0,
-            "approved": 8,
+            "approved": 6,
             "total_bed_used": 0,
-            "total_tent_used": 8,
+            "total_tent_used": 6,
             "note": null
           },
           {
@@ -22816,7 +22373,7 @@
             "status": "餘額",
             "bed_avail": 0,
             "tent_avail": 4,
-            "queue": 0,
+            "queue": 5,
             "reviewing": 0,
             "approved": 44,
             "total_bed_used": 24,
@@ -22888,7 +22445,7 @@
             "status": "餘額",
             "bed_avail": 24,
             "tent_avail": 24,
-            "queue": 0,
+            "queue": 2,
             "reviewing": 0,
             "approved": 0,
             "total_bed_used": 0,
@@ -22912,7 +22469,7 @@
             "status": "餘額",
             "bed_avail": 24,
             "tent_avail": 24,
-            "queue": 0,
+            "queue": 2,
             "reviewing": 0,
             "approved": 0,
             "total_bed_used": 0,
@@ -23221,12 +22778,12 @@
           {
             "date": "2026-12-14",
             "status": "餘額",
-            "bed_avail": 8,
+            "bed_avail": 10,
             "tent_avail": 4,
             "queue": 1,
             "reviewing": 0,
-            "approved": 8,
-            "total_bed_used": 8,
+            "approved": 6,
+            "total_bed_used": 6,
             "total_tent_used": 0,
             "note": null
           },
@@ -25125,12 +24682,12 @@
             "date": "2026-12-13",
             "status": "餘額",
             "bed_avail": 0,
-            "tent_avail": 16,
+            "tent_avail": 18,
             "queue": 1,
             "reviewing": 0,
-            "approved": 8,
+            "approved": 6,
             "total_bed_used": 0,
-            "total_tent_used": 8,
+            "total_tent_used": 6,
             "note": null
           },
           {
@@ -25741,26 +25298,6 @@
       "name": "天池山莊/營地",
       "days": [
         {
-          "date": "2026-11-19",
-          "items": [
-            {
-              "label": "天池山莊床位",
-              "remaining": 0,
-              "applications": 12
-            },
-            {
-              "label": "天池營地帳篷4*4(建議8人)",
-              "remaining": 3,
-              "applications": 0
-            },
-            {
-              "label": "天池營地帳篷3*3(建議6人)",
-              "remaining": 20,
-              "applications": 0
-            }
-          ]
-        },
-        {
           "date": "2026-11-20",
           "items": [
             {
@@ -25925,8 +25462,8 @@
           "items": [
             {
               "label": "天池山莊床位",
-              "remaining": 0,
-              "applications": 251
+              "remaining": 2,
+              "applications": 248
             },
             {
               "label": "天池營地帳篷4*4(建議8人)",
@@ -25945,7 +25482,7 @@
           "items": [
             {
               "label": "天池山莊床位",
-              "remaining": 0,
+              "remaining": 1,
               "applications": 10
             },
             {
@@ -25985,16 +25522,6 @@
     {
       "name": "向陽山屋",
       "days": [
-        {
-          "date": "2026-11-19",
-          "items": [
-            {
-              "label": "向陽山屋床位",
-              "remaining": 49,
-              "applications": 22
-            }
-          ]
-        },
         {
           "date": "2026-11-20",
           "items": [
@@ -26110,21 +25637,6 @@
     {
       "name": "嘉明湖山屋/營地",
       "days": [
-        {
-          "date": "2026-11-19",
-          "items": [
-            {
-              "label": "嘉明湖山屋床位",
-              "remaining": 24,
-              "applications": 46
-            },
-            {
-              "label": "嘉明湖營地營地",
-              "remaining": 6,
-              "applications": 0
-            }
-          ]
-        },
         {
           "date": "2026-11-20",
           "items": [
@@ -26296,21 +25808,6 @@
       "name": "檜谷山莊/營地",
       "days": [
         {
-          "date": "2026-11-19",
-          "items": [
-            {
-              "label": "檜谷山莊",
-              "remaining": 33,
-              "applications": 26
-            },
-            {
-              "label": "檜谷山莊周圍營地四人帳篷",
-              "remaining": 7,
-              "applications": 0
-            }
-          ]
-        },
-        {
           "date": "2026-11-20",
           "items": [
             {
@@ -26421,7 +25918,7 @@
             {
               "label": "檜谷山莊",
               "remaining": 2,
-              "applications": 81
+              "applications": 83
             },
             {
               "label": "檜谷山莊周圍營地四人帳篷",
@@ -26711,7 +26208,7 @@
               {
                 "label": "天池山莊床位",
                 "remaining": 0,
-                "applications": 285
+                "applications": 284
               },
               {
                 "label": "天池營地帳篷4*4(建議8人)",
@@ -26720,7 +26217,7 @@
               },
               {
                 "label": "天池營地帳篷3*3(建議6人)",
-                "remaining": 0,
+                "remaining": 1,
                 "applications": 6
               }
             ]
@@ -26731,7 +26228,7 @@
               {
                 "label": "天池山莊床位",
                 "remaining": 0,
-                "applications": 8
+                "applications": 5
               },
               {
                 "label": "天池營地帳篷4*4(建議8人)",
@@ -26871,7 +26368,7 @@
               {
                 "label": "天池山莊床位",
                 "remaining": 88,
-                "applications": 35
+                "applications": 37
               },
               {
                 "label": "天池營地帳篷4*4(建議8人)",
@@ -26971,27 +26468,7 @@
               {
                 "label": "天池山莊床位",
                 "remaining": 88,
-                "applications": 170
-              },
-              {
-                "label": "天池營地帳篷4*4(建議8人)",
-                "remaining": 3,
-                "applications": 2
-              },
-              {
-                "label": "天池營地帳篷3*3(建議6人)",
-                "remaining": 23,
-                "applications": 9
-              }
-            ]
-          },
-          {
-            "date": "2026-12-26",
-            "items": [
-              {
-                "label": "天池山莊床位",
-                "remaining": 88,
-                "applications": 225
+                "applications": 186
               },
               {
                 "label": "天池營地帳篷4*4(建議8人)",
@@ -27002,6 +26479,26 @@
                 "label": "天池營地帳篷3*3(建議6人)",
                 "remaining": 23,
                 "applications": 8
+              }
+            ]
+          },
+          {
+            "date": "2026-12-26",
+            "items": [
+              {
+                "label": "天池山莊床位",
+                "remaining": 88,
+                "applications": 241
+              },
+              {
+                "label": "天池營地帳篷4*4(建議8人)",
+                "remaining": 3,
+                "applications": 2
+              },
+              {
+                "label": "天池營地帳篷3*3(建議6人)",
+                "remaining": 23,
+                "applications": 7
               }
             ]
           },
@@ -27101,7 +26598,7 @@
               {
                 "label": "天池營地帳篷3*3(建議6人)",
                 "remaining": 23,
-                "applications": 2
+                "applications": 3
               }
             ]
           }
@@ -27226,7 +26723,7 @@
               {
                 "label": "向陽山屋床位",
                 "remaining": 17,
-                "applications": 60
+                "applications": 65
               }
             ]
           },
@@ -27246,7 +26743,7 @@
               {
                 "label": "向陽山屋床位",
                 "remaining": 64,
-                "applications": 21
+                "applications": 23
               }
             ]
           },
@@ -27266,7 +26763,7 @@
               {
                 "label": "向陽山屋床位",
                 "remaining": 70,
-                "applications": 0
+                "applications": 2
               }
             ]
           },
@@ -27356,7 +26853,7 @@
               {
                 "label": "向陽山屋床位",
                 "remaining": 70,
-                "applications": 89
+                "applications": 93
               }
             ]
           },
@@ -27601,7 +27098,7 @@
               {
                 "label": "嘉明湖營地營地",
                 "remaining": 0,
-                "applications": 13
+                "applications": 12
               }
             ]
           },
@@ -27641,12 +27138,12 @@
               {
                 "label": "嘉明湖山屋床位",
                 "remaining": 70,
-                "applications": 17
+                "applications": 19
               },
               {
                 "label": "嘉明湖營地營地",
                 "remaining": 6,
-                "applications": 0
+                "applications": 2
               }
             ]
           },
@@ -27661,7 +27158,7 @@
               {
                 "label": "嘉明湖營地營地",
                 "remaining": 6,
-                "applications": 0
+                "applications": 2
               }
             ]
           },
@@ -27671,7 +27168,7 @@
               {
                 "label": "嘉明湖山屋床位",
                 "remaining": 70,
-                "applications": 4
+                "applications": 6
               },
               {
                 "label": "嘉明湖營地營地",
@@ -27806,7 +27303,7 @@
               {
                 "label": "嘉明湖山屋床位",
                 "remaining": 70,
-                "applications": 158
+                "applications": 162
               },
               {
                 "label": "嘉明湖營地營地",
@@ -27950,7 +27447,7 @@
               },
               {
                 "label": "檜谷山莊周圍營地四人帳篷",
-                "remaining": 2,
+                "remaining": 4,
                 "applications": 12
               }
             ]
@@ -27965,8 +27462,8 @@
               },
               {
                 "label": "檜谷山莊周圍營地四人帳篷",
-                "remaining": 0,
-                "applications": 36
+                "remaining": 1,
+                "applications": 35
               }
             ]
           },
@@ -28050,8 +27547,8 @@
             "items": [
               {
                 "label": "檜谷山莊",
-                "remaining": 0,
-                "applications": 99
+                "remaining": 2,
+                "applications": 101
               },
               {
                 "label": "檜谷山莊周圍營地四人帳篷",
@@ -28065,8 +27562,8 @@
             "items": [
               {
                 "label": "檜谷山莊",
-                "remaining": 0,
-                "applications": 236
+                "remaining": 2,
+                "applications": 238
               },
               {
                 "label": "檜谷山莊周圍營地四人帳篷",
@@ -28111,7 +27608,7 @@
               {
                 "label": "檜谷山莊",
                 "remaining": 42,
-                "applications": 55
+                "applications": 56
               },
               {
                 "label": "檜谷山莊周圍營地四人帳篷",
@@ -28141,7 +27638,7 @@
               {
                 "label": "檜谷山莊",
                 "remaining": 42,
-                "applications": 63
+                "applications": 59
               },
               {
                 "label": "檜谷山莊周圍營地四人帳篷",
@@ -28186,7 +27683,7 @@
               {
                 "label": "檜谷山莊",
                 "remaining": 26,
-                "applications": 53
+                "applications": 56
               },
               {
                 "label": "檜谷山莊周圍營地四人帳篷",
@@ -28266,7 +27763,7 @@
               {
                 "label": "檜谷山莊周圍營地四人帳篷",
                 "remaining": 7,
-                "applications": 46
+                "applications": 47
               }
             ]
           },
@@ -28281,7 +27778,7 @@
               {
                 "label": "檜谷山莊周圍營地四人帳篷",
                 "remaining": 7,
-                "applications": 41
+                "applications": 42
               }
             ]
           },
@@ -28306,7 +27803,7 @@
               {
                 "label": "檜谷山莊",
                 "remaining": 42,
-                "applications": 9
+                "applications": 11
               },
               {
                 "label": "檜谷山莊周圍營地四人帳篷",
@@ -28321,7 +27818,7 @@
               {
                 "label": "檜谷山莊",
                 "remaining": 42,
-                "applications": 4
+                "applications": 6
               },
               {
                 "label": "檜谷山莊周圍營地四人帳篷",
@@ -28368,16 +27865,6 @@
     {
       "name": "黑水塘山屋",
       "days": [
-        {
-          "date": "2026-11-14",
-          "fields": {
-            "餘額": 4,
-            "待處理": 0,
-            "已通過": 2
-          },
-          "closed": false,
-          "note": null
-        },
         {
           "date": "2026-11-15",
           "fields": {
@@ -28544,16 +28031,6 @@
       "name": "成功山屋",
       "days": [
         {
-          "date": "2026-11-14",
-          "fields": {
-            "餘額": 25,
-            "待處理": 0,
-            "已通過": 9
-          },
-          "closed": false,
-          "note": null
-        },
-        {
           "date": "2026-11-15",
           "fields": {
             "餘額": 11,
@@ -28566,9 +28043,9 @@
         {
           "date": "2026-11-16",
           "fields": {
-            "餘額": 21,
+            "餘額": 22,
             "待處理": 0,
-            "已通過": 13
+            "已通過": 12
           },
           "closed": false,
           "note": null
@@ -28586,9 +28063,9 @@
         {
           "date": "2026-11-18",
           "fields": {
-            "餘額": 26,
+            "餘額": 27,
             "待處理": 0,
-            "已通過": 8
+            "已通過": 7
           },
           "closed": false,
           "note": null
@@ -28596,9 +28073,9 @@
         {
           "date": "2026-11-19",
           "fields": {
-            "餘額": 28,
+            "餘額": 29,
             "待處理": 0,
-            "已通過": 6
+            "已通過": 5
           },
           "closed": false,
           "note": null
@@ -28616,9 +28093,9 @@
         {
           "date": "2026-11-21",
           "fields": {
-            "餘額": 18,
+            "餘額": 20,
             "待處理": 2,
-            "已通過": 14
+            "已通過": 12
           },
           "closed": false,
           "note": null
@@ -28626,9 +28103,9 @@
         {
           "date": "2026-11-22",
           "fields": {
-            "餘額": 25,
+            "餘額": 27,
             "待處理": 2,
-            "已通過": 7
+            "已通過": 5
           },
           "closed": false,
           "note": null
@@ -28718,16 +28195,6 @@
     {
       "name": "成功二號堡",
       "days": [
-        {
-          "date": "2026-11-14",
-          "fields": {
-            "餘額": 8,
-            "待處理": 0,
-            "已通過": 0
-          },
-          "closed": false,
-          "note": null
-        },
         {
           "date": "2026-11-15",
           "fields": {
@@ -28890,16 +28357,6 @@
       "name": "奇萊山屋",
       "days": [
         {
-          "date": "2026-11-14",
-          "fields": {
-            "餘額": 0,
-            "待處理": 0,
-            "已通過": 40
-          },
-          "closed": false,
-          "note": null
-        },
-        {
           "date": "2026-11-15",
           "fields": {
             "餘額": 12,
@@ -28932,9 +28389,9 @@
         {
           "date": "2026-11-18",
           "fields": {
-            "餘額": 5,
+            "餘額": 6,
             "待處理": 0,
-            "已通過": 35
+            "已通過": 34
           },
           "closed": false,
           "note": null
@@ -29065,16 +28522,6 @@
       "name": "雲稜山屋",
       "days": [
         {
-          "date": "2026-11-14",
-          "fields": {
-            "餘額": 29,
-            "待處理": 0,
-            "已通過": 36
-          },
-          "closed": false,
-          "note": null
-        },
-        {
           "date": "2026-11-15",
           "fields": {
             "餘額": 43,
@@ -29087,9 +28534,9 @@
         {
           "date": "2026-11-16",
           "fields": {
-            "餘額": 27,
+            "餘額": 29,
             "待處理": 0,
-            "已通過": 38
+            "已通過": 36
           },
           "closed": false,
           "note": null
@@ -29097,9 +28544,9 @@
         {
           "date": "2026-11-17",
           "fields": {
-            "餘額": 49,
+            "餘額": 53,
             "待處理": 0,
-            "已通過": 16
+            "已通過": 12
           },
           "closed": false,
           "note": null
@@ -29117,9 +28564,9 @@
         {
           "date": "2026-11-19",
           "fields": {
-            "餘額": 5,
+            "餘額": 7,
             "待處理": 2,
-            "已通過": 58
+            "已通過": 56
           },
           "closed": false,
           "note": null
@@ -29207,9 +28654,9 @@
         {
           "date": "2026-11-28",
           "fields": {
-            "餘額": 34,
+            "餘額": 35,
             "待處理": 0,
-            "已通過": 31
+            "已通過": 30
           },
           "closed": false,
           "note": null
@@ -29239,16 +28686,6 @@
     {
       "name": "審馬陣山屋",
       "days": [
-        {
-          "date": "2026-11-14",
-          "fields": {
-            "餘額": 7,
-            "待處理": 0,
-            "已通過": 3
-          },
-          "closed": false,
-          "note": null
-        },
         {
           "date": "2026-11-15",
           "fields": {
@@ -29415,16 +28852,6 @@
       "name": "南湖山屋",
       "days": [
         {
-          "date": "2026-11-14",
-          "fields": {
-            "餘額": 6,
-            "待處理": 0,
-            "已通過": 32
-          },
-          "closed": false,
-          "note": null
-        },
-        {
           "date": "2026-11-15",
           "fields": {
             "餘額": 0,
@@ -29447,9 +28874,9 @@
         {
           "date": "2026-11-17",
           "fields": {
-            "餘額": 1,
+            "餘額": 3,
             "待處理": 0,
-            "已通過": 37
+            "已通過": 35
           },
           "closed": false,
           "note": null
@@ -29457,9 +28884,9 @@
         {
           "date": "2026-11-18",
           "fields": {
-            "餘額": 6,
+            "餘額": 12,
             "待處理": 0,
-            "已通過": 32
+            "已通過": 26
           },
           "closed": false,
           "note": null
@@ -29467,9 +28894,9 @@
         {
           "date": "2026-11-19",
           "fields": {
-            "餘額": 0,
+            "餘額": 4,
             "待處理": 1,
-            "已通過": 37
+            "已通過": 33
           },
           "closed": false,
           "note": null
@@ -29567,9 +28994,9 @@
         {
           "date": "2026-11-29",
           "fields": {
-            "餘額": 8,
+            "餘額": 10,
             "待處理": 0,
-            "已通過": 30
+            "已通過": 28
           },
           "closed": false,
           "note": null
@@ -29577,9 +29004,9 @@
         {
           "date": "2026-11-30",
           "fields": {
-            "餘額": 13,
+            "餘額": 14,
             "待處理": 0,
-            "已通過": 25
+            "已通過": 24
           },
           "closed": false,
           "note": null
@@ -29589,16 +29016,6 @@
     {
       "name": "鋸東避難小屋",
       "days": [
-        {
-          "date": "2026-11-14",
-          "fields": {
-            "餘額": 9,
-            "待處理": 0,
-            "已通過": 5
-          },
-          "closed": false,
-          "note": null
-        },
         {
           "date": "2026-11-15",
           "fields": {
@@ -29765,12 +29182,6 @@
       "name": "屏風避難山屋",
       "days": [
         {
-          "date": "2026-11-14",
-          "fields": {},
-          "closed": true,
-          "note": "本日關閉"
-        },
-        {
           "date": "2026-11-15",
           "fields": {},
           "closed": true,
@@ -29871,16 +29282,6 @@
     {
       "name": "雲稜營地",
       "days": [
-        {
-          "date": "2026-11-14",
-          "fields": {
-            "餘額": 14,
-            "待處理": 0,
-            "已通過": 0
-          },
-          "closed": false,
-          "note": null
-        },
         {
           "date": "2026-11-15",
           "fields": {
@@ -30047,16 +29448,6 @@
       "name": "南湖營地",
       "days": [
         {
-          "date": "2026-11-14",
-          "fields": {
-            "餘額": 2,
-            "待處理": 0,
-            "已通過": 12
-          },
-          "closed": false,
-          "note": null
-        },
-        {
           "date": "2026-11-15",
           "fields": {
             "餘額": 12,
@@ -30221,16 +29612,6 @@
     {
       "name": "磐石中峰避難小屋",
       "days": [
-        {
-          "date": "2026-11-14",
-          "fields": {
-            "餘額": 12,
-            "待處理": 0,
-            "已通過": 0
-          },
-          "closed": false,
-          "note": null
-        },
         {
           "date": "2026-11-15",
           "fields": {
@@ -30397,16 +29778,6 @@
       "name": "三叉營地避難小屋",
       "days": [
         {
-          "date": "2026-11-14",
-          "fields": {
-            "餘額": 0,
-            "待處理": 0,
-            "已通過": 12
-          },
-          "closed": false,
-          "note": null
-        },
-        {
           "date": "2026-11-15",
           "fields": {
             "餘額": 12,
@@ -30571,16 +29942,6 @@
     {
       "name": "大理石營地避難小屋",
       "days": [
-        {
-          "date": "2026-11-14",
-          "fields": {
-            "餘額": 10,
-            "待處理": 0,
-            "已通過": 2
-          },
-          "closed": false,
-          "note": null
-        },
         {
           "date": "2026-11-15",
           "fields": {
@@ -31099,8 +30460,8 @@
           {
             "date": "2026-12-04",
             "fields": {
-              "餘額": 6,
-              "待處理": 1,
+              "餘額": 4,
+              "待處理": 3,
               "已通過": 27
             },
             "closed": false,
@@ -31109,8 +30470,8 @@
           {
             "date": "2026-12-05",
             "fields": {
-              "餘額": 15,
-              "待處理": 0,
+              "餘額": 13,
+              "待處理": 2,
               "已通過": 19
             },
             "closed": false,
@@ -31219,8 +30580,8 @@
           {
             "date": "2026-12-16",
             "fields": {
-              "餘額": 11,
-              "待處理": 23,
+              "餘額": 10,
+              "待處理": 24,
               "已通過": 0
             },
             "closed": false,
@@ -31720,8 +31081,8 @@
             "date": "2026-12-03",
             "fields": {
               "餘額": 0,
-              "待處理": 1,
-              "已通過": 39
+              "待處理": 2,
+              "已通過": 38
             },
             "closed": false,
             "note": null
@@ -32254,8 +31615,8 @@
           {
             "date": "2026-12-25",
             "fields": {
-              "餘額": 38,
-              "待處理": 27,
+              "餘額": 37,
+              "待處理": 28,
               "已通過": 0
             },
             "closed": false,
@@ -32264,8 +31625,8 @@
           {
             "date": "2026-12-26",
             "fields": {
-              "餘額": 15,
-              "待處理": 50,
+              "餘額": 14,
+              "待處理": 51,
               "已通過": 0
             },
             "closed": false,
@@ -32644,9 +32005,9 @@
           {
             "date": "2026-12-01",
             "fields": {
-              "餘額": 14,
+              "餘額": 15,
               "待處理": 0,
-              "已通過": 24
+              "已通過": 23
             },
             "closed": false,
             "note": null
@@ -33009,8 +32370,8 @@
           {
             "date": "2026-12-06",
             "fields": {
-              "餘額": 8,
-              "待處理": 0,
+              "餘額": 6,
+              "待處理": 2,
               "已通過": 6
             },
             "closed": false,
@@ -33304,9 +32665,9 @@
           {
             "date": "2026-12-04",
             "fields": {
-              "餘額": 0,
-              "待處理": 19,
-              "已通過": 9
+              "餘額": 3,
+              "待處理": 18,
+              "已通過": 7
             },
             "closed": false,
             "note": null
@@ -33394,8 +32755,8 @@
           {
             "date": "2026-12-13",
             "fields": {
-              "餘額": 19,
-              "待處理": 9,
+              "餘額": 16,
+              "待處理": 12,
               "已通過": 0
             },
             "closed": false,
@@ -35165,19 +34526,6 @@
       "name": "三六九臨時營地",
       "days": [
         {
-          "date": "2026-11-19",
-          "fields": {
-            "餘額": 5,
-            "待處理": 0,
-            "補件": 0,
-            "已通過": 19,
-            "待系統排定": 0,
-            "宿營地不足候補": 30
-          },
-          "closed": false,
-          "note": null
-        },
-        {
           "date": "2026-11-20",
           "fields": {
             "餘額": 1,
@@ -35185,7 +34533,7 @@
             "補件": 0,
             "已通過": 23,
             "待系統排定": 0,
-            "宿營地不足候補": 31
+            "宿營地不足候補": 7
           },
           "closed": false,
           "note": null
@@ -35193,11 +34541,11 @@
         {
           "date": "2026-11-21",
           "fields": {
-            "餘額": 2,
-            "待處理": 0,
+            "餘額": 0,
+            "待處理": 2,
             "補件": 0,
             "已通過": 22,
-            "待系統排定": 2,
+            "待系統排定": 0,
             "宿營地不足候補": 56
           },
           "closed": false,
@@ -35206,12 +34554,12 @@
         {
           "date": "2026-11-22",
           "fields": {
-            "餘額": 4,
-            "待處理": 1,
+            "餘額": 2,
+            "待處理": 3,
             "補件": 0,
             "已通過": 19,
             "待系統排定": 0,
-            "宿營地不足候補": 29
+            "宿營地不足候補": 27
           },
           "closed": false,
           "note": null
@@ -35326,28 +34674,14 @@
       "name": "七卡山莊",
       "days": [
         {
-          "date": "2026-11-19",
-          "fields": {
-            "餘額": 95,
-            "待處理": 0,
-            "補件": 0,
-            "已通過": 11,
-            "待系統排定": 0,
-            "宿營地不足候補": 0,
-            "外籍提前(": 0
-          },
-          "closed": false,
-          "note": null
-        },
-        {
           "date": "2026-11-20",
           "fields": {
-            "餘額": 52,
-            "待處理": 0,
+            "餘額": 50,
+            "待處理": 2,
             "補件": 0,
             "已通過": 54,
             "待系統排定": 0,
-            "宿營地不足候補": 3
+            "宿營地不足候補": 1
           },
           "closed": false,
           "note": null
@@ -35355,8 +34689,8 @@
         {
           "date": "2026-11-21",
           "fields": {
-            "餘額": 3,
-            "待處理": 0,
+            "餘額": 1,
+            "待處理": 2,
             "補件": 1,
             "已通過": 102,
             "待系統排定": 0,
@@ -35482,8 +34816,8 @@
             "待處理": 0,
             "補件": 0,
             "已通過": 7,
-            "待系統排定": 2,
-            "宿營地不足候補": 0,
+            "待系統排定": 0,
+            "宿營地不足候補": 2,
             "外籍提前(": 0
           },
           "closed": false,
@@ -35494,19 +34828,6 @@
     {
       "name": "七卡營地",
       "days": [
-        {
-          "date": "2026-11-19",
-          "fields": {
-            "餘額": 30,
-            "待處理": 0,
-            "補件": 0,
-            "已通過": 0,
-            "待系統排定": 0,
-            "宿營地不足候補": 0
-          },
-          "closed": false,
-          "note": null
-        },
         {
           "date": "2026-11-20",
           "fields": {
@@ -35656,12 +34977,6 @@
       "name": "三六九山莊",
       "days": [
         {
-          "date": "2026-11-19",
-          "fields": {},
-          "closed": true,
-          "note": "本日關閉"
-        },
-        {
           "date": "2026-11-20",
           "fields": {},
           "closed": true,
@@ -35733,19 +35048,6 @@
       "name": "翠池山屋",
       "days": [
         {
-          "date": "2026-11-19",
-          "fields": {
-            "餘額": 7,
-            "待處理": 0,
-            "補件": 0,
-            "已通過": 5,
-            "待系統排定": 0,
-            "宿營地不足候補": 0
-          },
-          "closed": false,
-          "note": null
-        },
-        {
           "date": "2026-11-20",
           "fields": {
             "餘額": 2,
@@ -35766,7 +35068,7 @@
             "補件": 0,
             "已通過": 12,
             "待系統排定": 0,
-            "宿營地不足候補": 11
+            "宿營地不足候補": 5
           },
           "closed": false,
           "note": null
@@ -35894,25 +35196,12 @@
       "name": "翠池營地",
       "days": [
         {
-          "date": "2026-11-19",
-          "fields": {
-            "餘額": 20,
-            "待處理": 0,
-            "補件": 0,
-            "已通過": 0,
-            "待系統排定": 0,
-            "宿營地不足候補": 0
-          },
-          "closed": false,
-          "note": null
-        },
-        {
           "date": "2026-11-20",
           "fields": {
-            "餘額": 15,
+            "餘額": 17,
             "待處理": 0,
             "補件": 0,
-            "已通過": 5,
+            "已通過": 3,
             "待系統排定": 0,
             "宿營地不足候補": 0
           },
@@ -36055,19 +35344,6 @@
       "name": "桃山山莊",
       "days": [
         {
-          "date": "2026-11-19",
-          "fields": {
-            "餘額": 0,
-            "待處理": 0,
-            "補件": 0,
-            "已通過": 19,
-            "待系統排定": 0,
-            "宿營地不足候補": 2
-          },
-          "closed": false,
-          "note": null
-        },
-        {
           "date": "2026-11-20",
           "fields": {
             "餘額": 0,
@@ -36122,8 +35398,8 @@
         {
           "date": "2026-11-24",
           "fields": {
-            "餘額": 9,
-            "待處理": 3,
+            "餘額": 6,
+            "待處理": 6,
             "補件": 0,
             "已通過": 7,
             "待系統排定": 0,
@@ -36215,19 +35491,6 @@
     {
       "name": "桃山營地",
       "days": [
-        {
-          "date": "2026-11-19",
-          "fields": {
-            "餘額": 6,
-            "待處理": 0,
-            "補件": 0,
-            "已通過": 2,
-            "待系統排定": 0,
-            "宿營地不足候補": 0
-          },
-          "closed": false,
-          "note": null
-        },
         {
           "date": "2026-11-20",
           "fields": {
@@ -36377,19 +35640,6 @@
       "name": "新達山屋",
       "days": [
         {
-          "date": "2026-11-19",
-          "fields": {
-            "餘額": 27,
-            "待處理": 0,
-            "補件": 0,
-            "已通過": 7,
-            "待系統排定": 0,
-            "宿營地不足候補": 0
-          },
-          "closed": false,
-          "note": null
-        },
-        {
           "date": "2026-11-20",
           "fields": {
             "餘額": 13,
@@ -36397,7 +35647,7 @@
             "補件": 0,
             "已通過": 21,
             "待系統排定": 0,
-            "宿營地不足候補": 4
+            "宿營地不足候補": 2
           },
           "closed": false,
           "note": null
@@ -36431,8 +35681,8 @@
         {
           "date": "2026-11-23",
           "fields": {
-            "餘額": 27,
-            "待處理": 3,
+            "餘額": 26,
+            "待處理": 4,
             "補件": 0,
             "已通過": 4,
             "待系統排定": 0,
@@ -36457,8 +35707,8 @@
         {
           "date": "2026-11-25",
           "fields": {
-            "餘額": 25,
-            "待處理": 0,
+            "餘額": 24,
+            "待處理": 1,
             "補件": 0,
             "已通過": 9,
             "待系統排定": 0,
@@ -36538,19 +35788,6 @@
       "name": "新達營地",
       "days": [
         {
-          "date": "2026-11-19",
-          "fields": {
-            "餘額": 20,
-            "待處理": 0,
-            "補件": 0,
-            "已通過": 0,
-            "待系統排定": 0,
-            "宿營地不足候補": 0
-          },
-          "closed": false,
-          "note": null
-        },
-        {
           "date": "2026-11-20",
           "fields": {
             "餘額": 9,
@@ -36570,8 +35807,8 @@
             "待處理": 3,
             "補件": 0,
             "已通過": 17,
-            "待系統排定": 1,
-            "宿營地不足候補": 4
+            "待系統排定": 0,
+            "宿營地不足候補": 5
           },
           "closed": false,
           "note": null
@@ -36698,19 +35935,6 @@
     {
       "name": "馬達拉溪登山口宿營地",
       "days": [
-        {
-          "date": "2026-11-19",
-          "fields": {
-            "餘額": 12,
-            "待處理": 0,
-            "補件": 0,
-            "已通過": 18,
-            "待系統排定": 0,
-            "宿營地不足候補": 0
-          },
-          "closed": false,
-          "note": null
-        },
         {
           "date": "2026-11-20",
           "fields": {
@@ -36860,20 +36084,6 @@
       "name": "九九山莊",
       "days": [
         {
-          "date": "2026-11-19",
-          "fields": {
-            "餘額": 23,
-            "待處理": 2,
-            "補件": 0,
-            "已通過": 45,
-            "待系統排定": 0,
-            "宿營地不足候補": 0,
-            "外籍提前(": 0
-          },
-          "closed": false,
-          "note": null
-        },
-        {
           "date": "2026-11-20",
           "fields": {
             "餘額": 4,
@@ -36903,9 +36113,9 @@
           "date": "2026-11-22",
           "fields": {
             "餘額": 8,
-            "待處理": 4,
+            "待處理": 2,
             "補件": 0,
-            "已通過": 58,
+            "已通過": 60,
             "待系統排定": 0,
             "宿營地不足候補": 22,
             "外籍提前(": 0
@@ -36917,9 +36127,9 @@
           "date": "2026-11-23",
           "fields": {
             "餘額": 14,
-            "待處理": 4,
+            "待處理": 2,
             "補件": 0,
-            "已通過": 52,
+            "已通過": 54,
             "待系統排定": 0,
             "宿營地不足候補": 0,
             "外籍提前(": 0
@@ -37028,19 +36238,6 @@
     {
       "name": "中霸山屋",
       "days": [
-        {
-          "date": "2026-11-19",
-          "fields": {
-            "餘額": 11,
-            "待處理": 1,
-            "補件": 0,
-            "已通過": 0,
-            "待系統排定": 0,
-            "宿營地不足候補": 0
-          },
-          "closed": false,
-          "note": null
-        },
         {
           "date": "2026-11-20",
           "fields": {
@@ -37190,19 +36387,6 @@
       "name": "賽良久營地",
       "days": [
         {
-          "date": "2026-11-19",
-          "fields": {
-            "餘額": 12,
-            "待處理": 0,
-            "補件": 0,
-            "已通過": 0,
-            "待系統排定": 0,
-            "宿營地不足候補": 0
-          },
-          "closed": false,
-          "note": null
-        },
-        {
           "date": "2026-11-20",
           "fields": {
             "餘額": 12,
@@ -37351,19 +36535,6 @@
       "name": "瓢簞山屋",
       "days": [
         {
-          "date": "2026-11-19",
-          "fields": {
-            "餘額": 9,
-            "待處理": 0,
-            "補件": 0,
-            "已通過": 6,
-            "待系統排定": 0,
-            "宿營地不足候補": 0
-          },
-          "closed": false,
-          "note": null
-        },
-        {
           "date": "2026-11-20",
           "fields": {
             "餘額": 0,
@@ -37457,8 +36628,8 @@
         {
           "date": "2026-11-27",
           "fields": {
-            "餘額": 11,
-            "待處理": 0,
+            "餘額": 9,
+            "待處理": 2,
             "補件": 0,
             "已通過": 4,
             "待系統排定": 0,
@@ -37511,19 +36682,6 @@
     {
       "name": "瓢簞營地",
       "days": [
-        {
-          "date": "2026-11-19",
-          "fields": {
-            "餘額": 13,
-            "待處理": 0,
-            "補件": 0,
-            "已通過": 0,
-            "待系統排定": 0,
-            "宿營地不足候補": 0
-          },
-          "closed": false,
-          "note": null
-        },
         {
           "date": "2026-11-20",
           "fields": {
@@ -37673,19 +36831,6 @@
       "name": "雪山山莊舊址營地",
       "days": [
         {
-          "date": "2026-11-19",
-          "fields": {
-            "餘額": 18,
-            "待處理": 0,
-            "補件": 0,
-            "已通過": 0,
-            "待系統排定": 0,
-            "宿營地不足候補": 0
-          },
-          "closed": false,
-          "note": null
-        },
-        {
           "date": "2026-11-20",
           "fields": {
             "餘額": 18,
@@ -37834,19 +36979,6 @@
       "name": "油婆蘭山屋",
       "days": [
         {
-          "date": "2026-11-19",
-          "fields": {
-            "餘額": 0,
-            "待處理": 0,
-            "補件": 0,
-            "已通過": 15,
-            "待系統排定": 0,
-            "宿營地不足候補": 1
-          },
-          "closed": false,
-          "note": null
-        },
-        {
           "date": "2026-11-20",
           "fields": {
             "餘額": 0,
@@ -37854,7 +36986,7 @@
             "補件": 0,
             "已通過": 15,
             "待系統排定": 0,
-            "宿營地不足候補": 12
+            "宿營地不足候補": 11
           },
           "closed": false,
           "note": null
@@ -37867,7 +36999,7 @@
             "補件": 0,
             "已通過": 15,
             "待系統排定": 0,
-            "宿營地不足候補": 26
+            "宿營地不足候補": 25
           },
           "closed": false,
           "note": null
@@ -37914,11 +37046,11 @@
         {
           "date": "2026-11-25",
           "fields": {
-            "餘額": 4,
-            "待處理": 0,
+            "餘額": 2,
+            "待處理": 2,
             "補件": 0,
             "已通過": 11,
-            "待系統排定": 2,
+            "待系統排定": 0,
             "宿營地不足候補": 1
           },
           "closed": false,
@@ -37927,11 +37059,11 @@
         {
           "date": "2026-11-26",
           "fields": {
-            "餘額": 2,
-            "待處理": 0,
+            "餘額": 0,
+            "待處理": 2,
             "補件": 0,
             "已通過": 13,
-            "待系統排定": 2,
+            "待系統排定": 0,
             "宿營地不足候補": 6
           },
           "closed": false,
@@ -37940,11 +37072,11 @@
         {
           "date": "2026-11-27",
           "fields": {
-            "餘額": 1,
-            "待處理": 0,
+            "餘額": 0,
+            "待處理": 1,
             "補件": 0,
             "已通過": 14,
-            "待系統排定": 1,
+            "待系統排定": 0,
             "宿營地不足候補": 6
           },
           "closed": false,
@@ -37953,11 +37085,11 @@
         {
           "date": "2026-11-28",
           "fields": {
-            "餘額": 1,
-            "待處理": 0,
+            "餘額": 0,
+            "待處理": 1,
             "補件": 0,
             "已通過": 14,
-            "待系統排定": 1,
+            "待系統排定": 0,
             "宿營地不足候補": 6
           },
           "closed": false,
@@ -37995,19 +37127,6 @@
       "name": "油婆蘭營地",
       "days": [
         {
-          "date": "2026-11-19",
-          "fields": {
-            "餘額": 23,
-            "待處理": 0,
-            "補件": 0,
-            "已通過": 2,
-            "待系統排定": 0,
-            "宿營地不足候補": 1
-          },
-          "closed": false,
-          "note": null
-        },
-        {
           "date": "2026-11-20",
           "fields": {
             "餘額": 0,
@@ -38015,7 +37134,7 @@
             "補件": 0,
             "已通過": 25,
             "待系統排定": 0,
-            "宿營地不足候補": 1
+            "宿營地不足候補": 0
           },
           "closed": false,
           "note": null
@@ -38028,7 +37147,7 @@
             "補件": 0,
             "已通過": 25,
             "待系統排定": 0,
-            "宿營地不足候補": 9
+            "宿營地不足候補": 8
           },
           "closed": false,
           "note": null
@@ -38049,11 +37168,11 @@
         {
           "date": "2026-11-23",
           "fields": {
-            "餘額": 13,
-            "待處理": 0,
+            "餘額": 11,
+            "待處理": 2,
             "補件": 4,
             "已通過": 8,
-            "待系統排定": 2,
+            "待系統排定": 0,
             "宿營地不足候補": 0
           },
           "closed": false,
@@ -38062,11 +37181,11 @@
         {
           "date": "2026-11-24",
           "fields": {
-            "餘額": 25,
-            "待處理": 0,
+            "餘額": 23,
+            "待處理": 2,
             "補件": 0,
             "已通過": 0,
-            "待系統排定": 2,
+            "待系統排定": 0,
             "宿營地不足候補": 0
           },
           "closed": false,
@@ -38155,19 +37274,6 @@
     {
       "name": "完美谷營地",
       "days": [
-        {
-          "date": "2026-11-19",
-          "fields": {
-            "餘額": 18,
-            "待處理": 0,
-            "補件": 0,
-            "已通過": 0,
-            "待系統排定": 0,
-            "宿營地不足候補": 0
-          },
-          "closed": false,
-          "note": null
-        },
         {
           "date": "2026-11-20",
           "fields": {
@@ -38317,19 +37423,6 @@
       "name": "17K營地",
       "days": [
         {
-          "date": "2026-11-19",
-          "fields": {
-            "餘額": 24,
-            "待處理": 0,
-            "補件": 0,
-            "已通過": 0,
-            "待系統排定": 0,
-            "宿營地不足候補": 0
-          },
-          "closed": false,
-          "note": null
-        },
-        {
           "date": "2026-11-20",
           "fields": {
             "餘額": 11,
@@ -38477,19 +37570,6 @@
     {
       "name": "26K營地",
       "days": [
-        {
-          "date": "2026-11-19",
-          "fields": {
-            "餘額": 22,
-            "待處理": 0,
-            "補件": 0,
-            "已通過": 2,
-            "待系統排定": 0,
-            "宿營地不足候補": 0
-          },
-          "closed": false,
-          "note": null
-        },
         {
           "date": "2026-11-20",
           "fields": {
@@ -38639,19 +37719,6 @@
       "name": "28K營地",
       "days": [
         {
-          "date": "2026-11-19",
-          "fields": {
-            "餘額": 23,
-            "待處理": 0,
-            "補件": 0,
-            "已通過": 1,
-            "待系統排定": 0,
-            "宿營地不足候補": 0
-          },
-          "closed": false,
-          "note": null
-        },
-        {
           "date": "2026-11-20",
           "fields": {
             "餘額": 21,
@@ -38799,19 +37866,6 @@
     {
       "name": "匹匹達山東鞍營地",
       "days": [
-        {
-          "date": "2026-11-19",
-          "fields": {
-            "餘額": 23,
-            "待處理": 0,
-            "補件": 0,
-            "已通過": 1,
-            "待系統排定": 0,
-            "宿營地不足候補": 0
-          },
-          "closed": false,
-          "note": null
-        },
         {
           "date": "2026-11-20",
           "fields": {
@@ -38961,19 +38015,6 @@
       "name": "奇峻山營地",
       "days": [
         {
-          "date": "2026-11-19",
-          "fields": {
-            "餘額": 24,
-            "待處理": 0,
-            "補件": 0,
-            "已通過": 0,
-            "待系統排定": 0,
-            "宿營地不足候補": 0
-          },
-          "closed": false,
-          "note": null
-        },
-        {
           "date": "2026-11-20",
           "fields": {
             "餘額": 24,
@@ -39121,19 +38162,6 @@
     {
       "name": "弓水營地",
       "days": [
-        {
-          "date": "2026-11-19",
-          "fields": {
-            "餘額": 6,
-            "待處理": 0,
-            "補件": 0,
-            "已通過": 2,
-            "待系統排定": 0,
-            "宿營地不足候補": 0
-          },
-          "closed": false,
-          "note": null
-        },
         {
           "date": "2026-11-20",
           "fields": {
@@ -39283,19 +38311,6 @@
       "name": "大南山西鞍營地",
       "days": [
         {
-          "date": "2026-11-19",
-          "fields": {
-            "餘額": 24,
-            "待處理": 0,
-            "補件": 0,
-            "已通過": 0,
-            "待系統排定": 0,
-            "宿營地不足候補": 0
-          },
-          "closed": false,
-          "note": null
-        },
-        {
           "date": "2026-11-20",
           "fields": {
             "餘額": 24,
@@ -39443,19 +38458,6 @@
     {
       "name": "火石山下營地",
       "days": [
-        {
-          "date": "2026-11-19",
-          "fields": {
-            "餘額": 12,
-            "待處理": 0,
-            "補件": 0,
-            "已通過": 0,
-            "待系統排定": 0,
-            "宿營地不足候補": 0
-          },
-          "closed": false,
-          "note": null
-        },
         {
           "date": "2026-11-20",
           "fields": {
@@ -39605,19 +38607,6 @@
       "name": "雪北山屋",
       "days": [
         {
-          "date": "2026-11-19",
-          "fields": {
-            "餘額": 23,
-            "待處理": 0,
-            "補件": 0,
-            "已通過": 2,
-            "待系統排定": 0,
-            "宿營地不足候補": 0
-          },
-          "closed": false,
-          "note": null
-        },
-        {
           "date": "2026-11-20",
           "fields": {
             "餘額": 8,
@@ -39625,7 +38614,7 @@
             "補件": 0,
             "已通過": 17,
             "待系統排定": 0,
-            "宿營地不足候補": 6
+            "宿營地不足候補": 0
           },
           "closed": false,
           "note": null
@@ -39672,11 +38661,11 @@
         {
           "date": "2026-11-24",
           "fields": {
-            "餘額": 23,
-            "待處理": 0,
+            "餘額": 22,
+            "待處理": 1,
             "補件": 0,
             "已通過": 2,
-            "待系統排定": 1,
+            "待系統排定": 0,
             "宿營地不足候補": 0
           },
           "closed": false,
@@ -39765,19 +38754,6 @@
     {
       "name": "素密達山屋",
       "days": [
-        {
-          "date": "2026-11-19",
-          "fields": {
-            "餘額": 10,
-            "待處理": 0,
-            "補件": 0,
-            "已通過": 14,
-            "待系統排定": 0,
-            "宿營地不足候補": 0
-          },
-          "closed": false,
-          "note": null
-        },
         {
           "date": "2026-11-20",
           "fields": {
@@ -39927,19 +38903,6 @@
       "name": "霸南山屋",
       "days": [
         {
-          "date": "2026-11-19",
-          "fields": {
-            "餘額": 15,
-            "待處理": 0,
-            "補件": 0,
-            "已通過": 0,
-            "待系統排定": 0,
-            "宿營地不足候補": 0
-          },
-          "closed": false,
-          "note": null
-        },
-        {
           "date": "2026-11-20",
           "fields": {
             "餘額": 6,
@@ -39994,8 +38957,8 @@
         {
           "date": "2026-11-24",
           "fields": {
-            "餘額": 15,
-            "待處理": 0,
+            "餘額": 14,
+            "待處理": 1,
             "補件": 0,
             "已通過": 0,
             "待系統排定": 0,
@@ -40087,19 +39050,6 @@
     {
       "name": "馬洋山前營地",
       "days": [
-        {
-          "date": "2026-11-19",
-          "fields": {
-            "餘額": 30,
-            "待處理": 0,
-            "補件": 0,
-            "已通過": 0,
-            "待系統排定": 0,
-            "宿營地不足候補": 0
-          },
-          "closed": false,
-          "note": null
-        },
         {
           "date": "2026-11-20",
           "fields": {
@@ -40249,19 +39199,6 @@
       "name": "馬洋池營地",
       "days": [
         {
-          "date": "2026-11-19",
-          "fields": {
-            "餘額": 30,
-            "待處理": 0,
-            "補件": 0,
-            "已通過": 0,
-            "待系統排定": 0,
-            "宿營地不足候補": 0
-          },
-          "closed": false,
-          "note": null
-        },
-        {
           "date": "2026-11-20",
           "fields": {
             "餘額": 30,
@@ -40409,19 +39346,6 @@
     {
       "name": "雪山圈谷營地",
       "days": [
-        {
-          "date": "2026-11-19",
-          "fields": {
-            "餘額": 30,
-            "待處理": 0,
-            "補件": 0,
-            "已通過": 0,
-            "待系統排定": 0,
-            "宿營地不足候補": 0
-          },
-          "closed": false,
-          "note": null
-        },
         {
           "date": "2026-11-20",
           "fields": {
@@ -40582,8 +39506,8 @@
               "待處理": 0,
               "補件": 0,
               "已通過": 24,
-              "待系統排定": 2,
-              "宿營地不足候補": 3
+              "待系統排定": 0,
+              "宿營地不足候補": 5
             },
             "closed": false,
             "note": null
@@ -40708,10 +39632,10 @@
           {
             "date": "2026-12-11",
             "fields": {
-              "餘額": 0,
+              "餘額": 3,
               "待處理": 0,
               "補件": 0,
-              "已通過": 24,
+              "已通過": 21,
               "待系統排定": 0,
               "宿營地不足候補": 0
             },
@@ -40722,11 +39646,11 @@
             "date": "2026-12-12",
             "fields": {
               "餘額": 0,
-              "待處理": 0,
+              "待處理": 3,
               "補件": 0,
-              "已通過": 24,
+              "已通過": 21,
               "待系統排定": 0,
-              "宿營地不足候補": 38
+              "宿營地不足候補": 35
             },
             "closed": false,
             "note": null
@@ -40747,8 +39671,8 @@
           {
             "date": "2026-12-14",
             "fields": {
-              "餘額": 7,
-              "待處理": 0,
+              "餘額": 5,
+              "待處理": 2,
               "補件": 0,
               "已通過": 17,
               "待系統排定": 0,
@@ -40838,11 +39762,11 @@
           {
             "date": "2026-12-21",
             "fields": {
-              "餘額": 22,
-              "待處理": 0,
+              "餘額": 16,
+              "待處理": 6,
               "補件": 0,
               "已通過": 2,
-              "待系統排定": 6,
+              "待系統排定": 0,
               "宿營地不足候補": 0
             },
             "closed": false,
@@ -41018,8 +39942,8 @@
               "待處理": 0,
               "補件": 0,
               "已通過": 27,
-              "待系統排定": 2,
-              "宿營地不足候補": 0,
+              "待系統排定": 0,
+              "宿營地不足候補": 2,
               "外籍提前(": 0
             },
             "closed": false,
@@ -41233,11 +40157,11 @@
           {
             "date": "2026-12-19",
             "fields": {
-              "餘額": 62,
-              "待處理": 0,
+              "餘額": 50,
+              "待處理": 12,
               "補件": 0,
               "已通過": 44,
-              "待系統排定": 12,
+              "待系統排定": 0,
               "宿營地不足候補": 0
             },
             "closed": false,
@@ -41246,11 +40170,11 @@
           {
             "date": "2026-12-20",
             "fields": {
-              "餘額": 104,
-              "待處理": 0,
+              "餘額": 98,
+              "待處理": 6,
               "補件": 0,
               "已通過": 2,
-              "待系統排定": 6,
+              "待系統排定": 0,
               "宿營地不足候補": 3,
               "外籍提前(": 0
             },
@@ -41302,11 +40226,11 @@
           {
             "date": "2026-12-24",
             "fields": {
-              "餘額": 58,
-              "待處理": 1,
+              "餘額": 57,
+              "待處理": 2,
               "補件": 0,
               "已通過": 47,
-              "待系統排定": 1,
+              "待系統排定": 0,
               "宿營地不足候補": 11,
               "外籍提前(": 0
             },
@@ -42910,11 +41834,11 @@
           {
             "date": "2026-12-07",
             "fields": {
-              "餘額": 11,
-              "待處理": 0,
+              "餘額": 9,
+              "待處理": 2,
               "補件": 0,
               "已通過": 8,
-              "待系統排定": 2,
+              "待系統排定": 0,
               "宿營地不足候補": 1
             },
             "closed": false,
@@ -43648,11 +42572,11 @@
           {
             "date": "2026-12-01",
             "fields": {
-              "餘額": 31,
-              "待處理": 0,
+              "餘額": 29,
+              "待處理": 2,
               "補件": 0,
               "已通過": 3,
-              "待系統排定": 2,
+              "待系統排定": 0,
               "宿營地不足候補": 0
             },
             "closed": false,
@@ -44607,11 +43531,11 @@
           {
             "date": "2026-12-12",
             "fields": {
-              "餘額": 28,
-              "待處理": 0,
+              "餘額": 25,
+              "待處理": 3,
               "補件": 0,
               "已通過": 2,
-              "待系統排定": 3,
+              "待系統排定": 0,
               "宿營地不足候補": 0
             },
             "closed": false,
@@ -45036,11 +43960,11 @@
           {
             "date": "2026-12-13",
             "fields": {
-              "餘額": 16,
+              "餘額": 11,
               "待處理": 11,
               "補件": 0,
-              "已通過": 43,
-              "待系統排定": 5,
+              "已通過": 48,
+              "待系統排定": 0,
               "宿營地不足候補": 8,
               "外籍提前(": 0
             },
@@ -45050,11 +43974,11 @@
           {
             "date": "2026-12-14",
             "fields": {
-              "餘額": 48,
+              "餘額": 43,
               "待處理": 7,
               "補件": 0,
-              "已通過": 15,
-              "待系統排定": 5,
+              "已通過": 20,
+              "待系統排定": 0,
               "宿營地不足候補": 0,
               "外籍提前(": 0
             },
@@ -45078,8 +44002,8 @@
           {
             "date": "2026-12-16",
             "fields": {
-              "餘額": 61,
-              "待處理": 5,
+              "餘額": 62,
+              "待處理": 4,
               "補件": 0,
               "已通過": 4,
               "待系統排定": 0,
@@ -45092,8 +44016,8 @@
           {
             "date": "2026-12-17",
             "fields": {
-              "餘額": 54,
-              "待處理": 5,
+              "餘額": 55,
+              "待處理": 4,
               "補件": 0,
               "已通過": 11,
               "待系統排定": 0,
@@ -45192,8 +44116,8 @@
               "待處理": 0,
               "補件": 0,
               "已通過": 14,
-              "待系統排定": 2,
-              "宿營地不足候補": 0,
+              "待系統排定": 0,
+              "宿營地不足候補": 2,
               "外籍提前(": 0
             },
             "closed": false,
@@ -45206,8 +44130,8 @@
               "待處理": 2,
               "補件": 0,
               "已通過": 68,
-              "待系統排定": 2,
-              "宿營地不足候補": 105
+              "待系統排定": 0,
+              "宿營地不足候補": 107
             },
             "closed": false,
             "note": null
@@ -47525,11 +46449,11 @@
           {
             "date": "2026-12-15",
             "fields": {
-              "餘額": 5,
-              "待處理": 0,
+              "餘額": 3,
+              "待處理": 2,
               "補件": 0,
               "已通過": 10,
-              "待系統排定": 2,
+              "待系統排定": 0,
               "宿營地不足候補": 0
             },
             "closed": false,
@@ -47538,11 +46462,11 @@
           {
             "date": "2026-12-16",
             "fields": {
-              "餘額": 8,
-              "待處理": 0,
+              "餘額": 6,
+              "待處理": 2,
               "補件": 0,
               "已通過": 7,
-              "待系統排定": 2,
+              "待系統排定": 0,
               "宿營地不足候補": 0
             },
             "closed": false,
@@ -47990,7 +46914,7 @@
               "補件": 0,
               "已通過": 25,
               "待系統排定": 0,
-              "宿營地不足候補": 0
+              "宿營地不足候補": 3
             },
             "closed": false,
             "note": null
@@ -48003,7 +46927,7 @@
               "補件": 0,
               "已通過": 6,
               "待系統排定": 0,
-              "宿營地不足候補": 0
+              "宿營地不足候補": 3
             },
             "closed": false,
             "note": null
@@ -48879,11 +47803,11 @@
           {
             "date": "2026-12-25",
             "fields": {
-              "餘額": 19,
-              "待處理": 0,
+              "餘額": 14,
+              "待處理": 5,
               "補件": 0,
               "已通過": 5,
-              "待系統排定": 5,
+              "待系統排定": 0,
               "宿營地不足候補": 0
             },
             "closed": false,
@@ -49300,11 +48224,11 @@
           {
             "date": "2026-12-26",
             "fields": {
-              "餘額": 5,
-              "待處理": 0,
+              "餘額": 0,
+              "待處理": 5,
               "補件": 0,
               "已通過": 19,
-              "待系統排定": 5,
+              "待系統排定": 0,
               "宿營地不足候補": 0
             },
             "closed": false,
@@ -49313,11 +48237,11 @@
           {
             "date": "2026-12-27",
             "fields": {
-              "餘額": 24,
-              "待處理": 0,
+              "餘額": 19,
+              "待處理": 5,
               "補件": 0,
               "已通過": 0,
-              "待系統排定": 5,
+              "待系統排定": 0,
               "宿營地不足候補": 0
             },
             "closed": false,
@@ -51848,8 +50772,8 @@
               "待處理": 0,
               "補件": 0,
               "已通過": 10,
-              "待系統排定": 2,
-              "宿營地不足候補": 0
+              "待系統排定": 0,
+              "宿營地不足候補": 2
             },
             "closed": false,
             "note": null
@@ -52143,11 +51067,11 @@
           {
             "date": "2026-12-25",
             "fields": {
-              "餘額": 1,
-              "待處理": 1,
+              "餘額": 0,
+              "待處理": 2,
               "補件": 0,
               "已通過": 23,
-              "待系統排定": 1,
+              "待系統排定": 0,
               "宿營地不足候補": 17
             },
             "closed": false,
